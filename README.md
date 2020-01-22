@@ -8,7 +8,8 @@ Vision Statement
 Features
 --------
 *  Feature: 1
-    *    test
+    *   Priority:
+    *   Time Estimate:
 
 
 User Stories
