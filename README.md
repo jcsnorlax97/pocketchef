@@ -58,7 +58,27 @@ User Stories
 ------------
 #### Iteration 1
 
-*  As a user
-    *   [ Feature 1: part of feature ]
-    *   Priority:
-    *   Time Estimate:
+*  As a user, I want to be able to store family recipes that I would usually call upon during family events and use them.
+    *   Feature 3 (adding recipes)
+    *   Priority: High
+    *   Time Estimate: 3 days
+
+*  As a user, I want to be able to view step-by-step instruction for recipes, so it is understandable and clear to me on what to do.
+    *   Feature 1 (UI)
+    *   Priority: High
+    *   Time Estimate: 2 days
+
+*  As a user, who is new to technology or doesn’t interact with technology often, I want to have a simple and easy way to search recipes which I am looking for.
+    *   Feature 2 (Search)
+    *   Priority: High
+    *   Time Estimate: 4 days
+
+*  As a user who is a mom, I want to create and save recipe such that I can look back in the future and also can let other people know about my recipe.
+    *   Feature 3 (add)
+    *   Priority: High
+    *   Time Estimate: 2 days
+
+*	As a user, who is a student, I want to see the ingredients and directions from an existing recipe so I can easily follow it and also be aware of what I need to fulfil this recipe. 
+    *   Feature 1 (UI)
+    *   Priority: High
+    *   Time Estimate: 2 days
