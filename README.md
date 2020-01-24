@@ -51,12 +51,6 @@ considered a success.
 Features
 --------
 
-#### Sample 
-
-*  Feature: 1
-    *   Priority:
-    *   Time Estimate:
-
 #### Iteration 1
 
 *  [Display Recipes](https://code.cs.umanitoba.ca/comp3350-winter2020/pocketchef-5/issues/10)
