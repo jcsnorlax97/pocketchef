@@ -48,11 +48,31 @@ well as the first criteria succeeding, then the application will overall be
 considered a success. 
 
 
-
+Features
 --------
+
+#### Sample 
+
 *  Feature: 1
     *   Priority:
     *   Time Estimate:
+
+#### Iteration 1
+
+*  [Display Recipes](https://code.cs.umanitoba.ca/comp3350-winter2020/pocketchef-5/issues/10)
+*  [Bottom Navigation Bar](https://code.cs.umanitoba.ca/comp3350-winter2020/pocketchef-5/issues/11)
+*  [Add Recipes](https://code.cs.umanitoba.ca/comp3350-winter2020/pocketchef-5/issues/2)
+*  [Search Recipes](https://code.cs.umanitoba.ca/comp3350-winter2020/pocketchef-5/issues/1)
+
+#### Iteration 2
+*  [Filter by Ingredient](https://code.cs.umanitoba.ca/comp3350-winter2020/pocketchef-5/issues/8)
+*  [Categorize Food](https://code.cs.umanitoba.ca/comp3350-winter2020/pocketchef-5/issues/7)
+*  [Delete Recipes](https://code.cs.umanitoba.ca/comp3350-winter2020/pocketchef-5/issues/3)
+
+#### Iteration 3
+*  [Edit Recipes](https://code.cs.umanitoba.ca/comp3350-winter2020/pocketchef-5/issues/4)
+*  [Ingredient Popularity](https://code.cs.umanitoba.ca/comp3350-winter2020/pocketchef-5/issues/6)
+*  [Auto Correct/Suggest](https://code.cs.umanitoba.ca/comp3350-winter2020/pocketchef-5/issues/5)
 
 
 User Stories
