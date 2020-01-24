@@ -84,7 +84,11 @@ User Stories
 *  As a user who is new to technology or does not interact with technology often, I want to have a simple way to find recipes, so it will be easy for me to use.
     *   Feature [Search Recipes](https://code.cs.umanitoba.ca/comp3350-winter2020/pocketchef-5/issues/1)
     *   Priority: High
-    *   Time Estimate: 4 days
+    *   Time Estimate: 3 days
+*  As a user who just wants to experiment, I want to be able to find various types of the same recipe.
+    *   Feature [Search Recipes](https://code.cs.umanitoba.ca/comp3350-winter2020/pocketchef-5/issues/1)
+    *   Priority: High
+    *   Time Estimate: 1 days
 *  As a user who is a mom, I want to be able to store family recipes so I can call upon them during family events.
     *   Feature [Add Recipes](https://code.cs.umanitoba.ca/comp3350-winter2020/pocketchef-5/issues/2)
     *   Priority: High
