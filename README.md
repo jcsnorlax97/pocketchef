@@ -92,4 +92,8 @@ User Stories
 *  As a user who has not cooked much, I want to be able to view step-by-step instruction for recipes so it is understandable and clear to me on what to do 
     *   Feature [Display Recipes](https://code.cs.umanitoba.ca/comp3350-winter2020/pocketchef-5/issues/10)
     *   Priority: High
-    *   Time Estimate: 3 days
+    *   Time Estimate: 2 days
+*  As a user who is a mom, I want to know what ingredients I need to shop for when I want to cook a new meal.
+    *   Feature [Display Recipes](https://code.cs.umanitoba.ca/comp3350-winter2020/pocketchef-5/issues/10)
+    *   Priority: High
+    *   Time Estimate: 1 days
