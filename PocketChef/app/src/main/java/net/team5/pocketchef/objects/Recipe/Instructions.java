@@ -56,6 +56,35 @@ public class Instructions {
         return new Instructions(instructionList);
     }
 
+    /**
+     * checks to see if i2 is equal to 'this'
+     *
+     * @return true if the two Instructions lists are equal
+     * */
+    public boolean equals(Instructions i2){
+
+        //check null
+        if(i2 == null)
+            return false;
+
+        ArrayList<String> i2List = i2.getInstructionList();
+
+        //check to see they are the same length
+        if(i2List.size() != instructionList.size())
+            return false;
+
+
+        //go through whole list
+        for(int i = 0; i < instructionList.size(); i++){
+
+            if(!instructionList.get(i).equals(i2List.get(i))){
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     ///////////////////////////////////////////////////////////////////////////
     // END METHODS
     ///////////////////////////////////////////////////////////////////////////

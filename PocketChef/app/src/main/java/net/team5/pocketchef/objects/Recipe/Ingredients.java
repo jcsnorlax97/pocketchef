@@ -28,7 +28,7 @@ public class Ingredients {
      * @param ingredList an ArrayList of strings storing the ingredients of the recipe. Copies of the string values
      * */
     public Ingredients(ArrayList<String> ingredList){
-        ArrayList<String> ingredientList = new ArrayList<String>(ingredList);
+        ingredientList = new ArrayList<String>(ingredList);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -42,7 +42,7 @@ public class Ingredients {
     ///////////////////////////////////////////////////////////////////////////
 
     /**
-     * @return returns the String[] of the instructionsList
+     * @return returns the arrayList of the instructionsList (copy)
      * */
     public ArrayList<String> getIngredientList(){
         return  new ArrayList<String>(ingredientList);
@@ -54,6 +54,34 @@ public class Ingredients {
     public Ingredients deepCopy(){
         //Constructor makes a copy of the ingredientList
         return new Ingredients(ingredientList);
+    }
+
+    /**
+     * checks to see if i2 is equal to 'this'
+     *
+     * @return true if the two Ingredient lists are equal
+     * */
+    public boolean equals(Ingredients i2){
+
+        //check null
+        if(i2 == null)
+            return false;
+
+        ArrayList<String> i2List = i2.getIngredientList();
+
+        //check to make sure they are the same length
+        if(i2List.size() != ingredientList.size())
+            return false;
+
+        //go through the list
+        for(int i = 0; i < ingredientList.size(); i++){
+
+            //if not equal return false
+            if(!ingredientList.get(i).equals(i2List.get(i)))
+                return false;
+        }
+
+        return true;
     }
 
     ///////////////////////////////////////////////////////////////////////////

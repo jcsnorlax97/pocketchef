@@ -123,6 +123,45 @@ public class Recipe {
         return new Recipe(recipeName, category, ingredList.getIngredientList(), instructList.getInstructionList(), recipeID);
     }
 
+    /**
+     * checks to see if r2 is equal to this
+     * This equals is based on the whole recipe variables
+     * This means that the ID's can be different but if everything else is the same (name, category and so on) it will return true
+     *
+     * @return true if the two Recipe variables are the same (exluding ID)
+     * */
+    public boolean sameRecipe(Recipe r2){
+
+        //check null
+        if(r2 == null)
+            return false;
+
+        return (recipeName.equals(r2.recipeName) &&
+                category.equals(r2.category) &&
+                ingredList.equals(r2.ingredList) &&
+                instructList.equals(r2.instructList));
+
+    }
+
+    /**
+     * checks to see if r2 is equal to this
+     * This equals is based on the recipe ID's.
+     * This means that everything else can be different but as long as the ID's are the same it will return true
+     *
+     * @return true if the two Recipe ID's are the same
+     * */
+    public boolean equals(Recipe r2){
+
+        //check null
+        if(r2 == null)
+            return false;
+
+        //this should be a vaild equals check
+        return recipeID == r2.recipeID;
+
+
+    }
+
     ///////////////////////////////////////////////////////////////////////////
     // END METHODS
     ///////////////////////////////////////////////////////////////////////////
