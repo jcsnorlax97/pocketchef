@@ -1,5 +1,7 @@
 package net.team5.pocketchef.objects.Recipe;
 
+import java.util.ArrayList;
+
 /**
  * Comp 3350 Group Project
  * Version 1.0 for Iteration 1
@@ -16,17 +18,17 @@ package net.team5.pocketchef.objects.Recipe;
  * */
 public class Ingredients {
 
-    private String[] ingredientList;
+    private ArrayList<String> ingredientList;
 
     ///////////////////////////////////////////////////////////////////////////
     // CONSTRUCTORS
     ///////////////////////////////////////////////////////////////////////////
 
     /**
-     * @param ingredList an array of strings storing the ingredients of the recipe
+     * @param ingredList an ArrayList of strings storing the ingredients of the recipe. Copies of the string values
      * */
-    public Ingredients(String[] ingredList){
-        String[] ingredientList = ingredList;
+    public Ingredients(ArrayList<String> ingredList){
+        ArrayList<String> ingredientList = new ArrayList<String>(ingredList);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -42,8 +44,16 @@ public class Ingredients {
     /**
      * @return returns the String[] of the instructionsList
      * */
-    public String[] getIngredientList(){
-        return  ingredientList;
+    public ArrayList<String> getIngredientList(){
+        return  new ArrayList<String>(ingredientList);
+    }
+
+    /**
+     * @return returns a deepCopy of this Ingredient instance
+     * */
+    public Ingredients deepCopy(){
+        //Constructor makes a copy of the ingredientList
+        return new Ingredients(ingredientList);
     }
 
     ///////////////////////////////////////////////////////////////////////////
