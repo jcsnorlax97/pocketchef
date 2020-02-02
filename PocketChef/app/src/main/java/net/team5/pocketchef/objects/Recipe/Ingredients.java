@@ -1,0 +1,52 @@
+package net.team5.pocketchef.objects.Recipe;
+
+/**
+ * Comp 3350 Group Project
+ * Version 1.0 for Iteration 1
+ * John Hiebert
+ * Feb 1 2020
+ *
+ * Class for storing the ingredients of a particular recipe
+ *
+ * Contains:
+ * --Variables--
+ * String[] ingredientList: an array of strings that stores the ingredients
+ *
+ * --Methods--
+ * */
+public class Ingredients {
+
+    private String[] ingredientList;
+
+    ///////////////////////////////////////////////////////////////////////////
+    // CONSTRUCTORS
+    ///////////////////////////////////////////////////////////////////////////
+
+    /**
+     * @param ingredList an array of strings storing the ingredients of the recipe
+     * */
+    public Ingredients(String[] ingredList){
+        String[] ingredientList = ingredList;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // END CONSTRUCTORS
+    ///////////////////////////////////////////////////////////////////////////
+
+
+
+    ///////////////////////////////////////////////////////////////////////////
+    // METHODS
+    ///////////////////////////////////////////////////////////////////////////
+
+    /**
+     * @return returns the String[] of the instructionsList
+     * */
+    public String[] getIngredientList(){
+        return  ingredientList;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // END METHODS
+    ///////////////////////////////////////////////////////////////////////////
+}
