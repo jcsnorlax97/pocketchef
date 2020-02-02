@@ -1,5 +1,7 @@
 package net.team5.pocketchef.objects.Recipe;
 
+import java.util.ArrayList;
+
 /**
  * Comp 3350 Group Project
  * Version 1.0 for Iteration 1
@@ -16,17 +18,17 @@ package net.team5.pocketchef.objects.Recipe;
  * */
 public class Instructions {
 
-    private String[] instructionList;
+    private ArrayList<String> instructionList;
 
     ///////////////////////////////////////////////////////////////////////////
     // CONSTRUCTORS
     ///////////////////////////////////////////////////////////////////////////
 
     /**
-     * @param instructList a string array storing the instructions to make a recipe
+     * @param instructList a string array storing the instructions to make a recipe. Copies the String values
      * */
-    public  Instructions(String[] instructList){
-        instructionList = instructList;
+    public  Instructions(ArrayList<String> instructList){
+        instructionList =  new ArrayList<String>(instructList);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -40,10 +42,18 @@ public class Instructions {
     ///////////////////////////////////////////////////////////////////////////
 
     /**
-     * @return returns the String[] of the instructionsList
+     * @return returns the ArrayList of the instructionsList (Copy)
      * */
-    public String[] getInstructionList(){
-        return  instructionList;
+    public ArrayList<String> getInstructionList(){
+        return new ArrayList<String>(instructionList);
+    }
+
+    /**
+     * @return  returns a deepCopy of the Instruction instance
+     * */
+    public Instructions deepCopy(){
+        //Constructor makes a copy of the instructionList
+        return new Instructions(instructionList);
     }
 
     ///////////////////////////////////////////////////////////////////////////

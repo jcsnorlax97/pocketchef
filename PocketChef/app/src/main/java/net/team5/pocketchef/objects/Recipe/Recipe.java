@@ -1,5 +1,7 @@
 package net.team5.pocketchef.objects.Recipe;
 
+import java.util.ArrayList;
+
 /**
  *
  * Comp 3350 Group Project
@@ -11,6 +13,9 @@ package net.team5.pocketchef.objects.Recipe;
  *
  * Contains:
  * --Variables--
+ * Static int id: the id used to id each recipe (recipe 1 is id 0, recipe 2 is id 1 and so on)
+ *
+ * int recipeID: the id of the current recipe
  * String RecipeName: the name of the recipe
  * String Category: The category the recipe falls under (Mexican, Itilian ect)
  * String
@@ -18,9 +23,14 @@ package net.team5.pocketchef.objects.Recipe;
  * Instructions instrucList: the list of instructions for how to make the recipe
  *
  * --Methods--
- *
+ * getInstructList: returns the pointer to the InstructList
+ * getIngredList: returns the pointer to the IngredList
  */
 public class Recipe {
+
+    private static int id;
+
+    private int recipeID;//the unique ID of the recipe
 
     public String recipeName;
     public String category;
@@ -44,20 +54,42 @@ public class Recipe {
 
         ingredList = ingredientList;
         instructList = instructionList;
+
+        recipeID = id++;
     }
 
     /**
      * @param name the name of the recipe
      * @param categoryType the category the recipe falls under
-     * @param ingredientList a string[] of the ingredients of the recipe
-     * @param instructionList a string[] of the instructions of the recipe
+     * @param ingredientList a string[] of the ingredients of the recipe, gets copied in Ingredients
+     * @param instructionList a string[] of the instructions of the recipe, gets copied in Instructions
      * */
-    public Recipe(String name, String categoryType, String[] ingredientList, String[] instructionList){
+    public Recipe(String name, String categoryType, ArrayList<String> ingredientList, ArrayList<String> instructionList){
         recipeName = name;
         category = categoryType;
 
         ingredList = new Ingredients(ingredientList);
         instructList = new Instructions(instructionList);
+
+        recipeID = id++;
+    }
+
+    /**
+     * Private constructor for returning copies of a Recipe
+     *
+     * @param name the name of the recipe
+     * @param categoryType the category the recipe falls under
+     * @param ingredientList a string[] of the ingredients of the recipe, gets copied in Ingredients
+     * @param instructionList a string[] of the instructions of the recipe, gets copied in Instructions
+     * */
+    private Recipe(String name, String categoryType, ArrayList<String> ingredientList, ArrayList<String> instructionList, int rID){
+        recipeName = name;
+        category = categoryType;
+
+        ingredList = new Ingredients(ingredientList);
+        instructList = new Instructions(instructionList);
+
+        recipeID = rID;
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -82,6 +114,14 @@ public class Recipe {
      * */
     public  Ingredients getIngredList(){
         return  ingredList;
+    }
+
+    /**
+     * @return a deepCopy of the current recipe
+     *
+     * */
+    public Recipe deepCopy(){
+        return new Recipe(recipeName, category, ingredList.getIngredientList(), instructList.getInstructionList(), recipeID);
     }
 
     ///////////////////////////////////////////////////////////////////////////
