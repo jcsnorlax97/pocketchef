@@ -4,12 +4,49 @@ import net.team5.pocketchef.objects.Recipe.Recipe;
 
 import java.util.ArrayList;
 
+
+/**
+ * Comp 3350 Group Project
+ * Version 1.0 for Iteration 1
+ * John Hiebert
+ * Feb 2 2020
+ *
+ * Class for storing whole recipes
+ *
+ * Contains:
+ * --Variables--
+ * ArrayList<Recipe> recipes: an arrayList that stores the recipes of the whole app
+ *
+ * --Methods--
+ * */
 public class RecipeDatabase implements RecipeStorageInterface {
 
-    ArrayList<Recipe> recipes;
+    //the list of all recipes
+    private ArrayList<Recipe> recipes;
+
+    ///////////////////////////////////////////////////////////////////////////
+    // CONSTRUCTORS
+    ///////////////////////////////////////////////////////////////////////////
 
     public RecipeDatabase(){
         recipes = new ArrayList<Recipe>();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // END CONSTRUCTORS
+    ///////////////////////////////////////////////////////////////////////////
+
+
+
+    ///////////////////////////////////////////////////////////////////////////
+    // METHODS
+    ///////////////////////////////////////////////////////////////////////////
+
+    /**
+     * @return returns the Arraylist of recipes (shallow copy)
+     * */
+    public ArrayList<Recipe> getRecipes(){
+        return new ArrayList<Recipe>(recipes);
     }
 
     /**
@@ -24,7 +61,9 @@ public class RecipeDatabase implements RecipeStorageInterface {
 
         for(int i = 0; i < recipes.size(); i++){
             Recipe curr = recipes.get(i);
-            if(curr.equals(recipeName)){
+
+            //check the names
+            if(curr.recipeName.equals(recipeName)){
                 vaildRecipes.add(curr.deepCopy());
             }
         }
@@ -32,12 +71,32 @@ public class RecipeDatabase implements RecipeStorageInterface {
         return vaildRecipes;
     }
 
+    /**
+     * Searches through the list of recipes and returns an arraylist of all recipes that match (exactly
+     * the string categoryType
+     * */
     public ArrayList<Recipe> searchCategory(String categoryType){
 
-        return null;
+        ArrayList<Recipe> vaildRecipes = new ArrayList<Recipe>();//list of recipes with the same name as recipeName
+
+        for(int i = 0; i < recipes.size(); i++){
+            Recipe curr = recipes.get(i);
+
+            //check the category
+            if(curr.category.equals(categoryType)){
+                vaildRecipes.add(curr.deepCopy());
+            }
+        }
+
+        return vaildRecipes;
     }
 
     public void addRecipe(Recipe newRecipe){
-
+        //temp
+        recipes.add(newRecipe);
     }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // END METHODS
+    ///////////////////////////////////////////////////////////////////////////
 }

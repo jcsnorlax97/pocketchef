@@ -18,7 +18,6 @@ import java.util.ArrayList;
  * int recipeID: the id of the current recipe
  * String RecipeName: the name of the recipe
  * String Category: The category the recipe falls under (Mexican, Itilian ect)
- * String
  * Ingredients ingredList: The list of ingredients needed to make the recipe
  * Instructions instrucList: the list of instructions for how to make the recipe
  *
