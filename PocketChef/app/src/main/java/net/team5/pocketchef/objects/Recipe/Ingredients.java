@@ -12,7 +12,7 @@ import java.util.ArrayList;
  *
  * Contains:
  * --Variables--
- * String[] ingredientList: an array of strings that stores the ingredients
+ * ArrayList<String> ingredientList: an array of strings that stores the ingredients
  *
  * --Methods--
  * */
