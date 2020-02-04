@@ -12,6 +12,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
+import com.google.android.material.textfield.TextInputEditText;
+
 import net.team5.pocketchef.R;
 
 public class FragmentAddRecipe extends Fragment {
@@ -23,6 +28,9 @@ public class FragmentAddRecipe extends Fragment {
     String recipeName;
     String recipeCategory;
 
+    // --- a testing material chip ---
+    Chip chipItem;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -32,16 +40,17 @@ public class FragmentAddRecipe extends Fragment {
         etRecipeName = view.findViewById(R.id.etRecipeName);
         etRecipeCategory = view.findViewById(R.id.etRecipeCategory);
         btnAddRecipe = view.findViewById(R.id.btnAddRecipe);
+        chipItem = view.findViewById(R.id.chipItem);
 
         // add event handler for onClick event
         btnAddRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                recipeName = etRecipeName.getText().toString();
-                recipeCategory = etRecipeCategory.getText().toString();
+            recipeName = etRecipeName.getText().toString();
+            recipeCategory = etRecipeCategory.getText().toString();
 
-                // show what has been entered
-                Toast.makeText(getContext(), recipeName + " " + recipeCategory + " is entered.", Toast.LENGTH_SHORT).show();
+            // show what has been entered
+            Toast.makeText(getContext(), recipeName + " " + recipeCategory + " is entered.", Toast.LENGTH_SHORT).show();
             }
         });
 
