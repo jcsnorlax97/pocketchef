@@ -90,8 +90,8 @@
                     android:layout_height="wrap_content"/>
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnShowSelected"
-                    android:text="Show Selected"
+                    android:id="@+id/btnCheckAllIngredients"
+                    android:text="Check All Ingredient"
                     android:layout_marginLeft="4dp"
                     app:backgroundTint="@color/colorPrimaryDark"
                     android:layout_weight="1"

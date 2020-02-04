@@ -34,7 +34,7 @@ public class FragmentAddRecipe extends Fragment {
 
     // --- variables for ingredients ---
     MaterialButton btnAddIngredient;
-    MaterialButton btnShowSelected;
+    MaterialButton btnCheckAllIngredients;
     ChipGroup chipGroup;
     TextInputEditText tietIngredient;
 
@@ -47,10 +47,11 @@ public class FragmentAddRecipe extends Fragment {
         etRecipeName = view.findViewById(R.id.etRecipeName);
         etRecipeCategory = view.findViewById(R.id.etRecipeCategory);
         btnAddRecipe = view.findViewById(R.id.btnAddRecipe);
+
         chipItem = view.findViewById(R.id.chipItem);
 
         btnAddIngredient = view.findViewById(R.id.btnAddIngredient);
-        btnShowSelected = view.findViewById(R.id.btnShowSelected);
+        btnCheckAllIngredients = view.findViewById(R.id.btnCheckAllIngredients);
         chipGroup = view.findViewById(R.id.chipGroup);
         tietIngredient = view.findViewById(R.id.tietIngredient);
 
@@ -79,6 +80,21 @@ public class FragmentAddRecipe extends Fragment {
 
                 // Add the chipItem to chipGroup
                 chipGroup.addView(chipItem);
+
+            }
+        });
+
+        // When 'btnCheckAllIngredients' button is clicked, it checks all ingredients that have been added.
+        btnCheckAllIngredients.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                // iterate over each chip in the group, get the chip item name, and append to result.
+                for(int i=0; i < chipGroup.getChildCount(); i++) {
+                    Chip chip = (Chip) chipGroup.getChildAt(i);
+                    chip.setChecked(true);
+
+                }
 
             }
         });
