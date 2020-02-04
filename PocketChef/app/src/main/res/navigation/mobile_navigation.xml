@@ -22,4 +22,11 @@
         android:name="net.team5.pocketchef.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
+
+    <fragment
+        android:id="@+id/navigation_add_recipe"
+        android:name="net.team5.pocketchef.ui.add_recipe.FragmentAddRecipe"
+        android:label="Add Recipe"
+        tools:layout="@layout/fragment_add_recipe" />
+
 </navigation>
