@@ -20,6 +20,8 @@ import com.google.android.material.textfield.TextInputEditText;
 import net.team5.pocketchef.MainActivity;
 import net.team5.pocketchef.R;
 
+import java.util.ArrayList;
+
 public class FragmentAddRecipe extends Fragment {
 
     // --- variables ---
@@ -99,15 +101,30 @@ public class FragmentAddRecipe extends Fragment {
             }
         });
 
-        // add event handler for onClick event
+        // When 'btnAddRecipe' button is clicked, display what have been entered.
+        // PS:  At the end, it will pass the data to the business layer to add the recipe information
+        //      to the database.
         btnAddRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 recipeName = etRecipeName.getText().toString();
                 recipeCategory = etRecipeCategory.getText().toString();
 
-                // show what has been entered
-                Toast.makeText(getContext(), recipeName + " " + recipeCategory + " is entered.", Toast.LENGTH_SHORT).show();
+                ArrayList<String> ingredientList = new ArrayList<>();
+                StringBuilder result = new StringBuilder(""); // (just for testing; should remove it later)
+
+                // iterate over each chip in the chip group, get the chip item name, and add to the ingredientList
+                for(int i=0; i < chipGroup.getChildCount(); i++) {
+                    Chip chip = (Chip) chipGroup.getChildAt(i);
+                    if (chip.isChecked()) {
+                        ingredientList.add(chip.getText().toString());
+                        result.append(chip.getText()).append(" "); // (just for testing; should remove it later)
+                    }
+                }
+
+                // show what has been entered; (just for testing; should remove it later)
+                Toast.makeText(getContext(), recipeName + " " + recipeCategory + " " + result.toString() + " is entered.", Toast.LENGTH_SHORT).show();
             }
         });
 
