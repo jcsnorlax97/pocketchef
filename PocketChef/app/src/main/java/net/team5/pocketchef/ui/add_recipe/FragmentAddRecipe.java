@@ -17,6 +17,7 @@ import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputEditText;
 
+import net.team5.pocketchef.MainActivity;
 import net.team5.pocketchef.R;
 
 public class FragmentAddRecipe extends Fragment {
@@ -31,6 +32,12 @@ public class FragmentAddRecipe extends Fragment {
     // --- a testing material chip ---
     Chip chipItem;
 
+    // --- variables for ingredients ---
+    MaterialButton btnAddIngredient;
+    MaterialButton btnShowSelected;
+    ChipGroup chipGroup;
+    TextInputEditText tietIngredient;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -42,15 +49,49 @@ public class FragmentAddRecipe extends Fragment {
         btnAddRecipe = view.findViewById(R.id.btnAddRecipe);
         chipItem = view.findViewById(R.id.chipItem);
 
+        btnAddIngredient = view.findViewById(R.id.btnAddIngredient);
+        btnShowSelected = view.findViewById(R.id.btnShowSelected);
+        chipGroup = view.findViewById(R.id.chipGroup);
+        tietIngredient = view.findViewById(R.id.tietIngredient);
+
+        // When 'Add Tag' button is clicked, we split text from input to tags form
+        btnAddIngredient.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String ingredient = tietIngredient.getText().toString();
+                LayoutInflater inflater = LayoutInflater.from(getContext()); // (Not sure if this is the correct way to do it.)
+
+                // create view for a chipItem
+                chipItem = (Chip) inflater.inflate(R.layout.chip_item, null, false); // (Not sure if this is the correct way to do it.)
+                chipItem.setText(ingredient); // replace default text with the current one.
+
+                // add event handler for the close icon, i.e. when the close icon in the tag is clicked, execute the following.
+                chipItem.setOnCloseIconClickListener(new View.OnClickListener() {
+
+                    // View v here is the layout of a single chip
+                    @Override
+                    public void onClick(View v) {
+                        // Remove tag when 'close' symbol is clicked
+                        chipGroup.removeView(v);
+                    }
+
+                });
+
+                // Add the chipItem to chipGroup
+                chipGroup.addView(chipItem);
+
+            }
+        });
+
         // add event handler for onClick event
         btnAddRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            recipeName = etRecipeName.getText().toString();
-            recipeCategory = etRecipeCategory.getText().toString();
+                recipeName = etRecipeName.getText().toString();
+                recipeCategory = etRecipeCategory.getText().toString();
 
-            // show what has been entered
-            Toast.makeText(getContext(), recipeName + " " + recipeCategory + " is entered.", Toast.LENGTH_SHORT).show();
+                // show what has been entered
+                Toast.makeText(getContext(), recipeName + " " + recipeCategory + " is entered.", Toast.LENGTH_SHORT).show();
             }
         });
 
