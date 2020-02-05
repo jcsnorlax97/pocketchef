@@ -96,6 +96,40 @@ public class RecipeDatabase implements RecipeStorageInterface {
         recipes.add(newRecipe);
     }
 
+    /**
+     * @return the recipe database as a single string in the formate:
+     * recipeName
+     * Category
+     *
+     * ingred1
+     * ingred2
+     * ingred3...
+     *
+     * instruct1
+     * instruct2
+     * instruct3...
+     * ---------------------------
+     * recipeName
+     * Category
+     *
+     * ingred1
+     * ingred2
+     * ingred3...
+     *
+     * instruct1
+     * instruct2
+     * instruct3...
+     * */
+    public String toString(){
+        String rs = "";
+
+        for(int i = 0; i < recipes.size(); i++){
+            rs += recipes.get(i).toString() + "--------------------------\n";
+        }
+
+        return rs;
+    }
+
     ///////////////////////////////////////////////////////////////////////////
     // END METHODS
     ///////////////////////////////////////////////////////////////////////////
