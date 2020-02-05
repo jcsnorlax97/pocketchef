@@ -31,13 +31,11 @@ public class FragmentAddRecipe extends Fragment {
     String recipeName;
     String recipeCategory;
 
-    // --- a testing material chip ---
-    Chip chipItem;
-
     // --- variables for ingredients ---
     MaterialButton btnAddIngredient;
     MaterialButton btnCheckAllIngredients;
     ChipGroup chipGroup;
+    Chip chipItem;
     TextInputEditText tietIngredient;
 
     // --- variables for instructions (need to update in the future) ---
@@ -54,9 +52,6 @@ public class FragmentAddRecipe extends Fragment {
         etRecipeName = view.findViewById(R.id.etRecipeName);
         etRecipeCategory = view.findViewById(R.id.etRecipeCategory);
         btnAddRecipe = view.findViewById(R.id.btnAddRecipe);
-
-        // --- a testing material chip ---
-        chipItem = view.findViewById(R.id.chipItem);
 
         // --- ingredients ---
         btnAddIngredient = view.findViewById(R.id.btnAddIngredient);
@@ -105,7 +100,6 @@ public class FragmentAddRecipe extends Fragment {
                 for(int i=0; i < chipGroup.getChildCount(); i++) {
                     Chip chip = (Chip) chipGroup.getChildAt(i);
                     chip.setChecked(true);
-
                 }
 
             }
