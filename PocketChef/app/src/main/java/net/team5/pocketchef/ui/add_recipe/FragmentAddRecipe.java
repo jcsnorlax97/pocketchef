@@ -40,22 +40,32 @@ public class FragmentAddRecipe extends Fragment {
     ChipGroup chipGroup;
     TextInputEditText tietIngredient;
 
+    // --- variables for instructions (need to update in the future) ---
+    EditText etRecipeInstructions;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_recipe, container, false); // create view based on fragment_add_recipe.xmll in layout
 
         // link view to variables
+
+        // --- recipe name and category ---
         etRecipeName = view.findViewById(R.id.etRecipeName);
         etRecipeCategory = view.findViewById(R.id.etRecipeCategory);
         btnAddRecipe = view.findViewById(R.id.btnAddRecipe);
 
+        // --- a testing material chip ---
         chipItem = view.findViewById(R.id.chipItem);
 
+        // --- ingredients ---
         btnAddIngredient = view.findViewById(R.id.btnAddIngredient);
         btnCheckAllIngredients = view.findViewById(R.id.btnCheckAllIngredients);
         chipGroup = view.findViewById(R.id.chipGroup);
         tietIngredient = view.findViewById(R.id.tietIngredient);
+
+        // --- instructions ---
+        etRecipeInstructions = view.findViewById(R.id.etRecipeInstructions);
 
         // When 'Add Tag' button is clicked, we split text from input to tags form
         btnAddIngredient.setOnClickListener(new View.OnClickListener() {
@@ -108,9 +118,11 @@ public class FragmentAddRecipe extends Fragment {
             @Override
             public void onClick(View view) {
 
+                // --- name and category ---
                 recipeName = etRecipeName.getText().toString();
                 recipeCategory = etRecipeCategory.getText().toString();
 
+                // --- ingredients ---
                 ArrayList<String> ingredientList = new ArrayList<>();
                 StringBuilder result = new StringBuilder(""); // (just for testing; should remove it later)
 
@@ -123,8 +135,15 @@ public class FragmentAddRecipe extends Fragment {
                     }
                 }
 
+                // --- instructions (POOR DESIGN; NEED TO UPDATE IN THE FUTURE!!!) ---
+                ArrayList<String> instructionList = new ArrayList<>();
+                String recipeInstructions = etRecipeInstructions.getText().toString();
+                instructionList.add(recipeInstructions);
+
+                // --- debug / pass recipe information through calling the function / ... ---
+
                 // show what has been entered; (just for testing; should remove it later)
-                Toast.makeText(getContext(), recipeName + " " + recipeCategory + " " + result.toString() + " is entered.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), recipeName + " " + recipeCategory + " " + result.toString() + instructionList.get(0) + " is entered.", Toast.LENGTH_SHORT).show();
             }
         });
 

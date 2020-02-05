@@ -107,6 +107,15 @@
                 android:layout_height="wrap_content">
             </com.google.android.material.chip.ChipGroup>
 
+            <!-- fixed height instead of wrap_content such that it won't disappear when there are no texts.-->
+            <EditText
+                android:id="@+id/etRecipeInstructions"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:inputType="text|textMultiLine"
+                android:hint="Recipe Instructions"
+                android:gravity="top"/>
+
         </LinearLayout>
         <!--  END OF INGREDIENTS FORM -->
 
