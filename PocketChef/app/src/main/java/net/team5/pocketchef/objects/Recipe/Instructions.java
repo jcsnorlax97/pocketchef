@@ -85,6 +85,17 @@ public class Instructions {
         return true;
     }
 
+    /**
+     * @return returns the instructionList as a single string with each instruction on a seperate line
+     * */
+    public String toString(){
+        String rs = "";
+        for(int i = 0; i < instructionList.size(); i++){
+            rs += instructionList.get(i) + "\n";
+        }
+        return rs;
+    }
+
     ///////////////////////////////////////////////////////////////////////////
     // END METHODS
     ///////////////////////////////////////////////////////////////////////////

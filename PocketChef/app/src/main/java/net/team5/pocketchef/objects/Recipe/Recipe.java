@@ -158,8 +158,23 @@ public class Recipe {
 
         //this should be a vaild equals check
         return recipeID == r2.recipeID;
+    }
 
-
+    /**
+     * @return the recipe as a single string in the formate:
+     * recipeName
+     * Category
+     *
+     * ingred1
+     * ingred2
+     * ingred3...
+     *
+     * instruct1
+     * instruct2
+     * instruct3...
+     * */
+    public String toString(){
+        return recipeName + "\n" + category + "\n\n" + ingredList.toString() + "\n" + instructList.toString();
     }
 
     ///////////////////////////////////////////////////////////////////////////
