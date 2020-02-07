@@ -30,7 +30,7 @@ public class HomeFragment extends Fragment {
 //            public void onClick(View v){
 //
 //               FragmentTransaction fr=getFragmentManager().beginTransaction();
-//               fr.replace(R.id.fragment_home,new DashboardFragment());
+//               fr.replace(R.id.fragment_home,new ...Fragment());
 //               fr.commit();
 //            }
 //

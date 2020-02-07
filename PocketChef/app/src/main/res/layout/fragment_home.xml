@@ -8,9 +8,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/background"
     android:orientation="vertical"
-    tools:context=".MainActivity"
-    android:theme="@style/BucketTheme2"
-    android:>
+    tools:context=".MainActivity">
 
 
     <TextView
@@ -49,7 +47,6 @@
 
     <Button
         android:id="@+id/searchButton"
-        android:theme="@style/BucketTheme2"
         android:layout_width="538dp"
         android:layout_height="68dp"
 
@@ -58,13 +55,14 @@
 
         android:layout_gravity="center"
         android:layout_marginBottom="0dp"
-        android:background="@drawable/buttonshape"
         android:fontFamily="sans-serif-medium"
         android:text="Search Recipe"
         android:textColor="#0267a6"
 
         android:textSize="30sp"
-        android:textStyle="normal" />
+        android:textStyle="normal"
+        app:backgroundTint="#FFFFFF"
+        app:cornerRadius="55dp" />
 
 </LinearLayout>
 
