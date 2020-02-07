@@ -101,3 +101,13 @@ User Stories
     *   Feature [Display Recipes](https://code.cs.umanitoba.ca/comp3350-winter2020/pocketchef-5/issues/10)
     *   Priority: High
     *   Time Estimate: 1 days
+	
+Developer Tasks
+------------
+#### Iteration 1
+*  [Developer Tasks](https://code.cs.umanitoba.ca/comp3350-winter2020/pocketchef-5/blob/master/Developer_Tasks.md)
+
+Architecture Model
+------------
+#### Iteration 1
+*  [Architecture](https://code.cs.umanitoba.ca/comp3350-winter2020/pocketchef-5/blob/master/Architecture.md)
