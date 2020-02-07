@@ -25,6 +25,14 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+        //For button linking
+//
+//        FragmentTransaction fmt = getSupportFragmentManager().beginTransaction();
+//
+//        fmt.add(R.id.fragment_home,new DashboardFragment());
+//
+//        fmt.commit();
+
     }
 
 }
