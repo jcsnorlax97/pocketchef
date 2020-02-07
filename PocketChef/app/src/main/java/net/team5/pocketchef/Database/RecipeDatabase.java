@@ -1,6 +1,6 @@
 package net.team5.pocketchef.Database;
 
-import net.team5.pocketchef.objects.Recipe.Recipe;
+import net.team5.pocketchef.Business.Objects.Recipe.Recipe;
 
 import java.util.ArrayList;
 

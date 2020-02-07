@@ -1,4 +1,4 @@
-package net.team5.pocketchef.objects.Recipe;
+package net.team5.pocketchef.Business.Objects.Recipe;
 
 import java.util.ArrayList;
 
