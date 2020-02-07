@@ -37,5 +37,5 @@
 - Undecided in iteration 1. Will store all the account settings. 
 
 ## Domain Specific Objects
-[Recipe](https://code.cs.umanitoba.ca/comp3350-winter2020/pocketchef-5/blob/master/PocketChef/app/src/main/java/net/team5/pocketchef/objects/Recipe/Recipe.java)
+[Recipe](https://code.cs.umanitoba.ca/comp3350-winter2020/pocketchef-5/blob/master/PocketChef/app/src/main/java/net/team5/pocketchef/business/objects/Recipe/Recipe.java)
 - The recipe object
