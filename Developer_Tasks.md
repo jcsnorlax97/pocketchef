@@ -91,7 +91,8 @@ Features + tasks
     
         Time Estimate: 1 days
 	
-	*   ##### Developer Task [Implement Recipe Classes](https://code.cs.umanitoba.ca/comp3350-winter2020/pocketchef-5/issues/34)
+	*   ##### Developer Task 
+	    [Implement Recipe Classes](https://code.cs.umanitoba.ca/comp3350-winter2020/pocketchef-5/issues/34)
     
         Priority: High
     
