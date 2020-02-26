@@ -1,19 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_home"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/text_home"
-        android:layout_width="match_parent"
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_alignParentTop="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="75dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="WELCOME TO"
+        android:textColor="#FFFFFF"
+        android:textSize="50dp"
+
+        android:textStyle="bold" />
+
+    <FrameLayout
+        android:layout_width="395dp"
+        android:layout_height="361dp"
+        android:layout_centerHorizontal="true"
+
+        android:layout_marginBottom="100dp"
+
+        android:layout_gravity="center"
+        android:layout_marginTop="75dp">
+        android:theme="@style/BucketTheme2"
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="424dp"
+            android:layout_height="409dp"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:background="#00FFFFFF"
+            app:srcCompat="@drawable/whitelogo" />
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/searchButton"
+        android:layout_width="538dp"
+        android:layout_height="68dp"
+
+        android:layout_alignParentBottom="true"
+
+
+        android:layout_gravity="center"
+        android:layout_marginBottom="0dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="Search Recipe"
+        android:textColor="#0267a6"
+
+        android:textSize="30sp"
+        android:textStyle="normal"
+        app:backgroundTint="#FFFFFF"
+        app:cornerRadius="55dp" />
+
+</LinearLayout>
+

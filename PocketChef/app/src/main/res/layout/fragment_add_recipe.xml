@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:theme="@style/AppTheme">
+
+
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="30dp"
+            android:textColor="#000"
+            android:text="Add Recipe"/>
+
+        <EditText
+            android:id="@+id/etRecipeName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="Recipe Name" />
+
+        <EditText
+            android:id="@+id/etRecipeCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="Recipe Category" />
+
+
+        <!--  START OF INGREDIENTS FORM -->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tietIngredient"
+                android:hint="Ingredient"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <!--
+                orientation & weightSum
+                    - weightSum is based on orientation.
+                    - weightSum is the total weight for all children tags:
+                        - in our case, Add button and Show button share the weight.
+                    - although we use weightSum for the horizontal direction and don't use layout_width, we still need to declare layout_width to 0dp.
+            -->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnAddIngredient"
+                    android:text="Add Ingredient"
+                    android:layout_marginRight="4dp"
+                    app:backgroundTint="@color/colorPrimaryDark"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnCheckAllIngredients"
+                    android:text="Check All Ingredient"
+                    android:layout_marginLeft="4dp"
+                    app:backgroundTint="@color/colorPrimaryDark"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"/>
+
+
+            </LinearLayout>
+
+            <!-- note for Material Chip (not ChipGroup!):
+                style="@style/Widget.MaterialComponents.Chip.Entry":
+                    - to show the close icon
+                    - style of Material Chip can be: Entry, Choice, Action, and Filter
+            -->
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </com.google.android.material.chip.ChipGroup>
+
+            <!-- fixed height instead of wrap_content such that it won't disappear when there are no texts.-->
+            <EditText
+                android:id="@+id/etRecipeInstructions"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:inputType="text|textMultiLine"
+                android:hint="Recipe Instructions"
+                android:gravity="top"/>
+
+        </LinearLayout>
+        <!--  END OF INGREDIENTS FORM -->
+
+        <Button
+            android:id="@+id/btnAddRecipe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Recipe" />
+
+    </LinearLayout>
+
+</LinearLayout>

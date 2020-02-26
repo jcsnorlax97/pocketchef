@@ -1,4 +1,4 @@
-package net.team5.pocketchef.objects.Recipe;
+package net.team5.pocketchef.Business.Objects.Recipe;
 
 import java.util.ArrayList;
 
@@ -82,17 +82,6 @@ public class Ingredients {
         }
 
         return true;
-    }
-
-    /**
-     * @return returns the ingredientList as a single string with each ingredient on a seperate line
-     * */
-    public String toString(){
-        String rs = "";
-        for(int i = 0; i < ingredientList.size(); i++){
-            rs += ingredientList.get(i) + "\n";
-        }
-        return rs;
     }
 
     ///////////////////////////////////////////////////////////////////////////

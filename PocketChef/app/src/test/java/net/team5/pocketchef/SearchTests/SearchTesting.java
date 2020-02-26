@@ -1,9 +1,9 @@
 package net.team5.pocketchef.SearchTests;
 
 import net.team5.pocketchef.Database.RecipeDatabase;
-import net.team5.pocketchef.objects.Recipe.Ingredients;
-import net.team5.pocketchef.objects.Recipe.Instructions;
-import net.team5.pocketchef.objects.Recipe.Recipe;
+import net.team5.pocketchef.Business.Objects.Recipe.Ingredients;
+import net.team5.pocketchef.Business.Objects.Recipe.Instructions;
+import net.team5.pocketchef.Business.Objects.Recipe.Recipe;
 
 import org.junit.Test;
 
@@ -108,24 +108,5 @@ public class SearchTesting{
         list.add("New test case");
 
         assertFalse("The instruction list should now be different", oriInstruct.equals(clone.getInstructList().getInstructionList()));
-    }
-
-    /**
-     * Testing of toString
-     * */
-    @Test
-    public void toStringTesting(){
-        Recipe original = makeRecipe();
-
-        System.out.println("Printing reicpe:"+original.toString());
-
-        //test individual items
-        assertTrue("Name doesn't match when it should", original.recipeName.equals("TestCakes"));
-        assertTrue("category doesn't match when it should", original.category.equals("Testing"));
-        assertTrue("ingredients don't match when it should", original.getIngredList().toString().equals("3/4 cups patients\n"));
-        assertTrue("instructions don't match when it should", original.getInstructList().toString().equals("Pre-heat test oven\n"));
-
-        //test the whole recipe
-        assertTrue("The whole recipe doesn't match", original.toString().equals("TestCakes\nTesting\n\n3/4 cups patients\n\nPre-heat test oven\n"));
     }
 }
