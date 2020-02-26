@@ -1,6 +1,6 @@
 package net.team5.pocketchef.Database;
 
-import net.team5.pocketchef.objects.Recipe.Recipe;
+import net.team5.pocketchef.Business.Objects.Recipe.Recipe;
 
 import java.util.ArrayList;
 
@@ -94,40 +94,6 @@ public class RecipeDatabase implements RecipeStorageInterface {
     public void addRecipe(Recipe newRecipe){
         //temp
         recipes.add(newRecipe);
-    }
-
-    /**
-     * @return the recipe database as a single string in the formate:
-     * recipeName
-     * Category
-     *
-     * ingred1
-     * ingred2
-     * ingred3...
-     *
-     * instruct1
-     * instruct2
-     * instruct3...
-     * ---------------------------
-     * recipeName
-     * Category
-     *
-     * ingred1
-     * ingred2
-     * ingred3...
-     *
-     * instruct1
-     * instruct2
-     * instruct3...
-     * */
-    public String toString(){
-        String rs = "";
-
-        for(int i = 0; i < recipes.size(); i++){
-            rs += recipes.get(i).toString() + "--------------------------\n";
-        }
-
-        return rs;
     }
 
     ///////////////////////////////////////////////////////////////////////////

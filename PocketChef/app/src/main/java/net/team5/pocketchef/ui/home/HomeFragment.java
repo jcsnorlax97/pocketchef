@@ -4,15 +4,18 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Button;
+import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
+import net.team5.pocketchef.MainActivity;
 import net.team5.pocketchef.R;
+import net.team5.pocketchef.ui.search_recipes.DisplaySearchResultsFragment;
 
 public class HomeFragment extends Fragment {
 
@@ -22,14 +25,22 @@ public class HomeFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
-        final TextView textView = root.findViewById(R.id.text_home);
-        homeViewModel.getText().observe(this, new Observer<String>() {
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        Button buttonSearch=(Button) view.findViewById(R.id.searchButton);
+
+        buttonSearch.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
+            public void onClick(View view) {
+                Toast.makeText(getActivity(), "Going to search page", Toast.LENGTH_SHORT).show();
+                FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
+
+                //replace nav_host_fragment (found in activity_main) with a DisplaySearchResultsFragment fragment
+                fragTrans.replace(R.id.nav_host_fragment, new DisplaySearchResultsFragment());
+                fragTrans.commit();
             }
         });
-        return root;
+
+        return view;
     }
 }
