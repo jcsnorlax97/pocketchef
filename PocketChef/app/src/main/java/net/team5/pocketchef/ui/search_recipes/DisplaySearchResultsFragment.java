@@ -1,6 +1,8 @@
 package net.team5.pocketchef.ui.search_recipes;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -8,6 +10,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
@@ -79,13 +82,7 @@ public class DisplaySearchResultsFragment extends Fragment {
         recipeList.add(new RecipeItem(R.drawable.temp_recipe_image_foreground,"Test 3"));
 
         //set adapters and stuff
-        searchResults = view.findViewById(R.id.DisSearchRecyclerView);
-        searchResults.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(getContext());
-        adapter = new RecipeAdapter(recipeList);
-
-        searchResults.setLayoutManager(layoutManager);
-        searchResults.setAdapter(adapter);
+        buildRecyclerView(view);
 
         //deal with clicks on displayed recipes
         adapter.setOnItemClickListener(new RecipeAdapter.OnItemClickListener() {
@@ -96,8 +93,56 @@ public class DisplaySearchResultsFragment extends Fragment {
             }
         });
 
+        //set up variables for the search bar
+        EditText searchBar = view.findViewById(R.id.editText);
+        searchBar.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                filter(editable.toString());
+            }
+        });
+
         //return the view
         return view;
+    }
+
+    /**
+     * this deals with the string the user is using to search for recipes
+     * gets called everytime the string updates
+     * */
+    private void filter(String text){
+        ArrayList<RecipeItem> filteredList = new ArrayList<>();
+
+        for(RecipeItem item: recipeList){
+            if(item.getRecipeName().toLowerCase().contains(text.toLowerCase())){
+                filteredList.add(item);
+            }
+        }
+
+        adapter.filterList(filteredList);
+    }
+
+    /**
+     * Sets up the recycler view and stuff
+     * */
+    private void buildRecyclerView(View view) {
+        searchResults = view.findViewById(R.id.DisSearchRecyclerView);
+        searchResults.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(getContext());
+        adapter = new RecipeAdapter(recipeList);
+
+        searchResults.setLayoutManager(layoutManager);
+        searchResults.setAdapter(adapter);
     }
 
     /**
@@ -115,6 +160,7 @@ public class DisplaySearchResultsFragment extends Fragment {
         adapter.notifyItemChanged(position);
     }
 
+    /* THIS IS HERE INCASE WE WANT TO ADD A SEARCH ICON IN THE TOP RIGHT OF THE APP, ALTHOUGH THE CODE ISN'T WORKING RIGHT NOW WHEN IT SHOULD BE (ICON DOESN'T GET DISPLAYED)
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.search_recipes_menu, menu);
@@ -135,6 +181,8 @@ public class DisplaySearchResultsFragment extends Fragment {
             }
         });
     }
+
+     */
 
     ///////////////////////////////////////////////////////////////////////////
     // END METHODS
