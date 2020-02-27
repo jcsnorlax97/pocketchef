@@ -6,17 +6,18 @@
     >
 
     <EditText
-        android:id="@+id/editText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+    android:id="@+id/editText"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
 
-        android:layout_marginTop="30dp"
-        android:layout_weight="1"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:padding="20dp"
-        android:text="Name" />
+    android:layout_marginTop="20dp"
+    android:layout_margin="16dp"
+    android:ems="20"
+    android:inputType="textPersonName"
+    android:paddingLeft="20dp"
+    android:paddingTop="20dp"
+    android:paddingRight="20dp"
+    android:hint="Search Recipies" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/DisSearchRecyclerView"

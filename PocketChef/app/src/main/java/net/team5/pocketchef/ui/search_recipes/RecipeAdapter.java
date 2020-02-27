@@ -170,6 +170,14 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         }
     };
 
+    /**
+     * Set the recipe list to display only relevent search results
+     * */
+    public void filterList(ArrayList<RecipeItem> filterList){
+        mRecipeList = filterList;
+        notifyDataSetChanged();
+    }
+
     ///////////////////////////////////////////////////////////////////////////
     // END METHODS
     ///////////////////////////////////////////////////////////////////////////
