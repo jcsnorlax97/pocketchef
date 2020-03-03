@@ -20,6 +20,7 @@ public interface IIngredientHandler {
      *
      * Responsibilities:
      *  - Retrieve an ingredient from DB and return to caller
+     *  - Remark: ingredientName is the primary key for Ingredient table.
      */
     Ingredient getIngredient(String ingredientName);
 
