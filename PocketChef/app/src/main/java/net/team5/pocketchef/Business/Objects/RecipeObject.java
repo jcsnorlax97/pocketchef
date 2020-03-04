@@ -18,17 +18,17 @@ public class RecipeObject {
     private final String recipeId;
     private final String recipeName;
     private final Category recipeCategory;
-    private final String recipeInstruction;
+    private final String[] recipeInstructions;
     private final List<Ingredient> recipeIngredients;
 
     /********************************************************
      * constructors
      ********************************************************/
-    public RecipeObject(String recipeName, Category recipeCategory, String recipeInstruction, List<Ingredient> recipeIngredients) {
+    public RecipeObject(String recipeName, Category recipeCategory, String[] recipeInstructions, List<Ingredient> recipeIngredients) {
         this.recipeId = Integer.toString(RecipeObject.idCounter);
         this.recipeName = recipeName;
         this.recipeCategory = recipeCategory;
-        this.recipeInstruction = recipeInstruction;
+        this.recipeInstructions = recipeInstructions;
         this.recipeIngredients = recipeIngredients;
 
         RecipeObject.idCounter++;
@@ -49,8 +49,8 @@ public class RecipeObject {
         return this.recipeCategory;
     }
 
-    public String getRecipeInstruction() {
-        return this.recipeInstruction;
+    public String[] getRecipeInstructions() {
+        return this.recipeInstructions;
     }
 
     public List<Ingredient> getRecipeIngredients() {

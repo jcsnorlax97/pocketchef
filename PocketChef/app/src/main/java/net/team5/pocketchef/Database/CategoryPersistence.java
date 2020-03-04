@@ -1,12 +1,11 @@
-package net.team5.pocketchef.Business;
+package net.team5.pocketchef.Database;
 
 import net.team5.pocketchef.Business.Objects.Category;
 import net.team5.pocketchef.Business.Objects.RecipeObject;
 
 import java.util.List;
 
-public interface ICategoryHandler {
-
+public interface CategoryPersistence {
     /**
      * createCategory
      *
@@ -31,5 +30,4 @@ public interface ICategoryHandler {
      *  - retrieve the whole list of categories and return back to callers
      */
     List<Category> getCategories();
-
 }

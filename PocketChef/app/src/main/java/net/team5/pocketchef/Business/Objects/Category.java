@@ -8,27 +8,17 @@ import java.util.List;
 public class Category {
 
     /********************************************************
-     * class variables
-     ********************************************************/
-    private static int idCounter = 0; // to be used for unique id.
-
-    /********************************************************
      * instance variables
      ********************************************************/
-    private final String categoryId;    // MUTATION IS NOT ALLOWED
-    private final String categoryName;  // MUTATION IS NOT ALLOWED
+    private final String categoryName;    // MUTATION IS NOT ALLOWED, NAME IS TREATED AS ID
     private List<Recipe> recipeList;
 
     /********************************************************
      * instance methods
      ********************************************************/
     public Category(String categoryName) {
-        this.categoryId = Integer.toString(Category.idCounter);
         this.categoryName = categoryName;
         this.recipeList = new ArrayList<>();
-
-        // increment counter for next instance
-        Category.idCounter++;
     }
 
     /********************************************************
@@ -43,10 +33,6 @@ public class Category {
     /********************************************************
      * instance methods (accessors & toString)
      ********************************************************/
-    public String getCategoryId() {
-        return this.categoryId;
-    }
-
     public String getCategoryName() {
         return this.categoryName;
     }
@@ -56,6 +42,6 @@ public class Category {
     }
 
     public String toString() {
-        return String.format("Student: %s %s [%s]", this.categoryId, this.categoryName, this.recipeList.toString());
+        return String.format("Student: %s %s [%s]", this.categoryName, this.recipeList.toString());
     }
 }

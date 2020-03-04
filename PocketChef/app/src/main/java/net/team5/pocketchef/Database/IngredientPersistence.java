@@ -1,12 +1,10 @@
-package net.team5.pocketchef.Business;
+package net.team5.pocketchef.Database;
 
 import net.team5.pocketchef.Business.Objects.Ingredient;
 
-public interface IIngredientHandler {
+public interface IngredientPersistence {
 
     /**
-     * addIngredient
-     *
      * Responsibilities:
      *  - add ingredient to DB
      *  - Referencing Note (for persistence layer):
@@ -16,12 +14,9 @@ public interface IIngredientHandler {
     void addIngredient(Ingredient ingredient);
 
     /**
-     * getIngredient
-     *
      * Responsibilities:
      *  - Retrieve an ingredient from DB and return to caller
      *  - Remark: ingredientName is the primary key for Ingredient table.
      */
     Ingredient getIngredient(String ingredientName);
-
 }
