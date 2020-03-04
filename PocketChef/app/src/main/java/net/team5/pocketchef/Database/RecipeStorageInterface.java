@@ -22,5 +22,7 @@ public interface RecipeStorageInterface {
     public ArrayList<Recipe> searchName(String recipeName);
     public ArrayList<Recipe> searchCategory(String categoryType);
 
+    public ArrayList<Recipe> getRecipes();
+
     public void addRecipe(Recipe newRecipe);
 }
