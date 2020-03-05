@@ -15,12 +15,14 @@ import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import net.team5.pocketchef.R;
 import net.team5.pocketchef.ui.home.HomeViewModel;
+import net.team5.pocketchef.ui.recipe_display.DisplayFragment;
 
 import java.util.ArrayList;
 
@@ -155,7 +157,9 @@ public class DisplaySearchResultsFragment extends Fragment
      * Function to display the recipe that the user clicked on from the recylcer view (the search list)
      * */
     public void displayRecipe(int position){
-        //TO DO:
+        FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
+        fragTrans.replace(R.id.nav_host_fragment, new DisplayFragment());
+        fragTrans.commit();
     }
 
     /**
