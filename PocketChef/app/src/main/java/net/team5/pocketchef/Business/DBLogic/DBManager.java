@@ -1,5 +1,6 @@
 package net.team5.pocketchef.Business.DBLogic;
 
+import net.team5.pocketchef.Application.Services;
 import net.team5.pocketchef.Business.Objects.Category;
 import net.team5.pocketchef.Business.Objects.Ingredient;
 import net.team5.pocketchef.Business.Objects.RecipeObject;
@@ -18,14 +19,14 @@ import java.util.ArrayList;
 * across the app to set/get stuff from the DB
 ********************************************************/
 
-public class DBManager implements RecipePersistence, IngredientPersistence, CategoryPersistence {
+public class DBManager {
 
     /********************************************************
-    * Global Variables
+    * Private Class Variables
     ********************************************************/
-    private static RecipeHandler recipeHandler;
-    private static CategoryHandler categoryHandler;
-    private static IngredientHandler ingredientHandler;
+    private static RecipePersistence recipeHandler;
+    private static CategoryPersistence categoryHandler;
+    private static IngredientPersistence ingredientHandler;
 
     private static ArrayList<RecipeObject> recipes;
     private static ArrayList<Category> categories;
@@ -37,20 +38,19 @@ public class DBManager implements RecipePersistence, IngredientPersistence, Cate
     //TODO: add/get the correct dbPath
     public DBManager()
     {
-        recipeHandler = new RecipeHandler("");
-        categoryHandler = new CategoryHandler("");
-        ingredientHandler = new IngredientHandler("");
+        recipeHandler = Services.getRecipePersistence();
+        categoryHandler = Services.getCategoryPersistence();
+        ingredientHandler = Services.getIngredientPersistence();
 
-        recipes = recipeHandler.getRecipes();
-        categories = categoryHandler.getCategories();
-        ingredients = ingredientHandler.getIngredients();
+        recipes = recipeHandler.getRecipes(); // problem
+        categories = categoryHandler.getCategories(); // problem
+        ingredients = ingredientHandler.getIngredients(); // problem
     }
 
     /********************************************************
     * Recipe Methods
     ********************************************************/
 
-    @Override
     /** return a list of recipes that match the name provided **/
     public ArrayList<RecipeObject> getRecipes(String recipeName) {
        ArrayList<RecipeObject> toReturn = new ArrayList<>();
@@ -65,13 +65,11 @@ public class DBManager implements RecipePersistence, IngredientPersistence, Cate
        return toReturn;
     }
 
-    @Override
     /** return the entire list of recipes **/
     public ArrayList<RecipeObject> getRecipes() {
         return recipes;
     }
 
-    @Override
     /** return a recipe that matches the ID provided **/
     public RecipeObject getRecipe(int recipeID) {
         RecipeObject toReturn = null;
@@ -89,7 +87,6 @@ public class DBManager implements RecipePersistence, IngredientPersistence, Cate
         return toReturn;
     }
 
-    @Override
     /** add a recipe to the DB **/
     public RecipeObject addRecipe(RecipeObject recipe) {
         // NOT REDUNDANT, DB could throw exception and never return
@@ -109,7 +106,6 @@ public class DBManager implements RecipePersistence, IngredientPersistence, Cate
         }
     }
 
-    @Override
     /** delete a recipe from the DB **/
     public void deleteRecipe(RecipeObject recipe) {
         try {
@@ -129,7 +125,6 @@ public class DBManager implements RecipePersistence, IngredientPersistence, Cate
     * Category Methods
     ********************************************************/
 
-    @Override
     /** add a Category to the DB **/
     public Category createCategory(Category category) {
         // NOT REDUNDANT, DB could throw exception and never return
@@ -151,7 +146,6 @@ public class DBManager implements RecipePersistence, IngredientPersistence, Cate
 
     //TODO: decide on if Arrays will be continued to be used (Iteration 3) before using this
     //FIXME: I DO NOT WORK YET SO PLEASE DON'T USE ME
-    @Override
     /** add a recipe to the Category provided **/
     public Category appendRecipeList(Category category, RecipeObject recipe) {
         // NOT REDUNDANT, DB could throw exception and never return
@@ -171,13 +165,11 @@ public class DBManager implements RecipePersistence, IngredientPersistence, Cate
         }
     }
 
-    @Override
     /** get the entire list of Categories **/
     public ArrayList<Category> getCategories() {
         return categories;
     }
 
-    @Override
     /** get a Category from the DB that matches name provided **/
     public Category getCategory(String categoryName) {
         Category toReturn = null;
@@ -199,7 +191,6 @@ public class DBManager implements RecipePersistence, IngredientPersistence, Cate
     * Ingredient Methods
     ********************************************************/
 
-    @Override
     /** add ingredient to the DB **/
     public Ingredient addIngredient(Ingredient ingredient) {
         // NOT REDUNDANT, DB could throw exception and never return
@@ -219,7 +210,6 @@ public class DBManager implements RecipePersistence, IngredientPersistence, Cate
         }
     }
 
-    @Override
     /** get ingredient from the DB that matches name provded **/
     public Ingredient getIngredient(String ingredientName) {
         Ingredient toReturn = null;

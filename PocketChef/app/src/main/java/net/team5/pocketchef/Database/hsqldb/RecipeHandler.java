@@ -3,6 +3,7 @@ package net.team5.pocketchef.Database.hsqldb;
 import net.team5.pocketchef.Business.Objects.Category;
 import net.team5.pocketchef.Business.Objects.Ingredient;
 import net.team5.pocketchef.Business.Objects.RecipeObject;
+import net.team5.pocketchef.Database.RecipePersistence;
 import net.team5.pocketchef.MainActivity;
 
 import java.sql.Connection;
@@ -13,9 +14,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecipeHandler
+public class RecipeHandler implements RecipePersistence
 {
-
     private final String dbPath;
 
     public RecipeHandler(final String dbPath)
@@ -26,7 +26,7 @@ public class RecipeHandler
     // TODO: Set proper url, ensure path is correct, get password?
     private Connection connection() throws SQLException
     {
-        return DriverManager.getConnection("jdbc:hsqldb:file:" + dbPath + ";shutdown=true", "SA", "");
+        return DriverManager.getConnection("jdbc:hsqldb:file:" + this.dbPath + ";shutdown=true", "SA", "");
     }
 
     private RecipeObject fromResultSet(final ResultSet rs) throws SQLException
@@ -62,15 +62,14 @@ public class RecipeHandler
     /********************************************************
     * SQL Methods
     ********************************************************/
-
     /**
      * Responsibilities:
      * - Search ALL recipes having the target recipe name and return to callers
      * - Remark: search based on recipe name
      **/
-    public List<RecipeObject> getRecipes(String recipeName)
+    public ArrayList<RecipeObject> getRecipes(String recipeName)
     {
-        final List<RecipeObject> recipes = new ArrayList<>();
+        final ArrayList<RecipeObject> recipes = new ArrayList<>();
 
         try (final Connection c = connection())
         {
@@ -98,7 +97,6 @@ public class RecipeHandler
     public ArrayList<RecipeObject> getRecipes()
     {
         final ArrayList<RecipeObject> recipes = new ArrayList<>();
-
         try (final Connection c = connection())
         {
             final PreparedStatement st = c.prepareStatement("SELECT * FROM RECIPE");
@@ -110,7 +108,6 @@ public class RecipeHandler
             }
             rs.close();
             st.close();
-
             return recipes;
         } catch (final SQLException e)
         {
@@ -123,14 +120,14 @@ public class RecipeHandler
      * - Search for a recipe having the target recipe ID
      * - Remark: search based on recipe ID and should only be used by CategoryHandler
      **/
-    public RecipeObject getRecipe(String recipeID)
+    public RecipeObject getRecipe(int recipeID)
     {
         final List<RecipeObject> recipes = new ArrayList<>();
 
         try (final Connection c = connection())
         {
             final PreparedStatement st = c.prepareStatement("SELECT FROM RECIPE WHERE RID = ?");
-            st.setString(1, recipeID);
+            st.setInt(1, recipeID);
             final ResultSet rs = st.executeQuery();
             final RecipeObject recipe = fromResultSet(rs);
             rs.close();

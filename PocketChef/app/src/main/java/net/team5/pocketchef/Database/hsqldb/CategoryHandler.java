@@ -1,7 +1,10 @@
 package net.team5.pocketchef.Database.hsqldb;
 
+import android.widget.Toast;
+
 import net.team5.pocketchef.Business.Objects.Category;
 import net.team5.pocketchef.Business.Objects.RecipeObject;
+import net.team5.pocketchef.Database.CategoryPersistence;
 import net.team5.pocketchef.MainActivity;
 
 import java.sql.Connection;
@@ -11,7 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class CategoryHandler {
+public class CategoryHandler implements CategoryPersistence {
 
     private final String dbPath;
 
@@ -21,7 +24,7 @@ public class CategoryHandler {
 
     // TODO: Set proper url, ensure path is correct, get password?
     private Connection connection() throws SQLException {
-        return DriverManager.getConnection("jdbc:hsqldb:file:" + dbPath + ";shutdown=true", "SA", "");
+        return DriverManager.getConnection("jdbc:hsqldb:file:" + this.dbPath + ";shutdown=true", "SA", "");
     }
 
     /** Create Category object from DB result **/
@@ -38,7 +41,7 @@ public class CategoryHandler {
         ArrayList<RecipeObject> recipeObjects = new ArrayList<>();
         for(int x = 0; x < recipeArray.length; x++)
         {
-            recipeObjects.add(MainActivity.manager.getRecipe(recipeArray[x]));
+            recipeObjects.add(MainActivity.manager.getRecipe(Integer.parseInt(recipeArray[x])));
         }
         return recipeObjects;
     }
