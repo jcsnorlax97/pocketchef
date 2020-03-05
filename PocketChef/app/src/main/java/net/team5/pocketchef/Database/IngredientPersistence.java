@@ -11,7 +11,7 @@ public interface IngredientPersistence {
      *      - if there exists the ingredient in DB, do nothing;
      *        else add the ingredient to DB.
      */
-    void addIngredient(Ingredient ingredient);
+    Ingredient addIngredient(Ingredient ingredient);
 
     /**
      * Responsibilities:
