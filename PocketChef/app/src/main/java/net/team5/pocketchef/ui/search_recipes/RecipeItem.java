@@ -8,7 +8,8 @@ package net.team5.pocketchef.ui.search_recipes;
  *
  * Class for the items that are displayed when a search is preformed
  */
-public class RecipeItem {
+public class RecipeItem
+{
 
     private int mImageResource;//the image resource that gets displayed when displaying recipe searches
     private String mRecipeName;//the string that is printed next to the image (probably want this to be the recipe name but can be renamed)
@@ -17,7 +18,8 @@ public class RecipeItem {
     // CONSTRUCTORS
     ///////////////////////////////////////////////////////////////////////////
 
-    public RecipeItem(int imageResource, String recipeName) {
+    public RecipeItem(int imageResource, String recipeName)
+    {
         mImageResource = imageResource;
         mRecipeName = recipeName;
     }

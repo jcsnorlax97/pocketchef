@@ -25,7 +25,8 @@ import java.util.List;
  * Version 1.0 for Iteration 2
  * Feb 25 2020
  */
-public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder> implements Filterable {
+public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder> implements Filterable
+{
 
     private List<RecipeItem> mRecipeList;
 
@@ -38,12 +39,14 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     // CLASSES
     ///////////////////////////////////////////////////////////////////////////
 
-    public static class RecipeViewHolder extends RecyclerView.ViewHolder{
+    public static class RecipeViewHolder extends RecyclerView.ViewHolder
+    {
 
         public ImageView mImageView;
         public TextView mTextView;
 
-        public RecipeViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
+        public RecipeViewHolder(@NonNull View itemView, final OnItemClickListener listener)
+        {
             super(itemView);
             mImageView = itemView.findViewById(R.id.searchRecipeImageView);
             mTextView = itemView.findViewById(R.id.recipeNameTextView);
@@ -74,7 +77,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     // CONSTRUCTORS
     ///////////////////////////////////////////////////////////////////////////
 
-    public RecipeAdapter(ArrayList<RecipeItem> recipeList){
+    public RecipeAdapter(ArrayList<RecipeItem> recipeList)
+    {
 
         mRecipeList = recipeList;
 
@@ -93,7 +97,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
     @NonNull
     @Override
-    public RecipeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RecipeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+    {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recipe_item, parent, false);
 
         RecipeViewHolder rvh = new RecipeViewHolder(v, mListener);
@@ -105,10 +110,14 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
      * */
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
-    public void onBindViewHolder(@NonNull RecipeViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecipeViewHolder holder, int position)
+    {
         RecipeItem currentItem = mRecipeList.get(position);
 
-        holder.mImageView.setImageResource(currentItem.getImageResource());
+        //THIS LINE DOESN'T WORK WITH SOME API'S (23 FOR EXAMPLE)
+        //WE KNOW IT WORKS FOR API 28
+        //MUST CHANGE NEXT ITERATION
+        //holder.mImageView.setImageResource(currentItem.getImageResource());
         holder.mTextView.setText(currentItem.getRecipeName());
     }
 
@@ -120,7 +129,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     /**
      * method to access the listener when a click happens
      * */
-    public interface OnItemClickListener{
+    public interface OnItemClickListener
+    {
         void onItemClick(int position);
     }
 
@@ -138,19 +148,24 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
     private Filter recipeFilter = new Filter() {
         @Override
-        protected FilterResults performFiltering(CharSequence charSequence) {
+        protected FilterResults performFiltering(CharSequence charSequence)
+        {
             //this is where we return our filter results
             List<RecipeItem> filteredList = new ArrayList<>();
 
-            if(charSequence == null || charSequence.length() == 0) {
+            if(charSequence == null || charSequence.length() == 0)
+            {
                 //show everything
                 filteredList.addAll(recipeListFull);
             }
-            else{
+            else
+                {
                 String filterPattern = charSequence.toString().toLowerCase().trim();
 
-                for(RecipeItem item: recipeListFull){
-                    if(item.getRecipeName().toLowerCase().contains(filterPattern)){
+                for(RecipeItem item: recipeListFull)
+                {
+                    if(item.getRecipeName().toLowerCase().contains(filterPattern))
+                    {
                         filteredList.add(item);
                     }
                 }
@@ -163,7 +178,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         }
 
         @Override
-        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults)
+        {
             mRecipeList.clear();
             mRecipeList.addAll((List)filterResults.values);//add
             notifyDataSetChanged();
@@ -173,7 +189,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     /**
      * Set the recipe list to display only relevent search results
      * */
-    public void filterList(ArrayList<RecipeItem> filterList){
+    public void filterList(ArrayList<RecipeItem> filterList)
+    {
         mRecipeList = filterList;
         notifyDataSetChanged();
     }

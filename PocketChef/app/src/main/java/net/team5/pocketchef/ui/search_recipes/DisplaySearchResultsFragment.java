@@ -32,7 +32,8 @@ import java.util.ArrayList;
  *
  * main class that handles switching to other fragments after a search was preformed (acts as a 'MainActivity' sortof)
  */
-public class DisplaySearchResultsFragment extends Fragment {
+public class DisplaySearchResultsFragment extends Fragment
+{
 
     private HomeViewModel homeViewModel;
     private static final String TAG = "Display Search Results Fragment";
@@ -64,8 +65,8 @@ public class DisplaySearchResultsFragment extends Fragment {
     ///////////////////////////////////////////////////////////////////////////
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         homeViewModel = ViewModelProviders.of(this).get(net.team5.pocketchef.ui.home.HomeViewModel.class);
 
         View view = inflater.inflate(R.layout.fragment_display_search_results, container, false);
@@ -97,12 +98,14 @@ public class DisplaySearchResultsFragment extends Fragment {
         EditText searchBar = view.findViewById(R.id.editText);
         searchBar.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2)
+            {
 
             }
 
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2)
+            {
 
             }
 
@@ -120,11 +123,13 @@ public class DisplaySearchResultsFragment extends Fragment {
      * this deals with the string the user is using to search for recipes
      * gets called everytime the string updates
      * */
-    private void filter(String text){
+    private void filter(String text)
+    {
         ArrayList<RecipeItem> filteredList = new ArrayList<>();
 
         for(RecipeItem item: recipeList){
-            if(item.getRecipeName().toLowerCase().contains(text.toLowerCase())){
+            if(item.getRecipeName().toLowerCase().contains(text.toLowerCase()))
+            {
                 filteredList.add(item);
             }
         }
@@ -135,7 +140,8 @@ public class DisplaySearchResultsFragment extends Fragment {
     /**
      * Sets up the recycler view and stuff
      * */
-    private void buildRecyclerView(View view) {
+    private void buildRecyclerView(View view)
+    {
         searchResults = view.findViewById(R.id.DisSearchRecyclerView);
         searchResults.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getContext());
@@ -155,34 +161,11 @@ public class DisplaySearchResultsFragment extends Fragment {
     /**
      * THIS IS A TEMP FUNCTION TO TEXT THE CLICKING OF A ITEM IN THE RECYCLER VIEW (SEARCH LIST)
      * */
-    public void changeItem(int position, String text){
+    public void changeItem(int position, String text)
+    {
         recipeList.get(position).changeRecipeName(text);
         adapter.notifyItemChanged(position);
     }
-
-    /* THIS IS HERE INCASE WE WANT TO ADD A SEARCH ICON IN THE TOP RIGHT OF THE APP, ALTHOUGH THE CODE ISN'T WORKING RIGHT NOW WHEN IT SHOULD BE (ICON DOESN'T GET DISPLAYED)
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.search_recipes_menu, menu);
-
-        MenuItem searchItem = menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView) searchItem.getActionView();
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String s) {
-                adapter.getFilter().filter(s);
-                return false;
-            }
-        });
-    }
-
-     */
 
     ///////////////////////////////////////////////////////////////////////////
     // END METHODS
