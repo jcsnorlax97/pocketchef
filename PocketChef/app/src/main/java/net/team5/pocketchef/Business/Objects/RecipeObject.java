@@ -1,6 +1,6 @@
 package net.team5.pocketchef.Business.Objects;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * This RecipeObject class is used for representing the RecipeObject.
@@ -15,20 +15,30 @@ public class RecipeObject {
     /********************************************************
      * instance variables
      ********************************************************/
-    private final String recipeId;
+    private final int recipeID;
     private final String recipeName;
     private final Category recipeCategory;
-    private final String recipeInstruction;
-    private final List<Ingredient> recipeIngredients;
+    private final ArrayList<String> recipeInstructions;
+    private final ArrayList<Ingredient> recipeIngredients;
 
     /********************************************************
      * constructors
      ********************************************************/
-    public RecipeObject(String recipeName, Category recipeCategory, String recipeInstruction, List<Ingredient> recipeIngredients) {
-        this.recipeId = Integer.toString(RecipeObject.idCounter);
+    public RecipeObject(int recipeID, String recipeName, Category recipeCategory, ArrayList<String> recipeInstructions, ArrayList<Ingredient> recipeIngredients) {
+        this.recipeID = recipeID;
         this.recipeName = recipeName;
         this.recipeCategory = recipeCategory;
-        this.recipeInstruction = recipeInstruction;
+        this.recipeInstructions = recipeInstructions;
+        this.recipeIngredients = recipeIngredients;
+
+        RecipeObject.idCounter++;
+    }
+
+    public RecipeObject(String recipeName, Category recipeCategory, ArrayList<String> recipeInstructions, ArrayList<Ingredient> recipeIngredients) {
+        this.recipeID = RecipeObject.idCounter;
+        this.recipeName = recipeName;
+        this.recipeCategory = recipeCategory;
+        this.recipeInstructions = recipeInstructions;
         this.recipeIngredients = recipeIngredients;
 
         RecipeObject.idCounter++;
@@ -37,8 +47,8 @@ public class RecipeObject {
     /********************************************************
      * instance methods (accessors, toString, hashcode, equals)
      ********************************************************/
-    public String getRecipeId() {
-        return this.recipeId;
+    public int getRecipeId() {
+        return this.recipeID;
     }
 
     public String getRecipeName() {
@@ -49,11 +59,11 @@ public class RecipeObject {
         return this.recipeCategory;
     }
 
-    public String getRecipeInstruction() {
-        return this.recipeInstruction;
+    public ArrayList<String> getRecipeInstructions() {
+        return this.recipeInstructions;
     }
 
-    public List<Ingredient> getRecipeIngredients() {
+    public ArrayList<Ingredient> getRecipeIngredients() {
         return this.recipeIngredients;
     }
 

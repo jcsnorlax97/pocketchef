@@ -1,12 +1,11 @@
-package net.team5.pocketchef.Business;
+package net.team5.pocketchef.Database;
 
 import net.team5.pocketchef.Business.Objects.Category;
 import net.team5.pocketchef.Business.Objects.RecipeObject;
 
-import java.util.List;
+import java.util.ArrayList;
 
-public interface ICategoryHandler {
-
+public interface CategoryPersistence {
     /**
      * createCategory
      *
@@ -14,7 +13,7 @@ public interface ICategoryHandler {
      *  - create new Category and add that to DB
      *  - Reference Note: in iteration 2, only developers are allowed to make new category.
      */
-    void createCategory(String categoryName);
+    Category createCategory(Category category);
 
     /**
      * appendRecipeList
@@ -22,7 +21,7 @@ public interface ICategoryHandler {
      * Responsibilities:
      *  - append new Recipe into the target Category
      */
-    void appendRecipeList(Category category, RecipeObject recipe);
+    Category appendRecipeList(Category category, RecipeObject recipe);
 
     /**
      * getCategories
@@ -30,6 +29,12 @@ public interface ICategoryHandler {
      * Responsibilities:
      *  - retrieve the whole list of categories and return back to callers
      */
-    List<Category> getCategories();
+    ArrayList<Category> getCategories();
 
+    /**
+     * Responsibilities:
+     *  - Retrieve a category from DB and return to caller
+     *  - Remark: catagoryName is the primary key for Ingredient table.
+     */
+    Category getCategory(String categoryName);
 }

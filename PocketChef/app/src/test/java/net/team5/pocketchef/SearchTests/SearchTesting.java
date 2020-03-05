@@ -1,6 +1,5 @@
 package net.team5.pocketchef.SearchTests;
 
-import net.team5.pocketchef.Database.RecipeDatabase;
 import net.team5.pocketchef.Business.Objects.Recipe.Ingredients;
 import net.team5.pocketchef.Business.Objects.Recipe.Instructions;
 import net.team5.pocketchef.Business.Objects.Recipe.Recipe;
