@@ -1,5 +1,9 @@
 package net.team5.pocketchef.ui.search_recipes;
 
+import net.team5.pocketchef.Business.Objects.Recipe.Ingredients;
+import net.team5.pocketchef.Business.Objects.Recipe.Instructions;
+import net.team5.pocketchef.Business.Objects.Recipe.Recipe;
+
 /**
  *
  * Comp 3350 Group Project
@@ -12,16 +16,16 @@ public class RecipeItem
 {
 
     private int mImageResource;//the image resource that gets displayed when displaying recipe searches
-    private String mRecipeName;//the string that is printed next to the image (probably want this to be the recipe name but can be renamed)
+    private Recipe mRecipe;//the string that is printed next to the image (probably want this to be the recipe name but can be renamed)
 
     ///////////////////////////////////////////////////////////////////////////
     // CONSTRUCTORS
     ///////////////////////////////////////////////////////////////////////////
 
-    public RecipeItem(int imageResource, String recipeName)
+    public RecipeItem(int imageResource, Recipe recipeObj)
     {
         mImageResource = imageResource;
-        mRecipeName = recipeName;
+        mRecipe = recipeObj;
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -36,23 +40,27 @@ public class RecipeItem
     /**
      * TESTING PURPOSES ONLY
      * */
-    public void changeRecipeName(String newName){
-        mRecipeName = newName;
+    public void changeRecipeName(String newName)
+    {
+        mRecipe = new Recipe("You Clicked ME!", "Testing", new Ingredients(), new Instructions());
     }
 
     /**
      * get the image of the recipe that is being displayed
      * */
-    public int getImageResource() {
+    public int getImageResource()
+    {
         return mImageResource;
     }
 
     /**
      * get the name of the recipe that is being displayed
      * */
-    public String getRecipeName() {
-        return mRecipeName;
+    public Recipe getRecipeObj()
+    {
+        return mRecipe;
     }
+
 
     ///////////////////////////////////////////////////////////////////////////
     // END METHODS
