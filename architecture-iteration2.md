@@ -2,6 +2,6 @@
 
 **Directory**
 
-## Iteration 1 Diagram
+## Iteration 2 Diagram
 
 ![architecture](Architecture-Iteration2.jpg)
