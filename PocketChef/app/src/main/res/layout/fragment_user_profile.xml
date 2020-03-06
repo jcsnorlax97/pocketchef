@@ -25,7 +25,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="230dp"
-                    android:background="@color/colorAccent"
+                    android:background="#0267a6"
                     android:gravity="center"
                     android:orientation="vertical">
 
@@ -42,7 +42,7 @@
                         android:layout_gravity="center"
                         android:layout_marginTop="10dp"
                         android:text="USER PROFILE SETTINGS"
-                        android:textColor="@color/colorPrimary"
+                        android:textColor="#ffffff"
                         android:textSize="24sp"
                         android:textStyle="bold"
 
