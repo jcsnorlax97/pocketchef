@@ -37,7 +37,7 @@ public class Ingredients {
      * @param ingredList an ArrayList of strings storing the ingredients of the recipe. Copies of the string values
      * */
     public Ingredients(ArrayList<String> ingredList){
-        ingredientList = ingredList;
+        ingredientList = new ArrayList<String>(ingredList);
     }
 
     ///////////////////////////////////////////////////////////////////////////

@@ -38,7 +38,6 @@ public class Instructions {
      * */
     public  Instructions(ArrayList<String> instructList){
         instructionList =  new ArrayList<String>(instructList);
-        System.out.println(instructionList.get(0));
     }
 
     ///////////////////////////////////////////////////////////////////////////
