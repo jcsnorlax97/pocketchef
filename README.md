@@ -111,3 +111,6 @@ Architecture Model
 ------------
 #### Iteration 1
 *  [Architecture](https://code.cs.umanitoba.ca/comp3350-winter2020/pocketchef-5/blob/master/Architecture.md)
+
+#### Iteration 2
+*  [Architecture](https://code.cs.umanitoba.ca/comp3350-winter2020/pocketchef-5/blob/develop/architecture-iteration2.md)
