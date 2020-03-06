@@ -118,7 +118,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         //WE KNOW IT WORKS FOR API 28
         //MUST CHANGE NEXT ITERATION
         //holder.mImageView.setImageResource(currentItem.getImageResource());
-        holder.mTextView.setText(currentItem.getRecipeName());
+        holder.mTextView.setText(currentItem.getRecipeObj().recipeName);
     }
 
     @Override
@@ -164,7 +164,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
                 for(RecipeItem item: recipeListFull)
                 {
-                    if(item.getRecipeName().toLowerCase().contains(filterPattern))
+                    if(item.getRecipeObj().recipeName.toLowerCase().contains(filterPattern))
                     {
                         filteredList.add(item);
                     }

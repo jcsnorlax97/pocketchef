@@ -12,17 +12,34 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import net.team5.pocketchef.Business.Objects.Recipe.Recipe;
 import net.team5.pocketchef.R;
 
 public class DisplayFragment extends Fragment{ // If i have problems, check because this was named DisplayFragment befroe
 
     private DisplayViewModel displayViewModel;
+    private Recipe recipe;
+
+    public DisplayFragment(Recipe recipeTemp)
+    {
+        recipe=recipeTemp;
+
+    }
+
+    public DisplayFragment()
+    {
+        recipe=null;
+    }
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         displayViewModel =
                 ViewModelProviders.of(this).get(DisplayViewModel.class);
         View root = inflater.inflate(R.layout.fragment_display_recipe, container, false);
+
+        if(this.recipe != null)
+            displayViewModel.setValues(this.recipe);
 
         final TextView textView2 = root.findViewById(R.id.textView);
         displayViewModel.getRName().observe(this, new Observer<String>() {

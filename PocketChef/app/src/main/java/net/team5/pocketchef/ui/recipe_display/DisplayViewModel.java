@@ -18,8 +18,11 @@ public class DisplayViewModel extends ViewModel {
     private MutableLiveData<String> recipe;
     private MutableLiveData<String> ingredientList;
     private MutableLiveData<String> directionList;
+    private Recipe rec;
+    private ArrayList<String> instruc;
+    private ArrayList<String> ingreds;
     public DisplayViewModel() {
-        ArrayList<String> ingreds = new ArrayList<String>();
+        /*ArrayList<String> ingreds = new ArrayList<String>();
         ingreds.add("1-2 pounds chicken tenders or 2 large boneless skinless chicken breasts sliced into 1-inch thick strips");
         ingreds.add("1 1/2 cups all purpose flour");
         ingreds.add("3/4 teaspoon salt");
@@ -39,9 +42,10 @@ public class DisplayViewModel extends ViewModel {
         instruct.add("Cook the rest of the chicken in batches.");
         instruct.add("Transfer to a paper towel lined plate and sprinkle with a little more salt if needed.");
 
-        Recipe rec = new Recipe("Breaded Chicken Tenders","American", new Ingredients(ingreds), new Instructions(instruct));
+        Recipe rec = new Recipe("Breaded Chicken Tenders","American", new Ingredients(ingreds), new Instructions(instruct));*/
 
-        String instructions = "";
+
+        /*String instructions = "";
         for(int i = 0; i< instruct.size(); i++)
             instructions+= "Step "+(i+1)+": "+instruct.get(i)+"\n\n";
 
@@ -62,9 +66,54 @@ public class DisplayViewModel extends ViewModel {
 
         directionList = new MutableLiveData<>();
         directionList.setValue(instructions+"\n\n");
-
+*/
     }
 
+    public void setValues( Recipe tempRecipe)
+    {
+        boolean noInstructions = false;
+        boolean noIngredients = false;
+        rec=tempRecipe;
+        if(rec.getInstructList() != null && rec.getInstructList().getInstructionList() !=null)
+            instruc = rec.getInstructList().getInstructionList();
+        else
+            noInstructions = true;
+        if(rec.getIngredList() != null && rec.getIngredList().getIngredientList() != null)
+            ingreds = rec.getIngredList().getIngredientList();
+        else
+            noIngredients = true;
+
+        String instructions = "";
+        if(!noInstructions)
+        {
+            for (int i = 0; i < instruc.size(); i++)
+                instructions += "Step " + (i + 1) + ": " + instruc.get(i) + "\n\n";
+        }
+        else
+            instructions = "There are no instructions for this recipe.";
+
+        String ingredients = "";
+        if(!noIngredients)
+        {
+            for (int i = 0; i < ingreds.size(); i++)
+                ingredients += "- " + ingreds.get(i) + "\n";
+        }
+        else
+            ingredients = "There are no ingredients for this recipe.";
+
+        String discription;
+        discription=("There is no description for this recipe.");// ADD THIS INTO THE CODE OF JOHNS
+
+        name = new MutableLiveData<>();
+        name.setValue(rec.recipeName+"\n\n"+discription);
+
+        ingredientList = new MutableLiveData<>();
+        ingredientList.setValue(ingredients+"\n\n");
+
+        directionList = new MutableLiveData<>();
+        directionList.setValue(instructions+"\n\n");
+
+    }
     public LiveData<String> getText() {
         return mText;
     }

@@ -24,11 +24,21 @@ public class Instructions {
     // CONSTRUCTORS
     ///////////////////////////////////////////////////////////////////////////
 
+
+    /**
+     * null constructor
+     * */
+    public Instructions(){
+        instructionList =  null;
+    }
+
+
     /**
      * @param instructList a string array storing the instructions to make a recipe. Copies the String values
      * */
     public  Instructions(ArrayList<String> instructList){
         instructionList =  new ArrayList<String>(instructList);
+        System.out.println(instructionList.get(0));
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -45,7 +55,10 @@ public class Instructions {
      * @return returns the ArrayList of the instructionsList (Copy)
      * */
     public ArrayList<String> getInstructionList(){
-        return new ArrayList<String>(instructionList);
+        if(instructionList != null)
+            return new ArrayList<String>(instructionList);
+        else
+            return null;
     }
 
     /**

@@ -24,11 +24,20 @@ public class Ingredients {
     // CONSTRUCTORS
     ///////////////////////////////////////////////////////////////////////////
 
+
+    /**
+     * null constructor
+     * */
+    public Ingredients(){
+        ingredientList = null;
+    }
+
+
     /**
      * @param ingredList an ArrayList of strings storing the ingredients of the recipe. Copies of the string values
      * */
     public Ingredients(ArrayList<String> ingredList){
-        ingredientList = new ArrayList<String>(ingredList);
+        ingredientList = ingredList;
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -45,7 +54,10 @@ public class Ingredients {
      * @return returns the arrayList of the instructionsList (copy)
      * */
     public ArrayList<String> getIngredientList(){
-        return  new ArrayList<String>(ingredientList);
+        if(ingredientList != null)
+            return  new ArrayList<String>(ingredientList);
+        else
+            return null;
     }
 
     /**
