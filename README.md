@@ -107,7 +107,13 @@ Developer Tasks
 #### Iteration 1
 *  [Developer Tasks](https://code.cs.umanitoba.ca/comp3350-winter2020/pocketchef-5/blob/master/Developer_Tasks.md)
 
+#### Iteration 2
+*  [Developer Tasks](https://code.cs.umanitoba.ca/comp3350-winter2020/pocketchef-5/blob/master/Developer_Tasks_iteration2.md)
+
 Architecture Model
 ------------
 #### Iteration 1
 *  [Architecture](https://code.cs.umanitoba.ca/comp3350-winter2020/pocketchef-5/blob/master/Architecture.md)
+
+#### Iteration 2
+*  [Architecture](https://code.cs.umanitoba.ca/comp3350-winter2020/pocketchef-5/blob/master/architecture-iteration2.md)
