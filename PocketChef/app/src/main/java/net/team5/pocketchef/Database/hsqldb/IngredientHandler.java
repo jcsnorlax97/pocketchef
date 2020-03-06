@@ -24,7 +24,7 @@ public class IngredientHandler implements IngredientPersistence {
     }
 
     private Ingredient fromResultSet(final ResultSet rs) throws SQLException {
-        final String ingredient = rs.getString("IID");
+        final String ingredient = rs.getString("INAME");
         return new Ingredient(ingredient);
     }
 

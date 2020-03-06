@@ -42,9 +42,9 @@ public class DBManager {
         categoryHandler = Services.getCategoryPersistence();
         ingredientHandler = Services.getIngredientPersistence();
 
-        recipes = recipeHandler.getRecipes(); // problem
-        categories = categoryHandler.getCategories(); // problem
-        ingredients = ingredientHandler.getIngredients(); // problem
+        recipes = recipeHandler.getRecipes();
+//        categories = categoryHandler.getCategories();     // there are issues inside of the handler; will fix it in iteration 3.
+        ingredients = ingredientHandler.getIngredients();
     }
 
     /********************************************************

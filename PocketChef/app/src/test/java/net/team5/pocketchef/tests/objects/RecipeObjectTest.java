@@ -20,14 +20,18 @@ public class RecipeObjectTest {
      ********************************************************/
     private String recipeName;
     private Category recipeCategory;
-    private String recipeInstruction;
-    private List<Ingredient> recipeIngredients;
+    private ArrayList<String> recipeInstructions;
+    private ArrayList<Ingredient> recipeIngredients;
+
 
     @Before
     public void setup() {
         this.recipeName = "Veggie Burgers";
-        this.recipeCategory = new Category("Vegan");
-        this.recipeInstruction = "1.XXXXX 2.XXXXX 3.XXXXXX";
+        this.recipeCategory = new Category("Vegan", new ArrayList<RecipeObject>());
+        this.recipeInstructions = new ArrayList<>();
+        this.recipeInstructions.add("1.XXXXX");
+        this.recipeInstructions.add("2.XXXXX");
+        this.recipeInstructions.add("3.XXXXX");
         this.recipeIngredients = new ArrayList<>();
         this.recipeIngredients.add(new Ingredient("lettuce"));
         this.recipeIngredients.add(new Ingredient("tomatoes"));
@@ -42,17 +46,28 @@ public class RecipeObjectTest {
 
         System.out.println("\nStarting testCreatingRecipeObject");
 
-        RecipeObject recipe = new RecipeObject(this.recipeName, this.recipeCategory, this.recipeInstruction, this.recipeIngredients);
+        RecipeObject recipe = new RecipeObject(this.recipeName, this.recipeCategory, this.recipeInstructions, this.recipeIngredients);
 
+        // -- recipe & recipe id --
         assertNotNull(recipe);
-        assertTrue("0".equals(recipe.getRecipeId()));
+        assertTrue(0 == recipe.getRecipeId());
+
+        // -- recipe category --
         assertTrue("Vegan".equals(recipe.getRecipeCategory().getCategoryName()));
-        assertTrue("1.XXXXX 2.XXXXX 3.XXXXXX".equals(recipe.getRecipeInstruction()));
+
+        // -- recipe instructions --
+        assertNotNull(recipe.getRecipeInstructions());
+        assertTrue(recipe.getRecipeInstructions() instanceof ArrayList<?>);
+        assertTrue("1.XXXXX".equals(recipe.getRecipeInstructions().get(0)));
+        assertTrue("2.XXXXX".equals(recipe.getRecipeInstructions().get(1)));
+        assertTrue("3.XXXXX".equals(recipe.getRecipeInstructions().get(2)));
+
+        // -- recipe ingredients --
         assertNotNull(recipe.getRecipeIngredients());
-        assertTrue(recipe.getRecipeIngredients() instanceof List<?>);
+        assertTrue(recipe.getRecipeIngredients() instanceof ArrayList<?>);
         assertTrue("lettuce".equals(recipe.getRecipeIngredients().get(0).getIngredientName()));
         assertTrue("tomatoes".equals(recipe.getRecipeIngredients().get(1).getIngredientName()));
 
-        System.out.println("Finished testCreatingRecipeObject");
+        System.out.println("\nFinished testCreatingRecipeObject");
     }
 }

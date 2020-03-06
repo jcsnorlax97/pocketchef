@@ -30,18 +30,20 @@ public class CategoryHandler implements CategoryPersistence {
     /** Create Category object from DB result **/
     private Category fromResultSet(final ResultSet rs) throws SQLException {
         final String category = rs.getString("CNAME");
-        String[] recipeArray = (String[])(rs.getArray("RID").getArray());
+        ArrayList currRecipe = (ArrayList)(rs.getArray("RID").getArray());
+
+        Integer[] recipeArray = (Integer[])currRecipe.toArray(new Integer[currRecipe.size()]);
         final ArrayList<RecipeObject> recipeObjects = getRecipes(recipeArray);
         return new Category(category, recipeObjects);
     }
 
     /** Get the RecipeObjects related to the Category **/
-    private ArrayList<RecipeObject> getRecipes(String[] recipeArray)
+    private ArrayList<RecipeObject> getRecipes(Integer[] recipeArray)
     {
         ArrayList<RecipeObject> recipeObjects = new ArrayList<>();
         for(int x = 0; x < recipeArray.length; x++)
         {
-            recipeObjects.add(MainActivity.manager.getRecipe(Integer.parseInt(recipeArray[x])));
+            recipeObjects.add(MainActivity.manager.getRecipe(recipeArray[x]));
         }
         return recipeObjects;
     }
