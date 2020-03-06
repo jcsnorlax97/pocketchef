@@ -33,4 +33,5 @@ dependencies {
 
     // HSQLDB
     implementation group: 'org.hsqldb', name: 'hsqldb', version: '2.4.1'
+    implementation 'androidx.cardview:cardview:1.0.0'
 }

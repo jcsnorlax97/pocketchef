@@ -24,6 +24,15 @@ public class Instructions {
     // CONSTRUCTORS
     ///////////////////////////////////////////////////////////////////////////
 
+
+    /**
+     * null constructor
+     * */
+    public Instructions(){
+        instructionList =  null;
+    }
+
+
     /**
      * @param instructList a string array storing the instructions to make a recipe. Copies the String values
      * */
@@ -45,7 +54,10 @@ public class Instructions {
      * @return returns the ArrayList of the instructionsList (Copy)
      * */
     public ArrayList<String> getInstructionList(){
-        return new ArrayList<String>(instructionList);
+        if(instructionList != null)
+            return new ArrayList<String>(instructionList);
+        else
+            return null;
     }
 
     /**
