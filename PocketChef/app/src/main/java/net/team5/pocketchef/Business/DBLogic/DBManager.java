@@ -35,15 +35,17 @@ public class DBManager {
     /********************************************************
     * Constructor
     ********************************************************/
-    //TODO: add/get the correct dbPath
     public DBManager()
     {
         recipeHandler = Services.getRecipePersistence();
         categoryHandler = Services.getCategoryPersistence();
         ingredientHandler = Services.getIngredientPersistence();
+    }
 
+    public void setUp()
+    {
         recipes = recipeHandler.getRecipes();
-//        categories = categoryHandler.getCategories();     // there are issues inside of the handler; will fix it in iteration 3.
+        categories = categoryHandler.getCategories();
         ingredients = ingredientHandler.getIngredients();
     }
 
@@ -73,7 +75,7 @@ public class DBManager {
     /** return a recipe that matches the ID provided **/
     public RecipeObject getRecipe(int recipeID) {
         RecipeObject toReturn = null;
-
+        System.out.println("The recipe ID is: " + recipeID);
         for (int x = 0; x < recipes.size(); x++)
         {
             RecipeObject currRecipe = recipes.get(x);

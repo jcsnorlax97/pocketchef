@@ -47,6 +47,8 @@ public class RecipeHandler implements RecipePersistence
          * and then to ArrayList<String> using getInstructions() function
          **/
         String[] instructions = (String[])(rs.getArray("INSTRUCTIONS").getArray());
+        System.out.println("I am printing instructions: " + rs.getArray("INSTRUCTIONS").getArray().toString());
+        System.out.flush();
         final ArrayList<String> recipeInstructions = getInstructions(instructions);
 
         /** Get ingredients
