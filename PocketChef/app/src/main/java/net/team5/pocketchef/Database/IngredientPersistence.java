@@ -2,6 +2,8 @@ package net.team5.pocketchef.Database;
 
 import net.team5.pocketchef.Business.Objects.Ingredient;
 
+import java.util.ArrayList;
+
 public interface IngredientPersistence {
 
     /**
@@ -19,4 +21,6 @@ public interface IngredientPersistence {
      *  - Remark: ingredientName is the primary key for Ingredient table.
      */
     Ingredient getIngredient(String ingredientName);
+
+    ArrayList<Ingredient> getIngredients();
 }

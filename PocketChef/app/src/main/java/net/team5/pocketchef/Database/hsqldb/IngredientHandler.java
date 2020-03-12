@@ -1,6 +1,7 @@
 package net.team5.pocketchef.Database.hsqldb;
 
 import net.team5.pocketchef.Business.Objects.Ingredient;
+import net.team5.pocketchef.Database.IngredientPersistence;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class IngredientHandler {
+public class IngredientHandler implements IngredientPersistence {
 
     private final String dbPath;
 
@@ -19,11 +20,11 @@ public class IngredientHandler {
 
     // TODO: Set proper url, ensure path is correct, get password?
     private Connection connection() throws SQLException {
-        return DriverManager.getConnection("jdbc:hsqldb:file:" + dbPath + ";shutdown=true", "SA", "");
+        return DriverManager.getConnection("jdbc:hsqldb:file:" + this.dbPath + ";shutdown=true", "SA", "");
     }
 
     private Ingredient fromResultSet(final ResultSet rs) throws SQLException {
-        final String ingredient = rs.getString("IID");
+        final String ingredient = rs.getString("INAME");
         return new Ingredient(ingredient);
     }
 
