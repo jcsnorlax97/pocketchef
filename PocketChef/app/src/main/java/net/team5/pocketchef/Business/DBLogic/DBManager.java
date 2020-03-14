@@ -7,9 +7,6 @@ import net.team5.pocketchef.Business.Objects.RecipeObject;
 import net.team5.pocketchef.Database.CategoryPersistence;
 import net.team5.pocketchef.Database.IngredientPersistence;
 import net.team5.pocketchef.Database.RecipePersistence;
-import net.team5.pocketchef.Database.hsqldb.CategoryHandler;
-import net.team5.pocketchef.Database.hsqldb.IngredientHandler;
-import net.team5.pocketchef.Database.hsqldb.RecipeHandler;
 
 import java.util.ArrayList;
 
@@ -41,6 +38,10 @@ public class DBManager {
         categoryHandler = Services.getCategoryPersistence();
         ingredientHandler = Services.getIngredientPersistence();
     }
+
+    /********************************************************
+     * Builder, to call after constructor (to ensure instantiation of DBManager)
+     ********************************************************/
 
     public void setUp()
     {
@@ -91,7 +92,6 @@ public class DBManager {
 
     /** add a recipe to the DB **/
     public RecipeObject addRecipe(RecipeObject recipe) {
-        // NOT REDUNDANT, DB could throw exception and never return
         RecipeObject toReturn = null;
 
         try {
@@ -104,7 +104,7 @@ public class DBManager {
              * -Whoever made the call will see the null return and print a custom error
              **/
             e.printStackTrace(System.out);
-            return null;
+            return toReturn;
         }
     }
 
@@ -129,7 +129,6 @@ public class DBManager {
 
     /** add a Category to the DB **/
     public Category createCategory(Category category) {
-        // NOT REDUNDANT, DB could throw exception and never return
         Category toReturn = null;
 
         try {
@@ -142,7 +141,7 @@ public class DBManager {
              * -Whoever made the call will see the null return and print a custom error
              **/
             e.printStackTrace(System.out);
-            return null;
+            return toReturn;
         }
     }
 
@@ -150,7 +149,6 @@ public class DBManager {
     //FIXME: I DO NOT WORK YET SO PLEASE DON'T USE ME
     /** add a recipe to the Category provided **/
     public Category appendRecipeList(Category category, RecipeObject recipe) {
-        // NOT REDUNDANT, DB could throw exception and never return
         Category toReturn = null;
 
         try {
@@ -163,7 +161,7 @@ public class DBManager {
              * -Whoever made the call will see the null return and print a custom error
              **/
             e.printStackTrace(System.out);
-            return null;
+            return toReturn;
         }
     }
 
@@ -195,7 +193,6 @@ public class DBManager {
 
     /** add ingredient to the DB **/
     public Ingredient addIngredient(Ingredient ingredient) {
-        // NOT REDUNDANT, DB could throw exception and never return
         Ingredient toReturn = null;
 
         try {
@@ -208,7 +205,7 @@ public class DBManager {
              * -Whoever made the call will see the null return and print a custom error
              **/
             e.printStackTrace(System.out);
-            return null;
+            return toReturn;
         }
     }
 
