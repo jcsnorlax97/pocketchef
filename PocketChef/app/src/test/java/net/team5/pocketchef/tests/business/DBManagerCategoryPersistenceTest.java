@@ -1,4 +1,4 @@
-package net.team5.pocketchef.tests.objects;
+package net.team5.pocketchef.tests.business;
 
 import net.team5.pocketchef.Business.DBLogic.DBManager;
 import net.team5.pocketchef.Business.Objects.Category;
@@ -21,9 +21,11 @@ import static org.junit.Assert.fail;
  * getCategory()
  * -tests that an existing Category can be found
  * -tests that a non existing Category returns null
+ *
+ * By Beni
  **/
 
-public class CategoryPersistenceTest
+public class DBManagerCategoryPersistenceTest
 {
     private DBManager manager;
     private Category category;
