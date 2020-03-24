@@ -1,4 +1,4 @@
-package net.team5.pocketchef.tests.objects;
+package net.team5.pocketchef.tests.business;
 
 import net.team5.pocketchef.Business.DBLogic.DBManager;
 import net.team5.pocketchef.Business.Objects.Ingredient;
@@ -29,7 +29,7 @@ import java.util.ArrayList;
  * -tests that a non existing recipe returns null
  **/
 
-public class RecipePersistenceTest
+public class DBManagerRecipePersistenceTest
 {
 
     private DBManager manager;

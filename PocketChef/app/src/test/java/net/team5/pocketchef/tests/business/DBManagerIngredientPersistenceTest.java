@@ -1,4 +1,4 @@
-package net.team5.pocketchef.tests.objects;
+package net.team5.pocketchef.tests.business;
 
 import net.team5.pocketchef.Business.DBLogic.DBManager;
 import net.team5.pocketchef.Business.Objects.Ingredient;
@@ -21,10 +21,12 @@ import static org.junit.Assert.fail;
  * getIngredient()
  * -tests that an existing ingredient can be found
  * -tests that a non existing ingredient returns null
+ *
+ * By Beni
  **/
 
-public class IngredientPersistenceTest
-{
+public class DBManagerIngredientPersistenceTest {
+
     private DBManager manager;
     private Ingredient ingredient;
 
@@ -110,3 +112,4 @@ public class IngredientPersistenceTest
     }
 
 }
+
