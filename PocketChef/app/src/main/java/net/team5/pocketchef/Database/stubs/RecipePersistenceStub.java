@@ -27,7 +27,7 @@ public class RecipePersistenceStub implements RecipePersistence
     // a bit coupling on CategoryPersistence & IngredientPersistence in constructor
     public RecipePersistenceStub(CategoryPersistence categoryPersistence, IngredientPersistence ingredientPersistence)
     {
-        this.recipes = new ArrayList<RecipeObject>();
+        recipes = new ArrayList<RecipeObject>();
         this.categoryPersistence = categoryPersistence;
         this.ingredientPersistence = ingredientPersistence;
 
@@ -91,9 +91,9 @@ public class RecipePersistenceStub implements RecipePersistence
         RecipeObject fakedMexicanBreadRecipe = new RecipeObject(recipeName, recipeCategory, singleRecipeInstructionList, singleRecipeIngredientList);
 
         // add all created recipes into the faked Recipe DB.
-        this.recipes.add(fakedFriedEggsRecipe);
-        this.recipes.add(fakedMexicanBreakfastRecipe);
-        this.recipes.add(fakedMexicanBreadRecipe);
+        recipes.add(fakedFriedEggsRecipe);
+        recipes.add(fakedMexicanBreakfastRecipe);
+        recipes.add(fakedMexicanBreadRecipe);
 
         // update for the corresponding categories
         this.categoryPersistence.appendRecipeList(fakedFriedEggsRecipe.getRecipeCategory(), fakedFriedEggsRecipe);
@@ -130,7 +130,7 @@ public class RecipePersistenceStub implements RecipePersistence
         ArrayList<RecipeObject> matchedRecipeList = new ArrayList<>();
 
         // try to find the Recipe whose name is containing the recipe name from the argument.
-        for (RecipeObject recipe : this.recipes)
+        for (RecipeObject recipe : recipes)
         {
             if (recipe.getRecipeName().contains(recipeName))
             {
@@ -152,7 +152,7 @@ public class RecipePersistenceStub implements RecipePersistence
 
         // try to find the RecipeObject having the id
         // (assumption: id should be unique)
-        for (RecipeObject recipe : this.recipes)
+        for (RecipeObject recipe : recipes)
         {
             if (recipe.getRecipeId() == recipeID)
             {
@@ -176,20 +176,20 @@ public class RecipePersistenceStub implements RecipePersistence
     public RecipeObject addRecipe(RecipeObject recipe)
     {
         // add recipe only when it passes these conditions
-        if (!this.isRecipeNull(recipe) && !this.isRecipeIdUsedInDatabase(recipe) && this.isRecipeCategoryNameInDatabase(recipe))
+        if (!isRecipeNull(recipe) && !isRecipeIdUsedInDatabase(recipe))
         {
             // add to recipeDB
-            this.recipes.add(recipe);
+            recipes.add(recipe);
 
             // add to corresponding category's recipeList
             Category recipeCategory = recipe.getRecipeCategory();
-            this.categoryPersistence.appendRecipeList(recipeCategory, recipe);
+            categoryPersistence.appendRecipeList(recipeCategory, recipe);
 
             // add new ingredients (responsibility of addIngredient(), checking if the ingredient exists or not).
             ArrayList<Ingredient> recipeIngredients = recipe.getRecipeIngredients();
             for (Ingredient ingredient : recipeIngredients)
             {
-                this.ingredientPersistence.addIngredient(ingredient);
+                ingredientPersistence.addIngredient(ingredient);
             }
 
             return recipe;
@@ -211,14 +211,18 @@ public class RecipePersistenceStub implements RecipePersistence
      **/
     public void deleteRecipe(RecipeObject recipe)
     {
-        if (!this.isRecipeNull(recipe))
+        if (!isRecipeNull(recipe))
         {
             // remove from recipes in Recipe DB
-            this.recipes.remove(this.getRecipe(recipe.getRecipeId()));
+            recipes.remove(recipe);
 
             // remove from the recipeList in Category DB
-            // this.categoryPersistence.deleteRecipe(Category category, RecipeObject recipe); // TODO: NEED TO UPDATE INTERFACE FOR REAL DELETE!!
-            recipe.getRecipeCategory().deleteRecipe(this.getRecipe(recipe.getRecipeId()));
+            Category category = recipe.getRecipeCategory();
+            if(category != null)
+            {
+                category.deleteRecipe(recipe);
+            }
+
         }
 
     }
@@ -235,14 +239,14 @@ public class RecipePersistenceStub implements RecipePersistence
     // If recipe id is used in the database already, a RecipeObject will be found from db. As a result, it will return true.
     private boolean isRecipeIdUsedInDatabase(RecipeObject recipe)
     {
-        return this.getRecipe(recipe.getRecipeId()) != null;
+        return getRecipe(recipe.getRecipeId()) != null;
     }
 
     // return true if a category is returned by getCategory().
     private boolean isRecipeCategoryNameInDatabase(RecipeObject recipe)
     {
         String recipeCategoryName = recipe.getRecipeCategory().getCategoryName();
-        return this.categoryPersistence.getCategory(recipeCategoryName) != null;
+        return categoryPersistence.getCategory(recipeCategoryName) != null;
     }
 
 

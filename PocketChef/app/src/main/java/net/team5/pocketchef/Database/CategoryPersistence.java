@@ -24,6 +24,20 @@ public interface CategoryPersistence {
     Category appendRecipeList(Category category, RecipeObject recipe);
 
     /**
+     * Responsibilities:
+     *  - delete Recipe from Category
+     */
+    Category deleteRecipe(Category category, RecipeObject recipe);
+
+    /**
+     * appendRecipeList
+     *
+     * Responsibilities:
+     * delete a Category from DB
+     */
+    void deleteCategory(Category category);
+
+    /**
      * getCategories
      *
      * Responsibilities:

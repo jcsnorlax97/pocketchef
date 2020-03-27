@@ -22,6 +22,9 @@ import static org.junit.Assert.fail;
  * -tests that an existing ingredient can be found
  * -tests that a non existing ingredient returns null
  *
+ * deleteIngredient()
+ * -tests that an existing ingredient can be deleted
+ *
  * By Beni
  **/
 
@@ -86,6 +89,30 @@ public class DBManagerIngredientPersistenceTest {
         }
 
         System.out.println("Finished testing getIngredient() on existing Ingredient");
+
+        deleteIngredient();
+    }
+
+    public void deleteIngredient()
+    {
+        try
+        {
+            /** Test deleteIngredient on added Ingredient **/
+             manager.deleteIngredient(ingredient);
+
+            /** Ensure ingredient was added **/
+            assertNull(manager.getIngredient(ingredient.getIngredientName()));
+        } catch (Exception e)
+        {
+            /** For Dev to check **/
+            e.printStackTrace();
+            System.out.println("Unexpected Error Occurred in deleteIngredient() test");
+
+            fail();
+
+        }
+
+        System.out.println("Finished testing deleteIngredient() on existing Ingredient");
     }
 
     @Test
