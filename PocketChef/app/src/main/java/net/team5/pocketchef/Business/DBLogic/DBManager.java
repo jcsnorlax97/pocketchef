@@ -58,6 +58,10 @@ public class DBManager {
     public ArrayList<RecipeObject> getRecipes(String recipeName) {
        ArrayList<RecipeObject> toReturn = new ArrayList<>();
 
+        /** check if input is valid **/
+        if(recipeName.equals(""))
+            return toReturn;
+
        for (int x = 0; x < recipes.size(); x++)
        {
            RecipeObject currRecipe = recipes.get(x);
@@ -76,7 +80,7 @@ public class DBManager {
     /** return a recipe that matches the ID provided **/
     public RecipeObject getRecipe(int recipeID) {
         RecipeObject toReturn = null;
-        System.out.println("The recipe ID is: " + recipeID);
+
         for (int x = 0; x < recipes.size(); x++)
         {
             RecipeObject currRecipe = recipes.get(x);
@@ -94,6 +98,10 @@ public class DBManager {
     public RecipeObject addRecipe(RecipeObject recipe) {
         RecipeObject toReturn = null;
 
+        /** check if input is valid **/
+        if(recipe == null)
+            return toReturn;
+
         try {
             toReturn = recipeHandler.addRecipe(recipe);
             recipes.add(recipe);
@@ -110,6 +118,11 @@ public class DBManager {
 
     /** delete a recipe from the DB **/
     public void deleteRecipe(RecipeObject recipe) {
+
+        /** check if input is valid **/
+        if(recipe == null)
+            return;
+
         try {
             recipeHandler.deleteRecipe(recipe);
             recipes.remove(recipe);
@@ -131,6 +144,10 @@ public class DBManager {
     public Category createCategory(Category category) {
         Category toReturn = null;
 
+        /** check if input is valid **/
+        if(category == null)
+            return toReturn;
+
         try {
             toReturn = categoryHandler.createCategory(category);
             categories.add(category);
@@ -145,15 +162,67 @@ public class DBManager {
         }
     }
 
-    //TODO: decide on if Arrays will be continued to be used (Iteration 3) before using this
-    //FIXME: I DO NOT WORK YET SO PLEASE DON'T USE ME
+    /** delete a Category from DB **/
+    public void deleteCategory(Category category) {
+
+        /** check if input is valid **/
+        if(category == null)
+            return;
+
+        try {
+            categoryHandler.deleteCategory(category);
+            categories.remove(category);
+
+            /** change all recipes category after deleting category **/
+            ArrayList<RecipeObject> recipes = category.getRecipeList();
+            for(int x = 0; x < recipes.size(); x++)
+            {
+                recipes.get(x).setRecipeCategory(null);
+            }
+        } catch (Exception e)
+        {
+            /** The user does not need to see this error
+             * -Whoever made the call will see the it was not deleted
+             **/
+            e.printStackTrace(System.out);
+        }
+    }
+
     /** add a recipe to the Category provided **/
     public Category appendRecipeList(Category category, RecipeObject recipe) {
         Category toReturn = null;
 
+        /** check if input is valid **/
+        if(category == null)
+            return toReturn;
+        if(recipe == null)
+            return toReturn;
+
         try {
             toReturn = categoryHandler.appendRecipeList(category, recipe);
-            category.addRecipe(recipe);
+            return toReturn;
+        } catch (Exception e)
+        {
+            /** The user does not need to see this error
+             * -Whoever made the call will see the null return and print a custom error
+             **/
+            e.printStackTrace(System.out);
+            return toReturn;
+        }
+    }
+
+    /** add a recipe to the Category provided **/
+    public Category deleteRecipe(Category category, RecipeObject recipe) {
+        Category toReturn = null;
+
+        /** check if input is valid **/
+        if(category == null)
+            return toReturn;
+        if(recipe == null)
+            return toReturn;
+
+        try {
+            toReturn = categoryHandler.deleteRecipe(category, recipe);
             return toReturn;
         } catch (Exception e)
         {
@@ -173,6 +242,11 @@ public class DBManager {
     /** get a Category from the DB that matches name provided **/
     public Category getCategory(String categoryName) {
         Category toReturn = null;
+
+        /** check if input is valid **/
+        if(categoryName.equals(""))
+            return toReturn;
+
 
         for (int x = 0; x < categories.size(); x++)
         {
@@ -195,6 +269,10 @@ public class DBManager {
     public Ingredient addIngredient(Ingredient ingredient) {
         Ingredient toReturn = null;
 
+        /** check if input is valid **/
+        if(ingredient == null)
+            return toReturn;
+
         try {
             toReturn = ingredientHandler.addIngredient(ingredient);
             ingredients.add(ingredient);
@@ -209,9 +287,32 @@ public class DBManager {
         }
     }
 
+    /** delete ingredient from the DB **/
+    public void deleteIngredient(Ingredient ingredient) {
+
+        /** check if input is valid **/
+        if(ingredient == null)
+            return;
+
+        try {
+            ingredientHandler.deleteIngredient(ingredient);
+            ingredients.remove(ingredient);
+        } catch (Exception e)
+        {
+            /** The user does not need to see this error
+             * -Whoever made the call will see the null return and print a custom error
+             **/
+            e.printStackTrace(System.out);
+        }
+    }
+
     /** get ingredient from the DB that matches name provded **/
     public Ingredient getIngredient(String ingredientName) {
         Ingredient toReturn = null;
+
+        /** check if input is valid **/
+        if(ingredientName.equals(""))
+            return toReturn;
 
         for (int x = 0; x < ingredients.size(); x++)
         {

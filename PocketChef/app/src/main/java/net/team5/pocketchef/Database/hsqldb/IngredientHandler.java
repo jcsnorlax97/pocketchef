@@ -49,6 +49,24 @@ public class IngredientHandler implements IngredientPersistence {
     }
 
     /**
+     * Responsibilities:
+     *  - delete ingredient from DB
+     */
+    public void deleteIngredient(Ingredient ingredient)
+    {
+        try (final Connection c = connection())
+        {
+            final PreparedStatement st = c.prepareStatement("DELETE FROM INGREDIENT WHERE INAME = ?");
+            st.setString(1,  ingredient.getIngredientName());
+            st.executeUpdate();
+        } catch (final SQLException e)
+        {
+            System.err.println(("Catch SQLException: " + e.getMessage()));
+            throw new PersistenceException(e);
+        }
+    }
+
+    /**
     * Responsibilities:
     *  - Retrieve an ingredient from DB and return to caller
     *  - Remark: ingredientName is the primary key for Ingredient table.

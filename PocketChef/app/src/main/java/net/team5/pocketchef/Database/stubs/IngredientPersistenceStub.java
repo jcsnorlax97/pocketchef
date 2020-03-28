@@ -56,6 +56,20 @@ public class IngredientPersistenceStub implements IngredientPersistence {
     }
 
     /**
+     * deleteIngredient() [Done]
+     *
+     * Responsibilities:
+     *  - delete ingredient from DB
+     */
+    public void deleteIngredient(Ingredient ingredient) {
+        // checks if ingredient is valid and it is existing in the database.
+        if (!isIngredientNull(ingredient) && isIngredientExist(ingredient))
+        {
+            this.ingredients.remove(ingredient);
+        }
+    }
+
+    /**
      * getIngredient() [Done]
      *
      * Responsibilities:

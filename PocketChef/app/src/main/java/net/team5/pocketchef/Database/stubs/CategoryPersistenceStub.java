@@ -7,7 +7,8 @@ import net.team5.pocketchef.Database.CategoryPersistence;
 
 import java.util.ArrayList;
 
-public class CategoryPersistenceStub implements CategoryPersistence {
+public class CategoryPersistenceStub implements CategoryPersistence
+{
 
     /********************************************************
      * Instance Variables
@@ -28,7 +29,8 @@ public class CategoryPersistenceStub implements CategoryPersistence {
     /**
      * CategoryPersistenceStub [Done]
      */
-    public CategoryPersistenceStub() {
+    public CategoryPersistenceStub()
+    {
         this.categories = new ArrayList<Category>();
 
         // pretend we retrieve three category names, "Vegan", "Mexican", and "Indian", from the database; we create Category based on the names.
@@ -53,26 +55,46 @@ public class CategoryPersistenceStub implements CategoryPersistence {
 
     /**
      * createCategory() [Done]
-     *
+     * <p>
      * This inserts new Category into the Category table.
-     *
+     * <p>
      * Responsibilities:
-     *  - create new Category and add that to DB
-     *  - Reference Note: in iteration 2, only developers are allowed to make new category.
+     * - create new Category and add that to DB
+     * - Reference Note: in iteration 2, only developers are allowed to make new category.
      */
-    public Category createCategory(Category category) {
+    public Category createCategory(Category category)
+    {
         this.categories.add(category);
         return category;
     }
 
     /**
-     * appendRecipeList()
-     *
+     * deleteCategory() [Done]
+     * <p>
+     * This deletes a Category from Category table.
+     * <p>
      * Responsibilities:
-     *  - append new Recipe into the target Category
+     * - delete Recipe from Category
+     * - Reference Note: in iteration 2, only developers are allowed to delete category.
      */
-    public Category appendRecipeList(Category category, RecipeObject recipe) {
-        if (category != null) {
+    public void deleteCategory(Category category)
+    {
+        if (category != null)
+        {
+            this.categories.remove(category);
+        }
+    }
+
+    /**
+     * appendRecipeList()
+     * <p>
+     * Responsibilities:
+     * - append new Recipe into the target Category
+     */
+    public Category appendRecipeList(Category category, RecipeObject recipe)
+    {
+        if (category != null && recipe != null)
+        {
             category.appendRecipeList(recipe);
             return category;
         }
@@ -80,27 +102,47 @@ public class CategoryPersistenceStub implements CategoryPersistence {
     }
 
     /**
-     * getCategories() [Done]
-     *
+     * deleteRecipe()
+     * <p>
      * Responsibilities:
-     *  - retrieve the whole list of categories and return back to callers
+     * - delete Recipe from Category
      */
-    public ArrayList<Category> getCategories() {
+    public Category deleteRecipe(Category category, RecipeObject recipe)
+    {
+        if (category != null && recipe != null)
+        {
+            category.deleteRecipe(recipe);
+            return category;
+        }
+        return null;
+    }
+
+    /**
+     * getCategories() [Done]
+     * <p>
+     * Responsibilities:
+     * - retrieve the whole list of categories and return back to callers
+     */
+    public ArrayList<Category> getCategories()
+    {
         return this.categories;
     }
 
     /**
      * getCategory() [Done]
-     *
+     * <p>
      * Responsibilities:
-     *  - Retrieve a category from DB and return to caller
-     *  - Remark: catagoryName is the primary key for Ingredient table.
+     * - Retrieve a category from DB and return to caller
+     * - Remark: catagoryName is the primary key for Ingredient table.
      */
-    public Category getCategory(String categoryName) {
+    public Category getCategory(String categoryName)
+    {
 
         // try to find the Category having the same name as the argument.
-        for (Category category : this.getCategories()) {
-            if (categoryName.equals(category.getCategoryName())) {
+        for (Category category : this.getCategories())
+        {
+            if (categoryName.equals(category.getCategoryName()))
+            {
                 return category;
             }
         }

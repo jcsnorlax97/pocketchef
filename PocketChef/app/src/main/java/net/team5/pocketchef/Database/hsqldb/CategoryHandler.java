@@ -87,10 +87,46 @@ public class CategoryHandler implements CategoryPersistence {
     * Responsibilities:
     *  - append new Recipe into the target Category
     */
-    //TODO: decide on if Arrays will be continued to be used (Iteration 3) before doing this
     public Category appendRecipeList(Category category, RecipeObject recipe)
     {
-        return null;
+        /*** delete category and reinsert due to problems with SQL Arrays ***/
+        deleteCategory(category);
+        category.appendRecipeList(recipe);
+        createCategory(category);
+
+        return category;
+    }
+
+    /**
+     * Responsibilities:
+     *  - delete Recipe from Category
+     */
+    public Category deleteRecipe(Category category, RecipeObject recipe)
+    {
+        /*** delete category and reinsert due to problems with SQL Arrays ***/
+        deleteCategory(category);
+        category.deleteRecipe(recipe);
+        createCategory(category);
+
+        return category;
+    }
+
+    /**
+     * Responsibilities:
+     *  - delete category
+     */
+    public void deleteCategory(Category category)
+    {
+        try (final Connection c = connection())
+        {
+            final PreparedStatement st = c.prepareStatement("DELETE FROM CATEGORY WHERE CNAME = ?");
+            st.setString(1, category.getCategoryName());
+            st.executeUpdate();
+        } catch (final SQLException e)
+        {
+            System.err.println(("Catch SQLException: " + e.getMessage()));
+            throw new PersistenceException(e);
+        }
     }
 
     /**
