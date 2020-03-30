@@ -136,6 +136,20 @@ public class DBManager {
         }
     }
 
+    /** return a list of recipes that contains the name query provided **/
+    public ArrayList<RecipeObject> searchRecipes(String searchQuery) {
+        ArrayList<RecipeObject> toReturn = new ArrayList<>();
+
+        for (int x = 0; x < recipes.size(); x++)
+        {
+            RecipeObject currRecipe = recipes.get(x);
+            if (currRecipe.getRecipeName().toLowerCase().contains(searchQuery.toLowerCase()))
+                toReturn.add(currRecipe);
+        }
+
+        return toReturn;
+    }
+
     /********************************************************
     * Category Methods
     ********************************************************/
@@ -261,6 +275,30 @@ public class DBManager {
         return toReturn;
     }
 
+    /** get recipes from the DB that matches the category in the string provided **/
+    public ArrayList<RecipeObject> searchCategories(String searchQuery) {
+        ArrayList<Category> matching = new ArrayList<Category>();
+
+        //find the categories that match the searchQuery
+        for (int x = 0; x < categories.size(); x++)
+        {
+            Category currCategory = categories.get(x);
+            if (currCategory.getCategoryName().toLowerCase().contains(searchQuery.toLowerCase()))
+            {
+                matching.add(currCategory);
+            }
+        }
+
+        ArrayList<RecipeObject> toReturn = new ArrayList<RecipeObject>();
+        //now that we have the categories, go through and get all the recipes
+        for(int x = 0; x < matching.size(); x++)
+        {
+            toReturn.addAll(matching.get(x).getRecipeList());
+        }
+
+        return toReturn;
+    }
+
     /********************************************************
     * Ingredient Methods
     ********************************************************/
@@ -325,5 +363,55 @@ public class DBManager {
         }
 
         return toReturn;
+    }
+
+    /** get ingredient from the DB that matches name provded **/
+    public ArrayList<RecipeObject> searchIngredients(String searchQuery) {
+        ArrayList<RecipeObject> toReturn = new ArrayList<RecipeObject>();
+
+        //go through all the recipes
+        for (int x = 0; x < recipes.size(); x++)
+        {
+            RecipeObject currRecipe = recipes.get(x);
+            ArrayList<Ingredient> currIngredients = currRecipe.getRecipeIngredients();
+
+            //of the current recipe object go through all the ingredients and check if they match the seachQuery
+            for(int i = 0; i < currIngredients.size(); i++)
+            {
+                Ingredient currIngredient = currIngredients.get(i);
+
+                if (currIngredient.getIngredientName().toLowerCase().contains(searchQuery.toLowerCase()))
+                {
+                    toReturn.add(currRecipe);
+                    break;
+                }
+            }
+        }
+
+        return toReturn;
+    }
+
+    /**
+     * @param searchString The string that will be used to search the recipe names or categories or ingredients
+     * @param searchCategories boolean that determines if we should be searching recipe categories (true = cat, false = names)
+     * @param searchIngredients the boolean that determines if we should be searching recipe ingredients (true = ingred, false = names)
+     *                          NOTE: if both searchCategories and searchIngredients are true we use only categories for searching
+     *                          it is up to the caller to ensure that both are not true
+     * @return a list of recipes that match the search query
+     * */
+    public ArrayList<RecipeObject> search(String searchString, boolean searchCategories, boolean searchIngredients)
+    {
+        //check to see if we should be looking at the recipe categories, ingredients or names
+        if(searchCategories)
+        {
+            return searchCategories(searchString);
+        }
+        else if(searchIngredients)
+        {
+            return searchIngredients(searchString);
+        }
+        else{
+            return searchRecipes(searchString);
+        }
     }
 }

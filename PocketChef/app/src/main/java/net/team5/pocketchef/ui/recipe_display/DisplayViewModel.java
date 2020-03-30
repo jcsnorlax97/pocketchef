@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel;
 import net.team5.pocketchef.Business.Objects.Recipe.Ingredients;
 import net.team5.pocketchef.Business.Objects.Recipe.Instructions;
 import net.team5.pocketchef.Business.Objects.Recipe.Recipe;
+import net.team5.pocketchef.Business.Objects.RecipeObject;
 
 import java.util.ArrayList;
 
@@ -18,7 +19,7 @@ public class DisplayViewModel extends ViewModel {
     private MutableLiveData<String> recipe;
     private MutableLiveData<String> ingredientList;
     private MutableLiveData<String> directionList;
-    private Recipe rec;
+    private RecipeObject rec;
     private ArrayList<String> instruc;
     private ArrayList<String> ingreds;
     public DisplayViewModel() {
@@ -69,17 +70,25 @@ public class DisplayViewModel extends ViewModel {
 */
     }
 
-    public void setValues( Recipe tempRecipe)
+    public void setValues( RecipeObject tempRecipe)
     {
         boolean noInstructions = false;
         boolean noIngredients = false;
         rec=tempRecipe;
-        if(rec.getInstructList() != null && rec.getInstructList().getInstructionList() !=null)
-            instruc = rec.getInstructList().getInstructionList();
+        if(rec.getRecipeInstructions() !=null)
+            instruc = rec.getRecipeInstructions();
         else
             noInstructions = true;
-        if(rec.getIngredList() != null && rec.getIngredList().getIngredientList() != null)
-            ingreds = rec.getIngredList().getIngredientList();
+        if(rec.getRecipeIngredients() != null)
+        {
+            //convert array of Ingredients to array of strings
+            ArrayList<String> ingredsList = new ArrayList<>();
+            for(int i = 0; i < rec.getRecipeIngredients().size(); i++)
+            {
+                ingredsList.add(rec.getRecipeIngredients().get(i).getIngredientName());
+            }
+            ingreds = ingredsList;
+        }
         else
             noIngredients = true;
 
@@ -105,7 +114,7 @@ public class DisplayViewModel extends ViewModel {
         discription=("There is no description for this recipe.");// ADD THIS INTO THE CODE OF JOHNS
 
         name = new MutableLiveData<>();
-        name.setValue(rec.recipeName+"\n\n"+discription);
+        name.setValue(rec.getRecipeName()+"\n\n"+discription);
 
         ingredientList = new MutableLiveData<>();
         ingredientList.setValue(ingredients+"\n\n");
