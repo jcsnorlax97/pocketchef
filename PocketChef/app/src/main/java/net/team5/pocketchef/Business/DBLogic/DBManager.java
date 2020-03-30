@@ -7,9 +7,6 @@ import net.team5.pocketchef.Business.Objects.RecipeObject;
 import net.team5.pocketchef.Database.CategoryPersistence;
 import net.team5.pocketchef.Database.IngredientPersistence;
 import net.team5.pocketchef.Database.RecipePersistence;
-import net.team5.pocketchef.Database.hsqldb.CategoryHandler;
-import net.team5.pocketchef.Database.hsqldb.IngredientHandler;
-import net.team5.pocketchef.Database.hsqldb.RecipeHandler;
 
 import java.util.ArrayList;
 
@@ -35,15 +32,21 @@ public class DBManager {
     /********************************************************
     * Constructor
     ********************************************************/
-    //TODO: add/get the correct dbPath
     public DBManager()
     {
         recipeHandler = Services.getRecipePersistence();
         categoryHandler = Services.getCategoryPersistence();
         ingredientHandler = Services.getIngredientPersistence();
+    }
 
+    /********************************************************
+     * Builder, to call after constructor (to ensure instantiation of DBManager)
+     ********************************************************/
+
+    public void setUp()
+    {
         recipes = recipeHandler.getRecipes();
-//        categories = categoryHandler.getCategories();     // there are issues inside of the handler; will fix it in iteration 3.
+        categories = categoryHandler.getCategories();
         ingredients = ingredientHandler.getIngredients();
     }
 
@@ -54,6 +57,10 @@ public class DBManager {
     /** return a list of recipes that match the name provided **/
     public ArrayList<RecipeObject> getRecipes(String recipeName) {
        ArrayList<RecipeObject> toReturn = new ArrayList<>();
+
+        /** check if input is valid **/
+        if(recipeName.equals(""))
+            return toReturn;
 
        for (int x = 0; x < recipes.size(); x++)
        {
@@ -89,8 +96,11 @@ public class DBManager {
 
     /** add a recipe to the DB **/
     public RecipeObject addRecipe(RecipeObject recipe) {
-        // NOT REDUNDANT, DB could throw exception and never return
         RecipeObject toReturn = null;
+
+        /** check if input is valid **/
+        if(recipe == null)
+            return toReturn;
 
         try {
             toReturn = recipeHandler.addRecipe(recipe);
@@ -102,12 +112,17 @@ public class DBManager {
              * -Whoever made the call will see the null return and print a custom error
              **/
             e.printStackTrace(System.out);
-            return null;
+            return toReturn;
         }
     }
 
     /** delete a recipe from the DB **/
     public void deleteRecipe(RecipeObject recipe) {
+
+        /** check if input is valid **/
+        if(recipe == null)
+            return;
+
         try {
             recipeHandler.deleteRecipe(recipe);
             recipes.remove(recipe);
@@ -127,8 +142,11 @@ public class DBManager {
 
     /** add a Category to the DB **/
     public Category createCategory(Category category) {
-        // NOT REDUNDANT, DB could throw exception and never return
         Category toReturn = null;
+
+        /** check if input is valid **/
+        if(category == null)
+            return toReturn;
 
         try {
             toReturn = categoryHandler.createCategory(category);
@@ -140,20 +158,48 @@ public class DBManager {
              * -Whoever made the call will see the null return and print a custom error
              **/
             e.printStackTrace(System.out);
-            return null;
+            return toReturn;
         }
     }
 
-    //TODO: decide on if Arrays will be continued to be used (Iteration 3) before using this
-    //FIXME: I DO NOT WORK YET SO PLEASE DON'T USE ME
+    /** delete a Category from DB **/
+    public void deleteCategory(Category category) {
+
+        /** check if input is valid **/
+        if(category == null)
+            return;
+
+        try {
+            categoryHandler.deleteCategory(category);
+            categories.remove(category);
+
+            /** change all recipes category after deleting category **/
+            ArrayList<RecipeObject> recipes = category.getRecipeList();
+            for(int x = 0; x < recipes.size(); x++)
+            {
+                recipes.get(x).setRecipeCategory(null);
+            }
+        } catch (Exception e)
+        {
+            /** The user does not need to see this error
+             * -Whoever made the call will see the it was not deleted
+             **/
+            e.printStackTrace(System.out);
+        }
+    }
+
     /** add a recipe to the Category provided **/
     public Category appendRecipeList(Category category, RecipeObject recipe) {
-        // NOT REDUNDANT, DB could throw exception and never return
         Category toReturn = null;
+
+        /** check if input is valid **/
+        if(category == null)
+            return toReturn;
+        if(recipe == null)
+            return toReturn;
 
         try {
             toReturn = categoryHandler.appendRecipeList(category, recipe);
-            category.addRecipe(recipe);
             return toReturn;
         } catch (Exception e)
         {
@@ -161,7 +207,30 @@ public class DBManager {
              * -Whoever made the call will see the null return and print a custom error
              **/
             e.printStackTrace(System.out);
-            return null;
+            return toReturn;
+        }
+    }
+
+    /** add a recipe to the Category provided **/
+    public Category deleteRecipe(Category category, RecipeObject recipe) {
+        Category toReturn = null;
+
+        /** check if input is valid **/
+        if(category == null)
+            return toReturn;
+        if(recipe == null)
+            return toReturn;
+
+        try {
+            toReturn = categoryHandler.deleteRecipe(category, recipe);
+            return toReturn;
+        } catch (Exception e)
+        {
+            /** The user does not need to see this error
+             * -Whoever made the call will see the null return and print a custom error
+             **/
+            e.printStackTrace(System.out);
+            return toReturn;
         }
     }
 
@@ -173,6 +242,11 @@ public class DBManager {
     /** get a Category from the DB that matches name provided **/
     public Category getCategory(String categoryName) {
         Category toReturn = null;
+
+        /** check if input is valid **/
+        if(categoryName.equals(""))
+            return toReturn;
+
 
         for (int x = 0; x < categories.size(); x++)
         {
@@ -193,8 +267,11 @@ public class DBManager {
 
     /** add ingredient to the DB **/
     public Ingredient addIngredient(Ingredient ingredient) {
-        // NOT REDUNDANT, DB could throw exception and never return
         Ingredient toReturn = null;
+
+        /** check if input is valid **/
+        if(ingredient == null)
+            return toReturn;
 
         try {
             toReturn = ingredientHandler.addIngredient(ingredient);
@@ -206,13 +283,36 @@ public class DBManager {
              * -Whoever made the call will see the null return and print a custom error
              **/
             e.printStackTrace(System.out);
-            return null;
+            return toReturn;
+        }
+    }
+
+    /** delete ingredient from the DB **/
+    public void deleteIngredient(Ingredient ingredient) {
+
+        /** check if input is valid **/
+        if(ingredient == null)
+            return;
+
+        try {
+            ingredientHandler.deleteIngredient(ingredient);
+            ingredients.remove(ingredient);
+        } catch (Exception e)
+        {
+            /** The user does not need to see this error
+             * -Whoever made the call will see the null return and print a custom error
+             **/
+            e.printStackTrace(System.out);
         }
     }
 
     /** get ingredient from the DB that matches name provded **/
     public Ingredient getIngredient(String ingredientName) {
         Ingredient toReturn = null;
+
+        /** check if input is valid **/
+        if(ingredientName.equals(""))
+            return toReturn;
 
         for (int x = 0; x < ingredients.size(); x++)
         {

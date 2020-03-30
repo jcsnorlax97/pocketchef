@@ -7,6 +7,7 @@ import net.team5.pocketchef.Business.Objects.RecipeObject;
 import net.team5.pocketchef.Database.CategoryPersistence;
 import net.team5.pocketchef.MainActivity;
 
+import java.sql.Array;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -30,20 +31,36 @@ public class CategoryHandler implements CategoryPersistence {
     /** Create Category object from DB result **/
     private Category fromResultSet(final ResultSet rs) throws SQLException {
         final String category = rs.getString("CNAME");
-        ArrayList currRecipe = (ArrayList)(rs.getArray("RID").getArray());
-
-        Integer[] recipeArray = (Integer[])currRecipe.toArray(new Integer[currRecipe.size()]);
+        Object[] recipeObject = (Object[]) rs.getArray("RID").getArray();
+        ArrayList<Integer> recipeArray = toArray(recipeObject);
         final ArrayList<RecipeObject> recipeObjects = getRecipes(recipeArray);
         return new Category(category, recipeObjects);
     }
 
+    /** There is no conversion for HSQLDB, have to do manually **/
+    private ArrayList<Integer> toArray(Object[] recipeObject)
+    {
+        ArrayList<Integer> array = new ArrayList<>();
+        for (int x = 0; x < recipeObject.length; x++)
+        {
+            System.out.println("Adding: " + ((Integer)recipeObject[x]));
+            array.add((Integer) recipeObject[x]);
+        }
+        return array;
+    }
+
     /** Get the RecipeObjects related to the Category **/
-    private ArrayList<RecipeObject> getRecipes(Integer[] recipeArray)
+    private ArrayList<RecipeObject> getRecipes(ArrayList<Integer> recipeArray)
     {
         ArrayList<RecipeObject> recipeObjects = new ArrayList<>();
-        for(int x = 0; x < recipeArray.length; x++)
+        for(int x = 0; x < recipeArray.size(); x++)
         {
-            recipeObjects.add(MainActivity.manager.getRecipe(recipeArray[x]));
+            System.out.println("Seeing if recipeID of " + recipeArray.get(x) + " exists");
+            System.out.flush();
+            RecipeObject recipe = MainActivity.manager.getRecipe(recipeArray.get(x));
+            // TODO: throw exception
+            if(recipe != null)
+                recipeObjects.add(recipe);
         }
         return recipeObjects;
     }
@@ -70,10 +87,46 @@ public class CategoryHandler implements CategoryPersistence {
     * Responsibilities:
     *  - append new Recipe into the target Category
     */
-    //TODO: decide on if Arrays will be continued to be used (Iteration 3) before doing this
     public Category appendRecipeList(Category category, RecipeObject recipe)
     {
-        return null;
+        /*** delete category and reinsert due to problems with SQL Arrays ***/
+        deleteCategory(category);
+        category.appendRecipeList(recipe);
+        createCategory(category);
+
+        return category;
+    }
+
+    /**
+     * Responsibilities:
+     *  - delete Recipe from Category
+     */
+    public Category deleteRecipe(Category category, RecipeObject recipe)
+    {
+        /*** delete category and reinsert due to problems with SQL Arrays ***/
+        deleteCategory(category);
+        category.deleteRecipe(recipe);
+        createCategory(category);
+
+        return category;
+    }
+
+    /**
+     * Responsibilities:
+     *  - delete category
+     */
+    public void deleteCategory(Category category)
+    {
+        try (final Connection c = connection())
+        {
+            final PreparedStatement st = c.prepareStatement("DELETE FROM CATEGORY WHERE CNAME = ?");
+            st.setString(1, category.getCategoryName());
+            st.executeUpdate();
+        } catch (final SQLException e)
+        {
+            System.err.println(("Catch SQLException: " + e.getMessage()));
+            throw new PersistenceException(e);
+        }
     }
 
     /**
