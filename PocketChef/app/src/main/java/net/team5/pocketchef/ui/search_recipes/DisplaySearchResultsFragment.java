@@ -10,8 +10,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -20,11 +22,15 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import net.team5.pocketchef.Business.Objects.Category;
+import net.team5.pocketchef.Business.Objects.Ingredient;
 import net.team5.pocketchef.Business.Objects.Recipe.Ingredients;
 import net.team5.pocketchef.Business.Objects.Recipe.Instructions;
 import net.team5.pocketchef.Business.Objects.Recipe.Recipe;
 
 
+import net.team5.pocketchef.Business.Objects.RecipeObject;
+import net.team5.pocketchef.MainActivity;
 import net.team5.pocketchef.R;
 import net.team5.pocketchef.ui.home.HomeViewModel;
 import net.team5.pocketchef.ui.recipe_display.DisplayFragment;
@@ -49,9 +55,15 @@ public class DisplaySearchResultsFragment extends Fragment
     private RecipeAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
 
+    private CheckBox searchCat;
+    private CheckBox searchIngred;
+
+    private boolean searchRecipeIngredients = false;
+    private boolean searchRecipeCategories = false;
+
     //this is the variable that is used to show the recipes to the user
     //thus everything in this var should be a recipe that the user searched for/is relevant
-    ArrayList<RecipeItem> recipeList = new ArrayList<>();
+    ArrayList<RecipeObject> recipeList = new ArrayList<>();
 
     ///////////////////////////////////////////////////////////////////////////
     // CONSTRUCTORS
@@ -82,13 +94,8 @@ public class DisplaySearchResultsFragment extends Fragment
 
         Log.d(TAG, "onCreateView: started.");
 
-        /**
-         * EXAMPLE LIST
-         * */
-        recipeList.add(new RecipeItem(R.drawable.temp_recipe_image_foreground, getRecipeTemp()));
-        recipeList.add(new RecipeItem(R.drawable.temp_recipe_image_foreground,new Recipe("Test 2", "testing 1", new Ingredients(), new Instructions())));
-        recipeList.add(new RecipeItem(R.drawable.temp_recipe_image_foreground,new Recipe("Test 3", "testing 1", new Ingredients(), new Instructions())));
-
+        //fetch stuff from the manager incase there where changes since the last time we where here
+        recipeList = MainActivity.manager.getRecipes();
 
         //set adapters and stuff
         buildRecyclerView(view);
@@ -99,6 +106,38 @@ public class DisplaySearchResultsFragment extends Fragment
             public void onItemClick(int position)
             {
                 displayRecipe(position);
+            }
+        });
+
+        //manage the checkbox for searching categories
+        searchCat = (CheckBox)view.findViewById(R.id.searchCatCB);
+        searchCat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(searchCat.isChecked()){
+                    searchRecipeCategories = true;
+                    Toast.makeText(getContext(), "Searching through categories", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    searchRecipeCategories = false;
+                    Toast.makeText(getContext(), "Not searching through categories", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        //manage the checkbox for searching categories
+        searchIngred = (CheckBox)view.findViewById(R.id.searchIngredients);
+        searchIngred.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(searchIngred.isChecked()){
+                    searchRecipeIngredients = true;
+                    Toast.makeText(getContext(), "Searching through categories", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    searchRecipeIngredients = false;
+                    Toast.makeText(getContext(), "Not searching through categories", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -133,15 +172,10 @@ public class DisplaySearchResultsFragment extends Fragment
      * */
     private void filter(String text)
     {
-        ArrayList<RecipeItem> filteredList = new ArrayList<>();
+        //pass on the search to the DB manager
+        ArrayList<RecipeObject> filteredList = MainActivity.manager.search(text, searchRecipeCategories, searchRecipeIngredients);
 
-        for(RecipeItem item: recipeList){
-            if(item.getRecipeObj().recipeName.toLowerCase().contains(text.toLowerCase()))
-            {
-                filteredList.add(item);
-            }
-        }
-
+        //pass the search results to the adapter
         adapter.filterList(filteredList);
     }
 
@@ -164,37 +198,12 @@ public class DisplaySearchResultsFragment extends Fragment
      * */
     public void displayRecipe(int position){
         FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
-        fragTrans.replace(R.id.nav_host_fragment, new DisplayFragment(recipeList.get(position).getRecipeObj()));
+        fragTrans.replace(R.id.nav_host_fragment, new DisplayFragment(recipeList.get(position)));
 
+        fragTrans.addToBackStack(null);
         fragTrans.commit();
     }
 
-    /* Strictly a method used to create, and then demonstrate what displaying a recipe would look like.
-    This will be deleted in iteration 3.*/
-    private Recipe getRecipeTemp()
-    {
-        ArrayList<String> ingreds = new ArrayList<String>();
-        ingreds.add("1-2 pounds chicken tenders or 2 large boneless skinless chicken breasts sliced into 1-inch thick strips");
-        ingreds.add("1 1/2 cups all purpose flour");
-        ingreds.add("3/4 teaspoon salt");
-        ingreds.add("1/2 teaspoon black pepper");
-        ingreds.add("1 egg beaten with 2 tablespoons water");
-        ingreds.add("vegetable oil for frying");
-
-        ArrayList<String> instruct = new ArrayList<String>();
-        instruct.add("Fill a 9-inch cast iron or standard skillet with about 2 inches of oil. Start heating it over medium-high heat while you bread the chicken. (Keep an eye on it!)");
-        instruct.add("In a large bowl, mix the flour, salt and pepper.");
-        instruct.add("In another large bowl, beat the egg and water");
-        instruct.add("Dredge the chicken in the flour, coating well. Shake off excess flour and dip in the egg, the back in the flour.");
-        instruct.add("Set the chicken to the side to rest for about 5 minutes. (This helps the coating stick better)");
-        instruct.add("Check your oil temperature with a candy thermometer if necessary (you should be around 365-375 degrees) or drop in a little bit of flour–if it sizzles immediately, you can add one piece of chicken");
-        instruct.add("If the chicken sizzles, add about 5 pieces at a time and cook until golden brown on that side–about 8 to 10 minutes or so.");
-        instruct.add("Turn, and repeat until all brown.");
-        instruct.add("Cook the rest of the chicken in batches.");
-        instruct.add("Transfer to a paper towel lined plate and sprinkle with a little more salt if needed.");
-
-        return new Recipe("Breaded Chicken Tenders","American", ingreds, instruct);
-    }
     ///////////////////////////////////////////////////////////////////////////
     // END METHODS
     ///////////////////////////////////////////////////////////////////////////

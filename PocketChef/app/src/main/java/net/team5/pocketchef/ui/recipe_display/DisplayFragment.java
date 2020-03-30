@@ -13,14 +13,15 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import net.team5.pocketchef.Business.Objects.Recipe.Recipe;
+import net.team5.pocketchef.Business.Objects.RecipeObject;
 import net.team5.pocketchef.R;
 
 public class DisplayFragment extends Fragment{ // If i have problems, check because this was named DisplayFragment befroe
 
     private DisplayViewModel displayViewModel;
-    private Recipe recipe;
+    private RecipeObject recipe;
 
-    public DisplayFragment(Recipe recipeTemp)
+    public DisplayFragment(RecipeObject recipeTemp)
     {
         recipe=recipeTemp;
 

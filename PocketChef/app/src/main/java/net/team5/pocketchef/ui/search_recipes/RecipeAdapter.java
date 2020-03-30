@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
+import net.team5.pocketchef.Business.Objects.RecipeObject;
 import net.team5.pocketchef.R;
 
 import java.util.ArrayList;
@@ -28,10 +29,10 @@ import java.util.List;
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder> implements Filterable
 {
 
-    private List<RecipeItem> mRecipeList;
+    private List<RecipeObject> mRecipeList;
 
     //extra list for searching
-    private List<RecipeItem> recipeListFull;
+    private List<RecipeObject> recipeListFull;
 
     private OnItemClickListener mListener;//listener for the click
 
@@ -43,13 +44,16 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     {
 
         public ImageView mImageView;
-        public TextView mTextView;
+        public TextView mTextViewName;
+        public TextView mTextViewCat;
 
         public RecipeViewHolder(@NonNull View itemView, final OnItemClickListener listener)
         {
             super(itemView);
             mImageView = itemView.findViewById(R.id.searchRecipeImageView);
-            mTextView = itemView.findViewById(R.id.recipeNameTextView);
+            mTextViewName = itemView.findViewById(R.id.recipeNameTextView);
+            mTextViewCat = itemView.findViewById(R.id.recipeCategoryTextView);
+            //mTextViewCat = itemView.findViewById(R.id.reci);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -77,7 +81,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     // CONSTRUCTORS
     ///////////////////////////////////////////////////////////////////////////
 
-    public RecipeAdapter(ArrayList<RecipeItem> recipeList)
+    public RecipeAdapter(ArrayList<RecipeObject> recipeList)
     {
 
         mRecipeList = recipeList;
@@ -112,13 +116,14 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     @Override
     public void onBindViewHolder(@NonNull RecipeViewHolder holder, int position)
     {
-        RecipeItem currentItem = mRecipeList.get(position);
+        RecipeObject currentItem = mRecipeList.get(position);
 
         //THIS LINE DOESN'T WORK WITH SOME API'S (23 FOR EXAMPLE)
         //WE KNOW IT WORKS FOR API 28
         //MUST CHANGE NEXT ITERATION
         //holder.mImageView.setImageResource(currentItem.getImageResource());
-        holder.mTextView.setText(currentItem.getRecipeObj().recipeName);
+        holder.mTextViewName.setText(currentItem.getRecipeName());
+        holder.mTextViewCat.setText(currentItem.getRecipeCategory().getCategoryName());
     }
 
     @Override
@@ -151,7 +156,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         protected FilterResults performFiltering(CharSequence charSequence)
         {
             //this is where we return our filter results
-            List<RecipeItem> filteredList = new ArrayList<>();
+            List<RecipeObject> filteredList = new ArrayList<>();
 
             if(charSequence == null || charSequence.length() == 0)
             {
@@ -159,12 +164,12 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
                 filteredList.addAll(recipeListFull);
             }
             else
-                {
+            {
                 String filterPattern = charSequence.toString().toLowerCase().trim();
 
-                for(RecipeItem item: recipeListFull)
+                for(RecipeObject item: recipeListFull)
                 {
-                    if(item.getRecipeObj().recipeName.toLowerCase().contains(filterPattern))
+                    if(item.getRecipeName().toLowerCase().contains(filterPattern))
                     {
                         filteredList.add(item);
                     }
@@ -189,7 +194,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     /**
      * Set the recipe list to display only relevent search results
      * */
-    public void filterList(ArrayList<RecipeItem> filterList)
+    public void filterList(ArrayList<RecipeObject> filterList)
     {
         mRecipeList = filterList;
         notifyDataSetChanged();
