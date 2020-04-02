@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -29,6 +30,9 @@ import java.util.Collections;
 
 public class FragmentAddRecipe extends Fragment {
 
+    // --- scroll view ---
+    ScrollView vScrollView;
+
     // --- variables ---
     Button btnAddRecipe;
     EditText etRecipeName;
@@ -50,6 +54,15 @@ public class FragmentAddRecipe extends Fragment {
         View view = inflater.inflate(R.layout.fragment_add_recipe, container, false); // create view based on fragment_add_recipe.xmll in layout
 
         // link view to variables
+
+        // --- scroll view ---
+        vScrollView = view.findViewById(R.id.vScrollView);
+        vScrollView.post(new Runnable() {
+            @Override
+            public void run() {
+                vScrollView.fullScroll(View.FOCUS_DOWN);
+            }
+        });
 
         // --- recipe name and category ---
         etRecipeName = view.findViewById(R.id.etRecipeName);
@@ -91,6 +104,8 @@ public class FragmentAddRecipe extends Fragment {
                 // Add the chipItem to chipGroup
                 chipGroup.addView(chipItem);
 
+                // ensure the scrollview is scrolled to the very bottom when a new ingredient chip is added.
+                vScrollView.fullScroll(ScrollView.FOCUS_DOWN);
             }
         });
 
@@ -124,6 +139,17 @@ public class FragmentAddRecipe extends Fragment {
 
                 // --- name ---
                 newRecipeName = etRecipeName.getText().toString();
+
+                // --- name: quick ui validation ---
+                if (newRecipeName.length() <= 0) {
+                    // construct error message
+                    String message = "Please enter a recipe name with more than one character.";
+
+                    // show error message
+                    Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
 
                 // --- category (must be existing in db already) ---
                 String recipeCategoryName = etRecipeCategory.getText().toString();
