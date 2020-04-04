@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,19 +18,25 @@ import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputEditText;
 
+import net.team5.pocketchef.Business.Objects.Category;
+import net.team5.pocketchef.Business.Objects.Ingredient;
+import net.team5.pocketchef.Business.Objects.RecipeObject;
 import net.team5.pocketchef.MainActivity;
 import net.team5.pocketchef.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 public class FragmentAddRecipe extends Fragment {
+
+    // --- scroll view ---
+    ScrollView vScrollView;
 
     // --- variables ---
     Button btnAddRecipe;
     EditText etRecipeName;
     EditText etRecipeCategory;
-    String recipeName;
-    String recipeCategory;
 
     // --- variables for ingredients ---
     MaterialButton btnAddIngredient;
@@ -47,6 +54,15 @@ public class FragmentAddRecipe extends Fragment {
         View view = inflater.inflate(R.layout.fragment_add_recipe, container, false); // create view based on fragment_add_recipe.xmll in layout
 
         // link view to variables
+
+        // --- scroll view ---
+        vScrollView = view.findViewById(R.id.vScrollView);
+        vScrollView.post(new Runnable() {
+            @Override
+            public void run() {
+                vScrollView.fullScroll(View.FOCUS_DOWN);
+            }
+        });
 
         // --- recipe name and category ---
         etRecipeName = view.findViewById(R.id.etRecipeName);
@@ -88,6 +104,8 @@ public class FragmentAddRecipe extends Fragment {
                 // Add the chipItem to chipGroup
                 chipGroup.addView(chipItem);
 
+                // ensure the scrollview is scrolled to the very bottom when a new ingredient chip is added.
+                vScrollView.fullScroll(ScrollView.FOCUS_DOWN);
             }
         });
 
@@ -112,32 +130,73 @@ public class FragmentAddRecipe extends Fragment {
             @Override
             public void onClick(View view) {
 
-                // --- name and category ---
-                recipeName = etRecipeName.getText().toString();
-                recipeCategory = etRecipeCategory.getText().toString();
+                // --- local variables for AddRecipe ---
+                RecipeObject newRecipe;
+                String newRecipeName;
+                Category newRecipeCategory;
+                ArrayList<String> newRecipeInstructions = new ArrayList<>();
+                ArrayList<Ingredient> newRecipeIngredients = new ArrayList<>();
+
+                // --- name ---
+                newRecipeName = etRecipeName.getText().toString();
+
+                // --- name: quick ui validation ---
+                if (newRecipeName.length() <= 0) {
+                    // construct error message
+                    String message = "Please enter a recipe name with more than one character.";
+
+                    // show error message
+                    Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+
+                // --- category (must be existing in db already) ---
+                String recipeCategoryName = etRecipeCategory.getText().toString();
+                newRecipeCategory = MainActivity.manager.getCategory(recipeCategoryName);
+
+                // --- category: quick ui validation ---
+                if (newRecipeCategory == null)
+                {
+                    // construct error message
+                    String message = recipeCategoryName + " does not exist. Please enter an existing category.";
+
+                    // show error message
+                    Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // --- instructions ---
+                // note:    This is a simple way for adding instructions.
+                //          A more complicated way would have a button for adding new instruction text box, allow editing and deleting easily, and
+                //          allow scrolling up and down when there are too much instructions and the screen doesn't fit.
+                String recipeInstructionInOneString = etRecipeInstructions.getText().toString();
+                String[] recipeInstructionArray = recipeInstructionInOneString.trim().split("\n");
+                Collections.addAll(newRecipeInstructions, recipeInstructionArray);
 
                 // --- ingredients ---
-                ArrayList<String> ingredientList = new ArrayList<>();
                 StringBuilder result = new StringBuilder(""); // (just for testing; should remove it later)
 
                 // iterate over each chip in the chip group, get the chip item name, and add to the ingredientList
                 for(int i=0; i < chipGroup.getChildCount(); i++) {
                     Chip chip = (Chip) chipGroup.getChildAt(i);
-                    if (chip.isChecked()) {
-                        ingredientList.add(chip.getText().toString());
-                        result.append(chip.getText()).append(" "); // (just for testing; should remove it later)
+                    if (chip.isChecked())
+                    {
+                        // create ingredient object and add to the list
+                        Ingredient ingredient = new Ingredient(chip.getText().toString());
+                        newRecipeIngredients.add(ingredient);
+
+                        // append string for testing
+                        result.append(chip.getText()).append(" ");
                     }
                 }
 
-                // --- instructions (POOR DESIGN; NEED TO UPDATE IN THE FUTURE!!!) ---
-                ArrayList<String> instructionList = new ArrayList<>();
-                String recipeInstructions = etRecipeInstructions.getText().toString();
-                instructionList.add(recipeInstructions);
-
-                // --- debug / pass recipe information through calling the function / ... ---
+                // --- create recipe & call DBManager to add the recipe ---
+                newRecipe = new RecipeObject(newRecipeName, newRecipeCategory, newRecipeInstructions, newRecipeIngredients);
+                MainActivity.manager.addRecipe(newRecipe);
 
                 // show what has been entered; (just for testing; should remove it later)
-                Toast.makeText(getContext(), recipeName + " " + recipeCategory + " " + result.toString() + instructionList.get(0) + " is entered.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), newRecipe.getRecipeName() + " " + newRecipeCategory.getCategoryName() + " " + result.toString() + newRecipeInstructions.get(0) + " is entered.", Toast.LENGTH_SHORT).show();
             }
         });
 

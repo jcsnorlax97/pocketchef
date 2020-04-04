@@ -53,6 +53,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
+            <ScrollView
+                android:id="@+id/vScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:fillViewport="true"
+                android:isScrollContainer="true"
+                android:padding="5dp">
+
+                <!-- note for Material Chip (not ChipGroup!):
+                    style="@style/Widget.MaterialComponents.Chip.Entry":
+                        - to show the close icon
+                        - style of Material Chip can be: Entry, Choice, Action, and Filter
+                -->
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chipGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                </com.google.android.material.chip.ChipGroup>
+
+            </ScrollView>
+
             <!--
                 orientation & weightSum
                     - weightSum is based on orientation.
@@ -87,28 +108,25 @@
 
             </LinearLayout>
 
-            <!-- note for Material Chip (not ChipGroup!):
-                style="@style/Widget.MaterialComponents.Chip.Entry":
-                    - to show the close icon
-                    - style of Material Chip can be: Entry, Choice, Action, and Filter
-            -->
-            <com.google.android.material.chip.ChipGroup
-                android:id="@+id/chipGroup"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </com.google.android.material.chip.ChipGroup>
-
-            <!-- fixed height instead of wrap_content such that it won't disappear when there are no texts.-->
-            <EditText
-                android:id="@+id/etRecipeInstructions"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:inputType="text|textMultiLine"
-                android:hint="Recipe Instructions"
-                android:gravity="top"/>
-
         </LinearLayout>
         <!--  END OF INGREDIENTS FORM -->
+
+        <!-- add a line separating ingredients and instructions -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"/>
+
+        <!--  START OF INSTRUCTION FORM -->
+        <!-- fixed height instead of wrap_content such that it won't disappear when there are no texts.-->
+        <EditText
+            android:id="@+id/etRecipeInstructions"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:inputType="text|textMultiLine"
+            android:hint="Recipe Instructions \n(one instruction per line)"
+            android:gravity="top"/>
+        <!--  END OF INSTRUCTION FORM -->
 
         <Button
             android:id="@+id/btnAddRecipe"
