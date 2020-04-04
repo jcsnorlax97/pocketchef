@@ -40,16 +40,14 @@ public class UserProfileFragment extends Fragment {
         btn_about.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), "Build Version 1.0.1 \n" +
-                        "Developed by: Derek, Justin, John, Beni, Jaskaran", Toast.LENGTH_SHORT).show();
-
+                openAboutDialog();
             }
         });
         //setting listener to display information to report bug
         btn_bug.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), "Report your bug at info@pocketchef.ca", Toast.LENGTH_SHORT).show();
+                openReportBugDialog();
             }
         });
         //setting listener to view recipes that were made by user. Implemented by Iteration3.
@@ -64,11 +62,25 @@ public class UserProfileFragment extends Fragment {
         btn_faq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), "Coming Soon!", Toast.LENGTH_SHORT).show();
-
+                openFaqDialog();
             }
         });
 
         return root;
+    }
+
+    public void openReportBugDialog() {
+        ReportBugDialog bugDialog = new ReportBugDialog();
+        bugDialog.show(getFragmentManager(), "bugDialog");
+    }
+
+    public void openAboutDialog() {
+        AboutDialog aboutDialog = new AboutDialog();
+        aboutDialog.show(getFragmentManager(), "aboutDialog");
+    }
+
+    public void openFaqDialog() {
+        FaqDialog faqDialog = new FaqDialog();
+        faqDialog.show(getFragmentManager(), "faqDialog");
     }
 }
