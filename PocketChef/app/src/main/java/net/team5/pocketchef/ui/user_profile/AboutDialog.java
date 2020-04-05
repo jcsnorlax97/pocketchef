@@ -12,7 +12,7 @@ public class AboutDialog extends AppCompatDialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("About PocketChef")
-                .setMessage("Build Version 1.0.1 \n\n" +
+                .setMessage("Build Version 1.3 \n\n" +
                         "Developed by: Derek, Justin, John, Beni, Jaskaran")
                 .setNegativeButton("OK", new DialogInterface.OnClickListener() {
                     @Override
