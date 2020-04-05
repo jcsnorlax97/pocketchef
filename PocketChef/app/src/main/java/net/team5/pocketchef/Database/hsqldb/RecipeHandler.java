@@ -25,7 +25,6 @@ public class RecipeHandler implements RecipePersistence
         this.dbPath = dbPath;
     }
 
-    // TODO: Set proper url, ensure path is correct, get password?
     private Connection connection() throws SQLException
     {
         return DriverManager.getConnection("jdbc:hsqldb:file:" + this.dbPath + ";shutdown=true", "SA", "");
@@ -138,8 +137,6 @@ public class RecipeHandler implements RecipePersistence
      **/
     public RecipeObject getRecipe(int recipeID)
     {
-        final List<RecipeObject> recipes = new ArrayList<>();
-
         try (final Connection c = connection())
         {
             final PreparedStatement st = c.prepareStatement("SELECT FROM RECIPE WHERE RID = ?");
@@ -164,6 +161,7 @@ public class RecipeHandler implements RecipePersistence
      **/
     public RecipeObject addRecipe(RecipeObject recipe)
     {
+        /** Used for transforming an array to an SQL array **/
         org.hsqldb.types.Type type = org.hsqldb.types.Type.SQL_VARCHAR_DEFAULT;
         try (final Connection c = connection())
         {
@@ -187,7 +185,7 @@ public class RecipeHandler implements RecipePersistence
 
     /**
      * deleteRecipe
-     * <p>
+     *
      * Responsibilities:
      * - Delete a SINGLE recipe having the target recipe id.
      * - Remark: search based on recipe id, which should be an UNIQUE attribute
@@ -220,7 +218,7 @@ public class RecipeHandler implements RecipePersistence
     /** Convert Arraylist to array **/
     private ArrayList<String> convertIngredientArray(ArrayList<Ingredient> list)
     {
-        ArrayList<String> newArray = new ArrayList<String>();
+        ArrayList<String> newArray = new ArrayList<>();
         for(int x = 0; x < list.size(); x++)
         {
             newArray.add(list.get(x).getIngredientName());
