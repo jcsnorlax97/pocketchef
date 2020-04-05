@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
+import net.team5.pocketchef.Business.Objects.Category;
 import net.team5.pocketchef.Business.Objects.RecipeObject;
 import net.team5.pocketchef.R;
 
@@ -123,7 +124,11 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         //MUST CHANGE NEXT ITERATION
         //holder.mImageView.setImageResource(currentItem.getImageResource());
         holder.mTextViewName.setText(currentItem.getRecipeName());
-        holder.mTextViewCat.setText(currentItem.getRecipeCategory().getCategoryName());
+        Category recipeCategory = currentItem.getRecipeCategory();
+        if (recipeCategory != null)
+            holder.mTextViewCat.setText(recipeCategory.getCategoryName());
+        else
+            holder.mTextViewCat.setText("N/A");
     }
 
     @Override

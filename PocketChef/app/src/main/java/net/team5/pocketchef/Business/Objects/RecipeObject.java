@@ -10,7 +10,7 @@ public class RecipeObject {
     /********************************************************
      * class variables
      ********************************************************/
-    private static int idCounter = 0; // to be used for unique id.
+    private static int idCounter = 1; // to be used for unique id.
 
     /********************************************************
      * instance variables

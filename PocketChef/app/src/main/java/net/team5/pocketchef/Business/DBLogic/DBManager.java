@@ -45,9 +45,15 @@ public class DBManager {
 
     public void setUp()
     {
-        recipes = recipeHandler.getRecipes();
-        categories = categoryHandler.getCategories();
         ingredients = ingredientHandler.getIngredients();
+
+        /** Set initial recipes which will be overwritten **/
+        recipes = recipeHandler.getRecipes();
+
+        /** Continue setup **/
+        categories = categoryHandler.getCategories();
+        recipes = recipeHandler.getRecipes();
+
     }
 
     /********************************************************
@@ -84,7 +90,7 @@ public class DBManager {
         for (int x = 0; x < recipes.size(); x++)
         {
             RecipeObject currRecipe = recipes.get(x);
-            if (currRecipe.getRecipeId() == (recipeID))
+            if (currRecipe.getRecipeId() == recipeID)
             {
                 toReturn = currRecipe;
                 break;
@@ -261,11 +267,15 @@ public class DBManager {
         if(categoryName.equals(""))
             return toReturn;
 
+        /** check if null, because during start up categories is null **/
+        if (categories == null) {
+            return null;
+        }
 
         for (int x = 0; x < categories.size(); x++)
         {
             Category currCategory = categories.get(x);
-            if (currCategory.getCategoryName().equals(categoryName))
+            if (currCategory.getCategoryName().toLowerCase().equals(categoryName.toLowerCase()))
             {
                 toReturn = currCategory;
                 break;
@@ -355,7 +365,7 @@ public class DBManager {
         for (int x = 0; x < ingredients.size(); x++)
         {
             Ingredient currIngredient = ingredients.get(x);
-            if (currIngredient.getIngredientName().equals(ingredientName))
+            if (currIngredient.getIngredientName().toLowerCase().equals(ingredientName.toLowerCase()))
             {
                 toReturn = currIngredient;
                 break;

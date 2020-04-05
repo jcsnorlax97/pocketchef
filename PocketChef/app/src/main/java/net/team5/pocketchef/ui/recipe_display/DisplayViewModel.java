@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import net.team5.pocketchef.Business.Objects.Ingredient;
 import net.team5.pocketchef.Business.Objects.Recipe.Ingredients;
 import net.team5.pocketchef.Business.Objects.Recipe.Instructions;
 import net.team5.pocketchef.Business.Objects.Recipe.Recipe;
@@ -85,7 +86,9 @@ public class DisplayViewModel extends ViewModel {
             ArrayList<String> ingredsList = new ArrayList<>();
             for(int i = 0; i < rec.getRecipeIngredients().size(); i++)
             {
-                ingredsList.add(rec.getRecipeIngredients().get(i).getIngredientName());
+                Ingredient currIngred = rec.getRecipeIngredients().get(i);
+                if(currIngred != null)
+                    ingredsList.add(currIngred.getIngredientName());
             }
             ingreds = ingredsList;
         }
