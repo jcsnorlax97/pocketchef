@@ -71,7 +71,7 @@ public class FragmentAddRecipe extends Fragment {
 
         // --- ingredients ---
         btnAddIngredient = view.findViewById(R.id.btnAddIngredient);
-        btnCheckAllIngredients = view.findViewById(R.id.btnCheckAllIngredients);
+//        btnCheckAllIngredients = view.findViewById(R.id.btnCheckAllIngredients);
         chipGroup = view.findViewById(R.id.chipGroup);
         tietIngredient = view.findViewById(R.id.tietIngredient);
 
@@ -83,6 +83,18 @@ public class FragmentAddRecipe extends Fragment {
             @Override
             public void onClick(View v) {
                 String ingredient = tietIngredient.getText().toString();
+
+                // Check if it is a duplicate
+                if(isDuplicate(ingredient))
+                {
+                    // construct error message
+                    String message = "Already Added";
+
+                    // show error message
+                    Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 LayoutInflater inflater = LayoutInflater.from(getContext()); // (Not sure if this is the correct way to do it.)
 
                 // create view for a chipItem
@@ -109,19 +121,19 @@ public class FragmentAddRecipe extends Fragment {
             }
         });
 
-        // When 'btnCheckAllIngredients' button is clicked, it checks all ingredients that have been added.
-        btnCheckAllIngredients.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                // iterate over each chip in the group, get the chip item name, and append to result.
-                for(int i=0; i < chipGroup.getChildCount(); i++) {
-                    Chip chip = (Chip) chipGroup.getChildAt(i);
-                    chip.setChecked(true);
-                }
-
-            }
-        });
+//        // When 'btnCheckAllIngredients' button is clicked, it checks all ingredients that have been added.
+//        btnCheckAllIngredients.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                // iterate over each chip in the group, get the chip item name, and append to result.
+//                for(int i=0; i < chipGroup.getChildCount(); i++) {
+//                    Chip chip = (Chip) chipGroup.getChildAt(i);
+//                    chip.setChecked(true);
+//                }
+//
+//            }
+//        });
 
         // When 'btnAddRecipe' button is clicked, display what have been entered.
         // PS:  At the end, it will pass the data to the business layer to add the recipe information
@@ -170,9 +182,12 @@ public class FragmentAddRecipe extends Fragment {
                 // note:    This is a simple way for adding instructions.
                 //          A more complicated way would have a button for adding new instruction text box, allow editing and deleting easily, and
                 //          allow scrolling up and down when there are too much instructions and the screen doesn't fit.
-                String recipeInstructionInOneString = etRecipeInstructions.getText().toString();
-                String[] recipeInstructionArray = recipeInstructionInOneString.trim().split("\n");
-                Collections.addAll(newRecipeInstructions, recipeInstructionArray);
+                String recipeInstructionInOneString = etRecipeInstructions.getText().toString().trim();
+                if (!recipeInstructionInOneString.equals(""))
+                {
+                    String[] recipeInstructionArray = recipeInstructionInOneString.split("\n");
+                    Collections.addAll(newRecipeInstructions, recipeInstructionArray);
+                }
 
                 // --- ingredients ---
                 StringBuilder result = new StringBuilder(""); // (just for testing; should remove it later)
@@ -180,15 +195,39 @@ public class FragmentAddRecipe extends Fragment {
                 // iterate over each chip in the chip group, get the chip item name, and add to the ingredientList
                 for(int i=0; i < chipGroup.getChildCount(); i++) {
                     Chip chip = (Chip) chipGroup.getChildAt(i);
-                    if (chip.isChecked())
-                    {
-                        // create ingredient object and add to the list
-                        Ingredient ingredient = new Ingredient(chip.getText().toString());
-                        newRecipeIngredients.add(ingredient);
+                    // create ingredient object and add to the list
+                    Ingredient ingredient = new Ingredient(chip.getText().toString());
 
-                        // append string for testing
-                        result.append(chip.getText()).append(" ");
-                    }
+                    // check if it is in DB, if not, add it
+                    if (MainActivity.manager.getIngredient(ingredient.getIngredientName()) == null)
+                        MainActivity.manager.addIngredient(ingredient);
+
+                    newRecipeIngredients.add(ingredient);
+
+                    // append string for testing
+                    result.append(chip.getText()).append(" ");
+                }
+
+                // --- ingredients: check if any were put ---
+                if(newRecipeIngredients.size() == 0)
+                {
+                    // construct error message
+                    String message = "Please enter at least 1 ingredient.";
+
+                    // show error message
+                    Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // --- instructions: check if any were put ---
+                if(newRecipeInstructions.size() == 0)
+                {
+                    // construct error message
+                    String message = "Please enter at least 1 instruction.";
+
+                    // show error message
+                    Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+                    return;
                 }
 
                 // --- create recipe & call DBManager to add the recipe ---
@@ -202,5 +241,16 @@ public class FragmentAddRecipe extends Fragment {
 
 
         return view;
+    }
+
+    public boolean isDuplicate(String ingredName)
+    {
+        for(int i=0; i < chipGroup.getChildCount(); i++) {
+            Chip chip = (Chip) chipGroup.getChildAt(i);
+            String chipName = chip.getText().toString().toLowerCase();
+            if (chipName.equals(ingredName.toLowerCase()))
+                return true;
+        }
+        return false;
     }
 }

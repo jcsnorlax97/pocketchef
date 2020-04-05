@@ -20,8 +20,8 @@ public class Services
     {
         if (Services.recipePersistence == null)
         {
-            Services.recipePersistence = new RecipePersistenceStub(Services.getCategoryPersistence(), Services.getIngredientPersistence());
-            // Services.recipePersistence = new RecipeHandler(Main.getDBPathName());
+            // Services.recipePersistence = new RecipePersistenceStub(Services.getCategoryPersistence(), Services.getIngredientPersistence());
+            Services.recipePersistence = new RecipeHandler(Main.getDBPathName());
         }
 
         return Services.recipePersistence;
@@ -31,8 +31,8 @@ public class Services
     {
         if (Services.categoryPersistence == null)
         {
-            Services.categoryPersistence = new CategoryPersistenceStub();
-            // Services.categoryPersistence = new CategoryHandler(Main.getDBPathName());
+            //Services.categoryPersistence = new CategoryPersistenceStub();
+            Services.categoryPersistence = new CategoryHandler(Main.getDBPathName());
         }
 
         return Services.categoryPersistence;
@@ -42,8 +42,8 @@ public class Services
     {
         if (Services.ingredientPersistence == null)
         {
-            Services.ingredientPersistence = new IngredientPersistenceStub();
-            // Services.ingredientPersistence = new IngredientHandler(Main.getDBPathName());
+            // Services.ingredientPersistence = new IngredientPersistenceStub();
+            Services.ingredientPersistence = new IngredientHandler(Main.getDBPathName());
         }
 
         return Services.ingredientPersistence;

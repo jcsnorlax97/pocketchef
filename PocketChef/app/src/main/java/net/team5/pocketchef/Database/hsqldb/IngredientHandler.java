@@ -38,7 +38,7 @@ public class IngredientHandler implements IngredientPersistence {
     public Ingredient addIngredient(Ingredient ingredient)
     {
         try (final Connection c = connection()) {
-            final PreparedStatement st = c.prepareStatement("INSERT INTO CATEGORY VALUES(?)");
+            final PreparedStatement st = c.prepareStatement("INSERT INTO INGREDIENT VALUES(?)");
             st.setString(1, ingredient.getIngredientName());
             st.executeUpdate();
 

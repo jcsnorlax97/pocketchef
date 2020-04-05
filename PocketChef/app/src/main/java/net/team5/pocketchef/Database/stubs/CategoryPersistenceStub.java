@@ -32,7 +32,6 @@ public class CategoryPersistenceStub implements CategoryPersistence
     public CategoryPersistenceStub()
     {
         this.categories = new ArrayList<Category>();
-
         // pretend we retrieve three category names, "Vegan", "Mexican", and "Indian", from the database; we create Category based on the names.
         this.categories.add(new Category("Vegan", null));
         this.categories.add(new Category("Mexican", null));
