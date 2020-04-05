@@ -23,7 +23,6 @@ public class CategoryHandler implements CategoryPersistence {
         this.dbPath = dbPath;
     }
 
-    // TODO: Set proper url, ensure path is correct, get password?
     private Connection connection() throws SQLException {
         return DriverManager.getConnection("jdbc:hsqldb:file:" + this.dbPath + ";shutdown=true", "SA", "");
     }
@@ -31,9 +30,12 @@ public class CategoryHandler implements CategoryPersistence {
     /** Create Category object from DB result **/
     private Category fromResultSet(final ResultSet rs) throws SQLException {
         final String category = rs.getString("CNAME");
+
+        /** Transform Object[] to ArrayList **/
         Object[] recipeObject = (Object[]) rs.getArray("RID").getArray();
         ArrayList<Integer> recipeArray = toArray(recipeObject);
         final ArrayList<RecipeObject> recipeObjects = getRecipes(recipeArray);
+
         return new Category(category, recipeObjects);
     }
 
@@ -43,7 +45,6 @@ public class CategoryHandler implements CategoryPersistence {
         ArrayList<Integer> array = new ArrayList<>();
         for (int x = 0; x < recipeObject.length; x++)
         {
-            System.out.println("Adding: " + ((Integer)recipeObject[x]));
             array.add((Integer) recipeObject[x]);
         }
         return array;
@@ -55,10 +56,7 @@ public class CategoryHandler implements CategoryPersistence {
         ArrayList<RecipeObject> recipeObjects = new ArrayList<>();
         for(int x = 0; x < recipeArray.size(); x++)
         {
-            System.out.println("Seeing if recipeID of " + recipeArray.get(x) + " exists");
-            System.out.flush();
             RecipeObject recipe = MainActivity.manager.getRecipe(recipeArray.get(x));
-            // TODO: throw exception
             if(recipe != null)
                 recipeObjects.add(recipe);
         }
@@ -68,7 +66,7 @@ public class CategoryHandler implements CategoryPersistence {
     /**
     * Responsibilities:
     *  - create new Category and add that to DB
-    *  - Reference Note: in iteration 2, only developers are allowed to make new category.
+    *  - Reference Note: Only developers are allowed to make new categories.
     */
     public Category createCategory(Category category)
     {

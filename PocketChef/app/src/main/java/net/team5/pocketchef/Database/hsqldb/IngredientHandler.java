@@ -18,7 +18,6 @@ public class IngredientHandler implements IngredientPersistence {
         this.dbPath = dbPath;
     }
 
-    // TODO: Set proper url, ensure path is correct, get password?
     private Connection connection() throws SQLException {
         return DriverManager.getConnection("jdbc:hsqldb:file:" + this.dbPath + ";shutdown=true", "SA", "");
     }

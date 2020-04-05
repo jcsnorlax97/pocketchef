@@ -43,6 +43,11 @@ public class DBManager {
      * Builder, to call after constructor (to ensure instantiation of DBManager)
      ********************************************************/
 
+
+    /**
+     * Note: calling get is required twice as recipes and categories point to each other
+     * The initial getRecipes call sets all its Categories to Null, the second fixes such problems
+     */
     public void setUp()
     {
         ingredients = ingredientHandler.getIngredients();
@@ -289,7 +294,7 @@ public class DBManager {
     public ArrayList<RecipeObject> searchCategories(String searchQuery) {
         ArrayList<Category> matching = new ArrayList<Category>();
 
-        //find the categories that match the searchQuery
+        /**find the categories that match the searchQuery **/
         for (int x = 0; x < categories.size(); x++)
         {
             Category currCategory = categories.get(x);
@@ -300,7 +305,7 @@ public class DBManager {
         }
 
         ArrayList<RecipeObject> toReturn = new ArrayList<RecipeObject>();
-        //now that we have the categories, go through and get all the recipes
+        /** Now that we have the categories, go through and get all the recipes **/
         for(int x = 0; x < matching.size(); x++)
         {
             toReturn.addAll(matching.get(x).getRecipeList());
@@ -375,17 +380,17 @@ public class DBManager {
         return toReturn;
     }
 
-    /** get ingredient from the DB that matches name provded **/
+    /** Get ingredient from the DB that matches name provded **/
     public ArrayList<RecipeObject> searchIngredients(String searchQuery) {
-        ArrayList<RecipeObject> toReturn = new ArrayList<RecipeObject>();
+        ArrayList<RecipeObject> toReturn = new ArrayList<>();
 
-        //go through all the recipes
+        /** Go through all the recipes **/
         for (int x = 0; x < recipes.size(); x++)
         {
             RecipeObject currRecipe = recipes.get(x);
             ArrayList<Ingredient> currIngredients = currRecipe.getRecipeIngredients();
 
-            //of the current recipe object go through all the ingredients and check if they match the seachQuery
+            /** Of the current recipe object go through all the ingredients and check if they match the seachQuery **/
             for(int i = 0; i < currIngredients.size(); i++)
             {
                 Ingredient currIngredient = currIngredients.get(i);
@@ -411,7 +416,7 @@ public class DBManager {
      * */
     public ArrayList<RecipeObject> search(String searchString, boolean searchCategories, boolean searchIngredients)
     {
-        //check to see if we should be looking at the recipe categories, ingredients or names
+        /** check to see if we should be looking at the recipe categories, ingredients or names **/
         if(searchCategories)
         {
             return searchCategories(searchString);
