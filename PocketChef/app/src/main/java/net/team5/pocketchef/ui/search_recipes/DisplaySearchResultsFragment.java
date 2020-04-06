@@ -5,14 +5,10 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,13 +17,6 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import net.team5.pocketchef.Business.Objects.Category;
-import net.team5.pocketchef.Business.Objects.Ingredient;
-import net.team5.pocketchef.Business.Objects.Recipe.Ingredients;
-import net.team5.pocketchef.Business.Objects.Recipe.Instructions;
-import net.team5.pocketchef.Business.Objects.Recipe.Recipe;
-
 
 import net.team5.pocketchef.Business.Objects.RecipeObject;
 import net.team5.pocketchef.MainActivity;

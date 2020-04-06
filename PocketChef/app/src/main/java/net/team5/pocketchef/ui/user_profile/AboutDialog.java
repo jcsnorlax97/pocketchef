@@ -1,7 +1,6 @@
 package net.team5.pocketchef.ui.user_profile;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
