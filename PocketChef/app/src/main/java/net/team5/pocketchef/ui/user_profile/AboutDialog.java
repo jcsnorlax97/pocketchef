@@ -3,14 +3,16 @@ package net.team5.pocketchef.ui.user_profile;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatDialogFragment;
 
 public class AboutDialog extends AppCompatDialogFragment {
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+    public AlertDialog onCreateDialog(Bundle savedInstanceState) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), net.team5.pocketchef.R.style.MyDialogTheme);
         builder.setTitle("About PocketChef")
                 .setMessage("Build Version 1.3 \n\n" +
                         "Developed by: Derek, Justin, John, Beni, Jaskaran")
@@ -20,6 +22,10 @@ public class AboutDialog extends AppCompatDialogFragment {
 
                     }
                 });
-        return builder.create();
+        AlertDialog alert = builder.create();
+        alert.show();
+        Button nButton = alert.getButton(DialogInterface.BUTTON_NEGATIVE);
+        nButton.setTextColor(Color.BLACK);
+        return alert;
     }
 }
