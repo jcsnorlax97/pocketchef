@@ -26,7 +26,7 @@ public class FaqDialog extends AppCompatDialogFragment {
         AlertDialog alert = builder.create();
         alert.show();
         Button nButton = alert.getButton(DialogInterface.BUTTON_NEGATIVE);
-        nButton.setTextColor(Color.BLACK);
+        nButton.setTextColor(Color.WHITE);
         return alert;
     }
 }
