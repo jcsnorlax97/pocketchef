@@ -9,6 +9,8 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        useLibrary 'android.test.base'
+        useLibrary 'android.test.mock'
     }
     buildTypes {
         release {
@@ -28,8 +30,18 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui:2.0.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
     testImplementation 'junit:junit:4.12'
+
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
+    androidTestImplementation 'com.android.support:support-annotations:23.3.0'
+    androidTestImplementation 'androidx.test:core:1.0.0'
+    testImplementation 'org.mockito:mockito-core:2.19.0'
+    debugImplementation 'com.android.support.test:runner:1.0.1'
+    debugImplementation 'androidx.test:rules:1.1.1'
+    androidTestImplementation 'androidx.test:rules:1.1.1'
+    androidTestImplementation 'androidx.test:runner:1.1.1'
+
 
     // HSQLDB
     implementation group: 'org.hsqldb', name: 'hsqldb', version: '2.4.1'
