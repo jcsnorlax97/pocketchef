@@ -115,6 +115,7 @@ public class DBManager {
 
         try {
             toReturn = recipeHandler.addRecipe(recipe);
+            categoryHandler.appendRecipeList(recipe.getRecipeCategory(), recipe);
             recipes.add(recipe);
             return toReturn;
         } catch (Exception e)
