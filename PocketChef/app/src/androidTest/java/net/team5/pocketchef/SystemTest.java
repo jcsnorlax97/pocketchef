@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 
+import androidx.test.espresso.DataInteraction;
 import androidx.test.espresso.ViewInteraction;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
@@ -18,6 +19,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.Espresso.pressBack;
 import static androidx.test.espresso.action.ViewActions.click;
@@ -30,6 +32,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.anything;
 import static org.hamcrest.Matchers.is;
 
 @LargeTest
@@ -61,15 +64,22 @@ public class SystemTest {
                         isDisplayed()));
         appCompatEditText.perform(replaceText("Chicken"), closeSoftKeyboard());
 
-        ViewInteraction appCompatEditText2 = onView(
-                allOf(withId(R.id.etRecipeCategory),
+        ViewInteraction appCompatSpinner = onView(
+                allOf(withId(R.id.vCategorySpinner),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.LinearLayout")),
                                         0),
                                 2),
                         isDisplayed()));
-        appCompatEditText2.perform(replaceText("Meat"), closeSoftKeyboard());
+        appCompatSpinner.perform(click());
+
+        DataInteraction appCompatCheckedTextView = onData(anything())
+                .inAdapterView(childAtPosition(
+                        withClassName(is("android.widget.PopupWindow$PopupBackgroundView")),
+                        0))
+                .atPosition(1);
+        appCompatCheckedTextView.perform(click());
 
         ViewInteraction textInputEditText = onView(
                 allOf(withId(R.id.tietIngredient),
@@ -123,7 +133,7 @@ public class SystemTest {
 
         pressBack();
 
-        ViewInteraction appCompatEditText3 = onView(
+        ViewInteraction appCompatEditText2 = onView(
                 allOf(withId(R.id.etRecipeInstructions),
                         childAtPosition(
                                 childAtPosition(
@@ -131,7 +141,7 @@ public class SystemTest {
                                         0),
                                 5),
                         isDisplayed()));
-        appCompatEditText3.perform(replaceText("Preheat oven to 350\nBread the chicken\nCook chicken for 30 min"), closeSoftKeyboard());
+        appCompatEditText2.perform(replaceText("Preheat oven to 350c\nBread the chicken\nCook for 30 mins"), closeSoftKeyboard());
 
         pressBack();
 
@@ -166,45 +176,21 @@ public class SystemTest {
                         isDisplayed()));
         materialButton4.perform(click());
 
-        ViewInteraction appCompatEditText4 = onView(
-                allOf(withId(R.id.editText),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.nav_host_fragment),
-                                        0),
-                                0),
-                        isDisplayed()));
-        appCompatEditText4.perform(replaceText("Chicken"), closeSoftKeyboard());
-
         ViewInteraction cardView = onView(
                 allOf(childAtPosition(
                         allOf(withId(R.id.DisSearchRecyclerView),
                                 childAtPosition(
                                         withClassName(is("android.widget.LinearLayout")),
                                         3)),
-                        0),
+                        4),
                         isDisplayed()));
         cardView.perform(click());
 
-        pressBack();
-
-        ViewInteraction cardView2 = onView(
-                allOf(childAtPosition(
-                        allOf(withId(R.id.DisSearchRecyclerView),
-                                childAtPosition(
-                                        withClassName(is("android.widget.LinearLayout")),
-                                        3)),
-                        0),
-                        isDisplayed()));
-        cardView2.perform(click());
-
-        pressBack();
-
         ViewInteraction textView = onView(
-                allOf(withId(R.id.recipeNameTextView), withText("Chicken"),
+                allOf(withId(R.id.textView), withText("Chicken"),
                         childAtPosition(
                                 childAtPosition(
-                                        IsInstanceOf.<View>instanceOf(android.widget.FrameLayout.class),
+                                        IsInstanceOf.<View>instanceOf(android.widget.ScrollView.class),
                                         0),
                                 1),
                         isDisplayed()));
@@ -224,16 +210,6 @@ public class SystemTest {
                         isDisplayed()));
         materialButton.perform(click());
 
-        ViewInteraction appCompatEditText = onView(
-                allOf(withId(R.id.editText),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.nav_host_fragment),
-                                        0),
-                                0),
-                        isDisplayed()));
-        appCompatEditText.perform(replaceText("Poor"), closeSoftKeyboard());
-
         ViewInteraction cardView = onView(
                 allOf(childAtPosition(
                         allOf(withId(R.id.DisSearchRecyclerView),
@@ -245,14 +221,14 @@ public class SystemTest {
         cardView.perform(click());
 
         ViewInteraction textView = onView(
-                allOf(withId(R.id.textViewIngredients), withText("- Ramen\n\n\n"),
+                allOf(withId(R.id.textView), withText("Poor Student Ramen"),
                         childAtPosition(
                                 childAtPosition(
                                         IsInstanceOf.<View>instanceOf(android.widget.ScrollView.class),
                                         0),
-                                4),
+                                1),
                         isDisplayed()));
-        textView.check(matches(withText("- Ramen   ")));
+        textView.check(matches(isDisplayed()));
 
         ViewInteraction textView2 = onView(
                 allOf(withId(R.id.textViewDirections), withText("Step 1: Boil water somehow? Probably cannot afford a kettle\n\nStep 2: Wash a bowl since you have no clean ones\n\nStep 3: Open the 50 cent ramen package\n\nStep 4: Put all contents into bowl\n\nStep 5: Pour hot water and wait 5 minutes\n\nStep 6: Enjoy!\n\n\n\n"),
@@ -262,7 +238,7 @@ public class SystemTest {
                                         0),
                                 6),
                         isDisplayed()));
-        textView2.check(matches(withText("Step 1: Boil water somehow? Probably cannot afford a kettle  Step 2: Wash a bowl since you have no clean ones  Step 3: Open the 50 cent ramen package  Step 4: Put all contents into bowl  Step 5: Pour hot water and wait 5 minutes  Step 6: Enjoy!    ")));
+        textView2.check(matches(isDisplayed()));
     }
 
     private static Matcher<View> childAtPosition(
