@@ -4,7 +4,7 @@
 Features + tasks
 --------
 
-#### Iteration 2 Initial Developer Tasks
+#### Iteration 3 Initial Developer Tasks
 
 *   ##### Developer Task 
     - [Settings Page](https://code.cs.umanitoba.ca/comp3350-winter2020/pocketchef-5/issues/46)
