@@ -202,7 +202,7 @@ public class DisplaySearchResultsFragment extends Fragment
      * */
     public void displayRecipe(int position){
         FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
-        fragTrans.replace(R.id.nav_host_fragment, new DisplayFragment(recipeList.get(position)));
+        fragTrans.replace(R.id.nav_host_fragment, new DisplayFragment(adapter.getFilteredList().get(position)));
 
         fragTrans.addToBackStack(null);
         fragTrans.commit();
