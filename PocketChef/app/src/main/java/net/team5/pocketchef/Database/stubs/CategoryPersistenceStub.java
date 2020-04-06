@@ -46,10 +46,6 @@ public class CategoryPersistenceStub implements CategoryPersistence
      * assumptions:
      *  1. The category name is CASE SENSITIVE, which means "Asian" != "asian".
      *  2. getCategory() returns null if it cannot find the name.
-     *
-     * questions:
-     *  1. in createCategory(), why is this returning a Category? It is a bit trivial that we pass a Category as argument, and then return the same Category.
-     *  2.
      */
 
     /**

@@ -242,12 +242,4 @@ public class RecipePersistenceStub implements RecipePersistence
         return getRecipe(recipe.getRecipeId()) != null;
     }
 
-    // return true if a category is returned by getCategory().
-    private boolean isRecipeCategoryNameInDatabase(RecipeObject recipe)
-    {
-        String recipeCategoryName = recipe.getRecipeCategory().getCategoryName();
-        return categoryPersistence.getCategory(recipeCategoryName) != null;
-    }
-
-
 }
