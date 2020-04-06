@@ -116,6 +116,8 @@ public class DisplaySearchResultsFragment extends Fragment
             public void onClick(View view) {
                 if(searchCat.isChecked()){
                     searchRecipeCategories = true;
+                    searchIngred.setChecked(false);
+                    searchRecipeIngredients = false;
                     Toast.makeText(getContext(), "Searching through categories", Toast.LENGTH_SHORT).show();
                 }
                 else{
@@ -132,6 +134,8 @@ public class DisplaySearchResultsFragment extends Fragment
             public void onClick(View view) {
                 if(searchIngred.isChecked()){
                     searchRecipeIngredients = true;
+                    searchCat.setChecked(false);
+                    searchRecipeCategories = false;
                     Toast.makeText(getContext(), "Searching through categories", Toast.LENGTH_SHORT).show();
                 }
                 else{
