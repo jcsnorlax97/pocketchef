@@ -14,8 +14,7 @@ import net.team5.pocketchef.R;
 
 public class UserProfileFragment extends Fragment {
 
-
-    Button btn_about, btn_viewRecipe, btn_bug, btn_faq;
+    Button btn_about, btn_faq;
 
     private UserProfileViewModel userProfileViewModel;
 
@@ -36,7 +35,6 @@ public class UserProfileFragment extends Fragment {
                 openAboutDialog();
             }
         });
-        //setting listener to display information to report bug
 
         //setting listener to display frequently asked questions (FAQ) coming soon
         btn_faq.setOnClickListener(new View.OnClickListener() {
