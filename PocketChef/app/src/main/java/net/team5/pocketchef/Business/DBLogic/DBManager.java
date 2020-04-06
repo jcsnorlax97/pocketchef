@@ -54,10 +54,11 @@ public class DBManager {
 
         /** Set initial recipes which will be overwritten **/
         recipes = recipeHandler.getRecipes();
-
-        /** Continue setup **/
         categories = categoryHandler.getCategories();
+
+        /** Override**/
         recipes = recipeHandler.getRecipes();
+        categories = categoryHandler.getCategories();
 
     }
 
