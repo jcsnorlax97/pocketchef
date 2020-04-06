@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
@@ -64,7 +63,7 @@
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/chipGroup"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"></com.google.android.material.chip.ChipGroup>
+                    android:layout_height="wrap_content" />
 
             </ScrollView>
 
@@ -89,16 +88,6 @@
                     android:layout_weight="1"
                     android:text="Add Ingredient"
                     app:backgroundTint="@color/colorPrimaryDark" />
-
-<!--                <com.google.android.material.button.MaterialButton-->
-<!--                    android:id="@+id/btnCheckAllIngredients"-->
-<!--                    android:layout_width="0dp"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginLeft="4dp"-->
-<!--                    android:layout_weight="1"-->
-<!--                    android:text="Check All Ingredient"-->
-<!--                    app:backgroundTint="@color/colorPrimaryDark" />-->
-
 
             </LinearLayout>
 
