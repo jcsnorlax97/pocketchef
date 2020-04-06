@@ -205,6 +205,14 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         notifyDataSetChanged();
     }
 
+    /**
+     * @return the list of recipe objects that are filtered
+     * */
+    public List<RecipeObject> getFilteredList()
+    {
+        return mRecipeList;
+    }
+
     ///////////////////////////////////////////////////////////////////////////
     // END METHODS
     ///////////////////////////////////////////////////////////////////////////
