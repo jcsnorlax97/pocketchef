@@ -10,14 +10,14 @@ public class RecipeObject {
     /********************************************************
      * class variables
      ********************************************************/
-    private static int idCounter = 0; // to be used for unique id.
+    private static int idCounter = 1; // to be used for unique id.
 
     /********************************************************
      * instance variables
      ********************************************************/
     private final int recipeID;
     private final String recipeName;
-    private final Category recipeCategory;
+    private Category recipeCategory; // Category can be changeable
     private final ArrayList<String> recipeInstructions;
     private final ArrayList<Ingredient> recipeIngredients;
 
@@ -65,6 +65,11 @@ public class RecipeObject {
 
     public ArrayList<Ingredient> getRecipeIngredients() {
         return this.recipeIngredients;
+    }
+
+    public void setRecipeCategory(Category category)
+    {
+        this.recipeCategory = category;
     }
 
 }

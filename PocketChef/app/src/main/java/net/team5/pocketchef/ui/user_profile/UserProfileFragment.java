@@ -5,22 +5,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import net.team5.pocketchef.MainActivity;
 import net.team5.pocketchef.R;
 
 public class UserProfileFragment extends Fragment {
 
-
-    Button btn_about, btn_viewRecipe, btn_bug, btn_faq;
+    Button btn_about, btn_faq;
 
     private UserProfileViewModel userProfileViewModel;
 
@@ -32,43 +26,35 @@ public class UserProfileFragment extends Fragment {
 
         //assigning buttons for each
         btn_about = (Button) root.findViewById(R.id.buttonInfo);
-        btn_bug = (Button) root.findViewById(R.id.buttonReportBug);
         btn_faq = (Button) root.findViewById(R.id.buttonFAQ);
-        btn_viewRecipe = (Button) root.findViewById(R.id.buttonViewRecipes);
 
         //setting listener to display build information about the app and the developers
         btn_about.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), "Build Version 1.0.1 \n" +
-                        "Developed by: Derek, Justin, John, Beni, Jaskaran", Toast.LENGTH_SHORT).show();
+                openAboutDialog();
+            }
+        });
 
-            }
-        });
-        //setting listener to display information to report bug
-        btn_bug.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getContext(), "Report your bug at info@pocketchef.ca", Toast.LENGTH_SHORT).show();
-            }
-        });
-        //setting listener to view recipes that were made by user. Implemented by Iteration3.
-        btn_viewRecipe.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getContext(), "Coming Soon \n Soon you will be able to view your recipes that you created here", Toast.LENGTH_SHORT).show();
-
-            }
-        });
         //setting listener to display frequently asked questions (FAQ) coming soon
         btn_faq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), "Coming Soon!", Toast.LENGTH_SHORT).show();
-
+                openFaqDialog();
             }
         });
 
         return root;
+    }
+
+
+    public void openAboutDialog() {
+        AboutDialog aboutDialog = new AboutDialog();
+        aboutDialog.show(getFragmentManager(), "aboutDialog");
+    }
+
+    public void openFaqDialog() {
+        FaqDialog faqDialog = new FaqDialog();
+        faqDialog.show(getFragmentManager(), "faqDialog");
     }
 }

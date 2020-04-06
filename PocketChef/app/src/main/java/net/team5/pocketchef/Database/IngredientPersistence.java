@@ -17,10 +17,20 @@ public interface IngredientPersistence {
 
     /**
      * Responsibilities:
+     *  - delete ingredient from DB
+     */
+    void deleteIngredient(Ingredient ingredient);
+
+    /**
+     * Responsibilities:
      *  - Retrieve an ingredient from DB and return to caller
      *  - Remark: ingredientName is the primary key for Ingredient table.
      */
     Ingredient getIngredient(String ingredientName);
 
+    /**
+     * Responsibilities:
+     *  - Retrieve the list of ingredients
+     */
     ArrayList<Ingredient> getIngredients();
 }

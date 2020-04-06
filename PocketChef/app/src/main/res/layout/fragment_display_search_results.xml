@@ -3,21 +3,40 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     >
 
     <EditText
-    android:id="@+id/editText"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
 
-    android:layout_marginTop="20dp"
-    android:layout_margin="16dp"
-    android:ems="20"
-    android:inputType="textPersonName"
-    android:paddingLeft="20dp"
-    android:paddingTop="20dp"
-    android:paddingRight="20dp"
-    android:hint="Search Recipies" />
+        android:layout_marginTop="20dp"
+        android:layout_margin="16dp"
+        android:ems="20"
+        android:inputType="textPersonName"
+        android:paddingLeft="20dp"
+        android:paddingTop="20dp"
+        android:paddingRight="20dp"
+        android:hint="Search Recipies" />
+
+    <CheckBox
+        android:id="@+id/searchIngredients"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Search Through Ingredients"
+        android:layout_marginTop="10dp"
+        android:layout_margin="8dp"
+        />
+
+    <CheckBox
+        android:id="@+id/searchCatCB"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Search Through Categories"
+        android:layout_marginTop="10dp"
+        android:layout_margin="8dp"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/DisSearchRecyclerView"

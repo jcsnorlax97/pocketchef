@@ -7,9 +7,6 @@ import net.team5.pocketchef.Business.Objects.RecipeObject;
 import net.team5.pocketchef.Database.CategoryPersistence;
 import net.team5.pocketchef.Database.IngredientPersistence;
 import net.team5.pocketchef.Database.RecipePersistence;
-import net.team5.pocketchef.Database.hsqldb.CategoryHandler;
-import net.team5.pocketchef.Database.hsqldb.IngredientHandler;
-import net.team5.pocketchef.Database.hsqldb.RecipeHandler;
 
 import java.util.ArrayList;
 
@@ -35,16 +32,34 @@ public class DBManager {
     /********************************************************
     * Constructor
     ********************************************************/
-    //TODO: add/get the correct dbPath
     public DBManager()
     {
         recipeHandler = Services.getRecipePersistence();
         categoryHandler = Services.getCategoryPersistence();
         ingredientHandler = Services.getIngredientPersistence();
+    }
 
-        recipes = recipeHandler.getRecipes();
-//        categories = categoryHandler.getCategories();     // there are issues inside of the handler; will fix it in iteration 3.
+    /********************************************************
+     * Builder, to call after constructor (to ensure instantiation of DBManager)
+     ********************************************************/
+
+
+    /**
+     * Note: calling get is required twice as recipes and categories point to each other
+     * The initial getRecipes call sets all its Categories to Null, the second fixes such problems
+     */
+    public void setUp()
+    {
         ingredients = ingredientHandler.getIngredients();
+
+        /** Set initial recipes which will be overwritten **/
+        recipes = recipeHandler.getRecipes();
+        categories = categoryHandler.getCategories();
+
+        /** Override**/
+        recipes = recipeHandler.getRecipes();
+        categories = categoryHandler.getCategories();
+
     }
 
     /********************************************************
@@ -54,6 +69,10 @@ public class DBManager {
     /** return a list of recipes that match the name provided **/
     public ArrayList<RecipeObject> getRecipes(String recipeName) {
        ArrayList<RecipeObject> toReturn = new ArrayList<>();
+
+        /** check if input is valid **/
+        if(recipeName.equals(""))
+            return toReturn;
 
        for (int x = 0; x < recipes.size(); x++)
        {
@@ -77,7 +96,7 @@ public class DBManager {
         for (int x = 0; x < recipes.size(); x++)
         {
             RecipeObject currRecipe = recipes.get(x);
-            if (currRecipe.getRecipeId() == (recipeID))
+            if (currRecipe.getRecipeId() == recipeID)
             {
                 toReturn = currRecipe;
                 break;
@@ -89,11 +108,15 @@ public class DBManager {
 
     /** add a recipe to the DB **/
     public RecipeObject addRecipe(RecipeObject recipe) {
-        // NOT REDUNDANT, DB could throw exception and never return
         RecipeObject toReturn = null;
+
+        /** check if input is valid **/
+        if(recipe == null)
+            return toReturn;
 
         try {
             toReturn = recipeHandler.addRecipe(recipe);
+            categoryHandler.appendRecipeList(recipe.getRecipeCategory(), recipe);
             recipes.add(recipe);
             return toReturn;
         } catch (Exception e)
@@ -102,12 +125,17 @@ public class DBManager {
              * -Whoever made the call will see the null return and print a custom error
              **/
             e.printStackTrace(System.out);
-            return null;
+            return toReturn;
         }
     }
 
     /** delete a recipe from the DB **/
     public void deleteRecipe(RecipeObject recipe) {
+
+        /** check if input is valid **/
+        if(recipe == null)
+            return;
+
         try {
             recipeHandler.deleteRecipe(recipe);
             recipes.remove(recipe);
@@ -121,14 +149,31 @@ public class DBManager {
         }
     }
 
+    /** return a list of recipes that contains the name query provided **/
+    public ArrayList<RecipeObject> searchRecipes(String searchQuery) {
+        ArrayList<RecipeObject> toReturn = new ArrayList<>();
+
+        for (int x = 0; x < recipes.size(); x++)
+        {
+            RecipeObject currRecipe = recipes.get(x);
+            if (currRecipe.getRecipeName().toLowerCase().contains(searchQuery.toLowerCase()))
+                toReturn.add(currRecipe);
+        }
+
+        return toReturn;
+    }
+
     /********************************************************
     * Category Methods
     ********************************************************/
 
     /** add a Category to the DB **/
     public Category createCategory(Category category) {
-        // NOT REDUNDANT, DB could throw exception and never return
         Category toReturn = null;
+
+        /** check if input is valid **/
+        if(category == null)
+            return toReturn;
 
         try {
             toReturn = categoryHandler.createCategory(category);
@@ -140,20 +185,48 @@ public class DBManager {
              * -Whoever made the call will see the null return and print a custom error
              **/
             e.printStackTrace(System.out);
-            return null;
+            return toReturn;
         }
     }
 
-    //TODO: decide on if Arrays will be continued to be used (Iteration 3) before using this
-    //FIXME: I DO NOT WORK YET SO PLEASE DON'T USE ME
+    /** delete a Category from DB **/
+    public void deleteCategory(Category category) {
+
+        /** check if input is valid **/
+        if(category == null)
+            return;
+
+        try {
+            categoryHandler.deleteCategory(category);
+            categories.remove(category);
+
+            /** change all recipes category after deleting category **/
+            ArrayList<RecipeObject> recipes = category.getRecipeList();
+            for(int x = 0; x < recipes.size(); x++)
+            {
+                recipes.get(x).setRecipeCategory(null);
+            }
+        } catch (Exception e)
+        {
+            /** The user does not need to see this error
+             * -Whoever made the call will see the it was not deleted
+             **/
+            e.printStackTrace(System.out);
+        }
+    }
+
     /** add a recipe to the Category provided **/
     public Category appendRecipeList(Category category, RecipeObject recipe) {
-        // NOT REDUNDANT, DB could throw exception and never return
         Category toReturn = null;
+
+        /** check if input is valid **/
+        if(category == null)
+            return toReturn;
+        if(recipe == null)
+            return toReturn;
 
         try {
             toReturn = categoryHandler.appendRecipeList(category, recipe);
-            category.addRecipe(recipe);
             return toReturn;
         } catch (Exception e)
         {
@@ -161,7 +234,30 @@ public class DBManager {
              * -Whoever made the call will see the null return and print a custom error
              **/
             e.printStackTrace(System.out);
-            return null;
+            return toReturn;
+        }
+    }
+
+    /** add a recipe to the Category provided **/
+    public Category deleteRecipe(Category category, RecipeObject recipe) {
+        Category toReturn = null;
+
+        /** check if input is valid **/
+        if(category == null)
+            return toReturn;
+        if(recipe == null)
+            return toReturn;
+
+        try {
+            toReturn = categoryHandler.deleteRecipe(category, recipe);
+            return toReturn;
+        } catch (Exception e)
+        {
+            /** The user does not need to see this error
+             * -Whoever made the call will see the null return and print a custom error
+             **/
+            e.printStackTrace(System.out);
+            return toReturn;
         }
     }
 
@@ -174,14 +270,47 @@ public class DBManager {
     public Category getCategory(String categoryName) {
         Category toReturn = null;
 
+        /** check if input is valid **/
+        if(categoryName.equals(""))
+            return toReturn;
+
+        /** check if null, because during start up categories is null **/
+        if (categories == null) {
+            return null;
+        }
+
         for (int x = 0; x < categories.size(); x++)
         {
             Category currCategory = categories.get(x);
-            if (currCategory.getCategoryName().equals(categoryName))
+            if (currCategory.getCategoryName().toLowerCase().equals(categoryName.toLowerCase()))
             {
                 toReturn = currCategory;
                 break;
             }
+        }
+
+        return toReturn;
+    }
+
+    /** get recipes from the DB that matches the category in the string provided **/
+    public ArrayList<RecipeObject> searchCategories(String searchQuery) {
+        ArrayList<Category> matching = new ArrayList<Category>();
+
+        /**find the categories that match the searchQuery **/
+        for (int x = 0; x < categories.size(); x++)
+        {
+            Category currCategory = categories.get(x);
+            if (currCategory.getCategoryName().toLowerCase().contains(searchQuery.toLowerCase()))
+            {
+                matching.add(currCategory);
+            }
+        }
+
+        ArrayList<RecipeObject> toReturn = new ArrayList<RecipeObject>();
+        /** Now that we have the categories, go through and get all the recipes **/
+        for(int x = 0; x < matching.size(); x++)
+        {
+            toReturn.addAll(matching.get(x).getRecipeList());
         }
 
         return toReturn;
@@ -193,8 +322,11 @@ public class DBManager {
 
     /** add ingredient to the DB **/
     public Ingredient addIngredient(Ingredient ingredient) {
-        // NOT REDUNDANT, DB could throw exception and never return
         Ingredient toReturn = null;
+
+        /** check if input is valid **/
+        if(ingredient == null)
+            return toReturn;
 
         try {
             toReturn = ingredientHandler.addIngredient(ingredient);
@@ -206,7 +338,26 @@ public class DBManager {
              * -Whoever made the call will see the null return and print a custom error
              **/
             e.printStackTrace(System.out);
-            return null;
+            return toReturn;
+        }
+    }
+
+    /** delete ingredient from the DB **/
+    public void deleteIngredient(Ingredient ingredient) {
+
+        /** check if input is valid **/
+        if(ingredient == null)
+            return;
+
+        try {
+            ingredientHandler.deleteIngredient(ingredient);
+            ingredients.remove(ingredient);
+        } catch (Exception e)
+        {
+            /** The user does not need to see this error
+             * -Whoever made the call will see the null return and print a custom error
+             **/
+            e.printStackTrace(System.out);
         }
     }
 
@@ -214,10 +365,14 @@ public class DBManager {
     public Ingredient getIngredient(String ingredientName) {
         Ingredient toReturn = null;
 
+        /** check if input is valid **/
+        if(ingredientName.equals(""))
+            return toReturn;
+
         for (int x = 0; x < ingredients.size(); x++)
         {
             Ingredient currIngredient = ingredients.get(x);
-            if (currIngredient.getIngredientName().equals(ingredientName))
+            if (currIngredient.getIngredientName().toLowerCase().equals(ingredientName.toLowerCase()))
             {
                 toReturn = currIngredient;
                 break;
@@ -225,5 +380,55 @@ public class DBManager {
         }
 
         return toReturn;
+    }
+
+    /** Get ingredient from the DB that matches name provded **/
+    public ArrayList<RecipeObject> searchIngredients(String searchQuery) {
+        ArrayList<RecipeObject> toReturn = new ArrayList<>();
+
+        /** Go through all the recipes **/
+        for (int x = 0; x < recipes.size(); x++)
+        {
+            RecipeObject currRecipe = recipes.get(x);
+            ArrayList<Ingredient> currIngredients = currRecipe.getRecipeIngredients();
+
+            /** Of the current recipe object go through all the ingredients and check if they match the seachQuery **/
+            for(int i = 0; i < currIngredients.size(); i++)
+            {
+                Ingredient currIngredient = currIngredients.get(i);
+
+                if (currIngredient.getIngredientName().toLowerCase().contains(searchQuery.toLowerCase()))
+                {
+                    toReturn.add(currRecipe);
+                    break;
+                }
+            }
+        }
+
+        return toReturn;
+    }
+
+    /**
+     * @param searchString The string that will be used to search the recipe names or categories or ingredients
+     * @param searchCategories boolean that determines if we should be searching recipe categories (true = cat, false = names)
+     * @param searchIngredients the boolean that determines if we should be searching recipe ingredients (true = ingred, false = names)
+     *                          NOTE: if both searchCategories and searchIngredients are true we use only categories for searching
+     *                          it is up to the caller to ensure that both are not true
+     * @return a list of recipes that match the search query
+     * */
+    public ArrayList<RecipeObject> search(String searchString, boolean searchCategories, boolean searchIngredients)
+    {
+        /** check to see if we should be looking at the recipe categories, ingredients or names **/
+        if(searchCategories)
+        {
+            return searchCategories(searchString);
+        }
+        else if(searchIngredients)
+        {
+            return searchIngredients(searchString);
+        }
+        else{
+            return searchRecipes(searchString);
+        }
     }
 }

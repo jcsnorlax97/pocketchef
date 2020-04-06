@@ -6,13 +6,14 @@ import net.team5.pocketchef.Business.Objects.RecipeObject;
 import net.team5.pocketchef.Database.RecipePersistence;
 import net.team5.pocketchef.MainActivity;
 
+import org.hsqldb.jdbc.JDBCArrayBasic;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class RecipeHandler implements RecipePersistence
 {
@@ -23,7 +24,6 @@ public class RecipeHandler implements RecipePersistence
         this.dbPath = dbPath;
     }
 
-    // TODO: Set proper url, ensure path is correct, get password?
     private Connection connection() throws SQLException
     {
         return DriverManager.getConnection("jdbc:hsqldb:file:" + this.dbPath + ";shutdown=true", "SA", "");
@@ -46,17 +46,31 @@ public class RecipeHandler implements RecipePersistence
          * -Convert SQL array to String[] using .getArray()
          * and then to ArrayList<String> using getInstructions() function
          **/
-        String[] instructions = (String[])(rs.getArray("INSTRUCTIONS").getArray());
+        Object[] recipeField = (Object[]) rs.getArray("INSTRUCTIONS").getArray();
+        String[] instructions = toArray(recipeField);
         final ArrayList<String> recipeInstructions = getInstructions(instructions);
 
         /** Get ingredients
          * -Convert SQL array to String[] using .getArray()
          * and then to ArrayList<Ingredient> using getIngredients() function
          **/
-        String[] ingredients = (String[])(rs.getArray("INGREDIENTS").getArray());
+        recipeField = (Object[]) rs.getArray("INGREDIENTS").getArray();
+        String[] ingredients = toArray(recipeField);
         final ArrayList<Ingredient> recipeIngredients = getIngredients(ingredients);
 
         return new RecipeObject(recipeId, recipeName, recipeCategory, recipeInstructions, recipeIngredients);
+    }
+
+    /** There is no conversion for HSQLDB, have to do manually **/
+    private String[] toArray(Object[] recipeObject)
+    {
+        String[] array = new String[recipeObject.length];
+        for (int x = 0; x < recipeObject.length; x++)
+        {
+            System.out.println("Adding: " + ((String)recipeObject[x]));
+            array[x] = ((String) recipeObject[x]);
+        }
+        return array;
     }
 
     /********************************************************
@@ -122,8 +136,6 @@ public class RecipeHandler implements RecipePersistence
      **/
     public RecipeObject getRecipe(int recipeID)
     {
-        final List<RecipeObject> recipes = new ArrayList<>();
-
         try (final Connection c = connection())
         {
             final PreparedStatement st = c.prepareStatement("SELECT FROM RECIPE WHERE RID = ?");
@@ -148,14 +160,18 @@ public class RecipeHandler implements RecipePersistence
      **/
     public RecipeObject addRecipe(RecipeObject recipe)
     {
+        /** Used for transforming an array to an SQL array **/
+        org.hsqldb.types.Type type = org.hsqldb.types.Type.SQL_VARCHAR_DEFAULT;
         try (final Connection c = connection())
         {
-            final PreparedStatement st = c.prepareStatement("INSERT INTO RECIPE VALUES(?, ?, ?, ?)");
+            final PreparedStatement st = c.prepareStatement("INSERT INTO RECIPE VALUES(?, ?, ?, ?, ?)");
             st.setInt(1, recipe.getRecipeId());
             st.setString(2, recipe.getRecipeName());
             st.setString(3, recipe.getRecipeCategory().getCategoryName());
-            st.setArray(4, c.createArrayOf("VARCHAR(100)", getArray(recipe.getRecipeInstructions())));
-            st.setArray(5, c.createArrayOf("VARCHAR(20)", getArray(recipe.getRecipeIngredients())));
+            JDBCArrayBasic array = new JDBCArrayBasic(getArray(recipe.getRecipeInstructions()), type);
+            st.setArray(4, array);
+            array = new JDBCArrayBasic(getArray(convertIngredientArray(recipe.getRecipeIngredients())), type);
+            st.setArray(5, array);
 
             st.executeUpdate();
 
@@ -168,7 +184,7 @@ public class RecipeHandler implements RecipePersistence
 
     /**
      * deleteRecipe
-     * <p>
+     *
      * Responsibilities:
      * - Delete a SINGLE recipe having the target recipe id.
      * - Remark: search based on recipe id, which should be an UNIQUE attribute
@@ -182,7 +198,6 @@ public class RecipeHandler implements RecipePersistence
             st.executeUpdate();
         } catch (final SQLException e)
         {
-            System.err.println(("Catch SQLException: " + e.getMessage()));
             throw new PersistenceException(e);
         }
     }
@@ -196,6 +211,17 @@ public class RecipeHandler implements RecipePersistence
     {
         String[] array = list.toArray(new String[list.size()]);
         return array;
+    }
+
+    /** Convert Arraylist to array **/
+    private ArrayList<String> convertIngredientArray(ArrayList<Ingredient> list)
+    {
+        ArrayList<String> newArray = new ArrayList<>();
+        for(int x = 0; x < list.size(); x++)
+        {
+            newArray.add(list.get(x).getIngredientName());
+        }
+        return newArray;
     }
 
     /** Convert String[] to ArrayList<String> **/

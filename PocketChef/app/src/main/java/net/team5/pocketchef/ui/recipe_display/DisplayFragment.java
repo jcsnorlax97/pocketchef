@@ -12,15 +12,15 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import net.team5.pocketchef.Business.Objects.Recipe.Recipe;
+import net.team5.pocketchef.Business.Objects.RecipeObject;
 import net.team5.pocketchef.R;
 
-public class DisplayFragment extends Fragment{ // If i have problems, check because this was named DisplayFragment befroe
+public class DisplayFragment extends Fragment{
 
     private DisplayViewModel displayViewModel;
-    private Recipe recipe;
+    private RecipeObject recipe;
 
-    public DisplayFragment(Recipe recipeTemp)
+    public DisplayFragment(RecipeObject recipeTemp)
     {
         recipe=recipeTemp;
 
@@ -71,7 +71,6 @@ public class DisplayFragment extends Fragment{ // If i have problems, check beca
             }
         });
 
-        // scrollView.setMovementMethod(new ScrollingMovementMethod());
         return root;
     }
 }

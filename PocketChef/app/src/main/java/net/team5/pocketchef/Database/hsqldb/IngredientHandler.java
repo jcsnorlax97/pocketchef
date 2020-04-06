@@ -18,7 +18,6 @@ public class IngredientHandler implements IngredientPersistence {
         this.dbPath = dbPath;
     }
 
-    // TODO: Set proper url, ensure path is correct, get password?
     private Connection connection() throws SQLException {
         return DriverManager.getConnection("jdbc:hsqldb:file:" + this.dbPath + ";shutdown=true", "SA", "");
     }
@@ -38,12 +37,29 @@ public class IngredientHandler implements IngredientPersistence {
     public Ingredient addIngredient(Ingredient ingredient)
     {
         try (final Connection c = connection()) {
-            final PreparedStatement st = c.prepareStatement("INSERT INTO CATEGORY VALUES(?)");
+            final PreparedStatement st = c.prepareStatement("INSERT INTO INGREDIENT VALUES(?)");
             st.setString(1, ingredient.getIngredientName());
             st.executeUpdate();
 
             return ingredient;
         } catch (final SQLException e) {
+            throw new PersistenceException(e);
+        }
+    }
+
+    /**
+     * Responsibilities:
+     *  - delete ingredient from DB
+     */
+    public void deleteIngredient(Ingredient ingredient)
+    {
+        try (final Connection c = connection())
+        {
+            final PreparedStatement st = c.prepareStatement("DELETE FROM INGREDIENT WHERE INAME = ?");
+            st.setString(1,  ingredient.getIngredientName());
+            st.executeUpdate();
+        } catch (final SQLException e)
+        {
             throw new PersistenceException(e);
         }
     }

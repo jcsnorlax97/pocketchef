@@ -44,17 +44,12 @@ public class Category {
         return this.recipeList;
     }
 
-    public void addRecipe(RecipeObject recipe)
-    {
-        recipeList.add(recipe);
-    }
-
     public void deleteRecipe(RecipeObject recipe)
     {
         recipeList.remove(recipe);
     }
 
     public String toString() {
-        return String.format("Student: %s %s [%s]", this.categoryName, this.recipeList.toString());
+        return this.categoryName;
     }
 }
