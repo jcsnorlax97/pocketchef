@@ -71,7 +71,6 @@ Features
 
 User Stories
 ------------
-#### Iteration 1
 
 *  As a user who uses mobile devices with big screens, I want to have bottom buttons that I can easily tap.
     *   Feature [Bottom Navigation Bar](https://code.cs.umanitoba.ca/comp3350-winter2020/pocketchef-5/issues/11)
@@ -110,6 +109,9 @@ Developer Tasks
 #### Iteration 2
 *  [Developer Tasks](https://code.cs.umanitoba.ca/comp3350-winter2020/pocketchef-5/blob/master/Developer_Tasks_iteration2.md)
 
+#### Iteration 3
+*  [Developer Tasks](https://code.cs.umanitoba.ca/comp3350-winter2020/pocketchef-5/blob/master/Developer_Tasks_iteration3.md)
+
 Architecture Model
 ------------
 #### Iteration 1
@@ -117,3 +119,6 @@ Architecture Model
 
 #### Iteration 2
 *  [Architecture](https://code.cs.umanitoba.ca/comp3350-winter2020/pocketchef-5/blob/master/architecture-iteration2.md)
+
+#### Iteration 3
+*  [Architecture](https://code.cs.umanitoba.ca/comp3350-winter2020/pocketchef-5/blob/master/architecture-iteration3.md)
