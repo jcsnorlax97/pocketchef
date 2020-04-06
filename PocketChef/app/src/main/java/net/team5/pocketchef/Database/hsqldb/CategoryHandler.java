@@ -7,6 +7,8 @@ import net.team5.pocketchef.Business.Objects.RecipeObject;
 import net.team5.pocketchef.Database.CategoryPersistence;
 import net.team5.pocketchef.MainActivity;
 
+import org.hsqldb.jdbc.JDBCArrayBasic;
+
 import java.sql.Array;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -39,13 +41,31 @@ public class CategoryHandler implements CategoryPersistence {
         return new Category(category, recipeObjects);
     }
 
+    /** Convert Arraylist to array **/
+    private Integer[] getArray(ArrayList<?> list)
+    {
+        Integer[] array = list.toArray(new Integer[list.size()]);
+        return array;
+    }
+
+    /** Convert Arraylist<RecipeObject> to arrayList<String> **/
+    private ArrayList<Integer> convertRecipeArray(ArrayList<RecipeObject> list)
+    {
+        ArrayList<Integer> newArray = new ArrayList<>();
+        for(int x = 0; x < list.size(); x++)
+        {
+            newArray.add(list.get(x).getRecipeId());
+        }
+        return newArray;
+    }
+
     /** There is no conversion for HSQLDB, have to do manually **/
     private ArrayList<Integer> toArray(Object[] recipeObject)
     {
         ArrayList<Integer> array = new ArrayList<>();
         for (int x = 0; x < recipeObject.length; x++)
         {
-            array.add((Integer) recipeObject[x]);
+            array.add((Integer)recipeObject[x]);
         }
         return array;
     }
@@ -70,10 +90,13 @@ public class CategoryHandler implements CategoryPersistence {
     */
     public Category createCategory(Category category)
     {
+        /** Used for transforming an array to an SQL array **/
+        org.hsqldb.types.Type type = org.hsqldb.types.Type.SQL_INTEGER;
         try (final Connection c = connection()) {
             final PreparedStatement st = c.prepareStatement("INSERT INTO CATEGORY VALUES(?, ?)");
             st.setString(1, category.getCategoryName());
-            st.setArray(2, c.createArrayOf("VARCHAR(20)", new String[1024]));
+            JDBCArrayBasic array = new JDBCArrayBasic(getArray(convertRecipeArray(category.getRecipeList())), type);
+            st.setArray(2, array);
             st.executeUpdate();
             return category;
         } catch (final SQLException e) {

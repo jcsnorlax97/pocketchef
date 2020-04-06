@@ -9,6 +9,7 @@ import net.team5.pocketchef.Database.hsqldb.RecipeHandler;
 import net.team5.pocketchef.Database.stubs.CategoryPersistenceStub;
 import net.team5.pocketchef.Database.stubs.IngredientPersistenceStub;
 import net.team5.pocketchef.Database.stubs.RecipePersistenceStub;
+import net.team5.pocketchef.MainActivity;
 
 public class Services
 {
@@ -20,8 +21,11 @@ public class Services
     {
         if (Services.recipePersistence == null)
         {
-            // Services.recipePersistence = new RecipePersistenceStub(Services.getCategoryPersistence(), Services.getIngredientPersistence());
-            Services.recipePersistence = new RecipeHandler(Main.getDBPathName());
+            if (MainActivity.isMain)
+                Services.recipePersistence = new RecipeHandler(Main.getDBPathName());
+            else
+                Services.recipePersistence = new RecipePersistenceStub(Services.getCategoryPersistence(), Services.getIngredientPersistence());
+
         }
 
         return Services.recipePersistence;
@@ -31,8 +35,10 @@ public class Services
     {
         if (Services.categoryPersistence == null)
         {
-            //Services.categoryPersistence = new CategoryPersistenceStub();
-            Services.categoryPersistence = new CategoryHandler(Main.getDBPathName());
+            if (MainActivity.isMain)
+                Services.categoryPersistence = new CategoryHandler(Main.getDBPathName());
+            else
+                Services.categoryPersistence = new CategoryPersistenceStub();
         }
 
         return Services.categoryPersistence;
@@ -42,8 +48,10 @@ public class Services
     {
         if (Services.ingredientPersistence == null)
         {
-            // Services.ingredientPersistence = new IngredientPersistenceStub();
-            Services.ingredientPersistence = new IngredientHandler(Main.getDBPathName());
+            if (MainActivity.isMain)
+                Services.ingredientPersistence = new IngredientHandler(Main.getDBPathName());
+            else
+                Services.ingredientPersistence = new IngredientPersistenceStub();
         }
 
         return Services.ingredientPersistence;

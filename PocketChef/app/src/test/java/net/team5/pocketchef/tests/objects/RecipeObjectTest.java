@@ -50,7 +50,7 @@ public class RecipeObjectTest {
 
         // -- recipe & recipe id --
         assertNotNull(recipe);
-        assertTrue(0 == recipe.getRecipeId());
+        assertTrue(1 == recipe.getRecipeId());
 
         // -- recipe category --
         assertTrue("Vegan".equals(recipe.getRecipeCategory().getCategoryName()));
