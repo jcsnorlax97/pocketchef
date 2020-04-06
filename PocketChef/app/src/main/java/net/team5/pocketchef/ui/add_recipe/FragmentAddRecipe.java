@@ -104,6 +104,17 @@ public class FragmentAddRecipe extends Fragment {
                     return;
                 }
 
+                // Check length
+                if(ingredient.length() > 20)
+                {
+                    // construct error message
+                    String message = "length is too large";
+
+                    // show error message
+                    Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 LayoutInflater inflater = LayoutInflater.from(getContext()); // (Not sure if this is the correct way to do it.)
 
                 // create view for a chipItem
@@ -162,9 +173,9 @@ public class FragmentAddRecipe extends Fragment {
                 newRecipeName = etRecipeName.getText().toString();
 
                 // --- name: quick ui validation ---
-                if (newRecipeName.length() <= 0) {
+                if (newRecipeName.length() <= 0 || newRecipeName.length() > 20) {
                     // construct error message
-                    String message = "Please enter a recipe name with more than one character.";
+                    String message = "Recipe length has to be 1-20 long";
 
                     // show error message
                     Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
@@ -190,10 +201,21 @@ public class FragmentAddRecipe extends Fragment {
                 //          A more complicated way would have a button for adding new instruction text box, allow editing and deleting easily, and
                 //          allow scrolling up and down when there are too much instructions and the screen doesn't fit.
                 String recipeInstructionInOneString = etRecipeInstructions.getText().toString().trim();
-                if (!recipeInstructionInOneString.equals(""))
+                if (!recipeInstructionInOneString.equals("") && recipeInstructionInOneString.length() <= 100)
                 {
                     String[] recipeInstructionArray = recipeInstructionInOneString.split("\n");
                     Collections.addAll(newRecipeInstructions, recipeInstructionArray);
+                } else
+                {
+                    String message;
+                    if (recipeInstructionInOneString.equals(""))
+                        message = "Instruction has to be added";
+                    else
+                        message = "Instruction length has to be 1-100 long";
+
+                    // show error message
+                    Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+                    return;
                 }
 
                 // --- ingredients ---
