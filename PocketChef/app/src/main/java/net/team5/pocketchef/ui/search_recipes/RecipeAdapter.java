@@ -44,14 +44,12 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     public static class RecipeViewHolder extends RecyclerView.ViewHolder
     {
 
-        public ImageView mImageView;
         public TextView mTextViewName;
         public TextView mTextViewCat;
 
         public RecipeViewHolder(@NonNull View itemView, final OnItemClickListener listener)
         {
             super(itemView);
-            mImageView = itemView.findViewById(R.id.searchRecipeImageView);
             mTextViewName = itemView.findViewById(R.id.recipeNameTextView);
             mTextViewCat = itemView.findViewById(R.id.recipeCategoryTextView);
             //mTextViewCat = itemView.findViewById(R.id.reci);
@@ -119,10 +117,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     {
         RecipeObject currentItem = mRecipeList.get(position);
 
-        //THIS LINE DOESN'T WORK WITH SOME API'S (23 FOR EXAMPLE)
-        //WE KNOW IT WORKS FOR API 28
-        //MUST CHANGE NEXT ITERATION
-        //holder.mImageView.setImageResource(currentItem.getImageResource());
         holder.mTextViewName.setText(currentItem.getRecipeName());
         Category recipeCategory = currentItem.getRecipeCategory();
         if (recipeCategory != null)
