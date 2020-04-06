@@ -55,6 +55,6 @@ public class Category {
     }
 
     public String toString() {
-        return String.format("Student: %s %s [%s]", this.categoryName, this.recipeList.toString());
+        return this.categoryName;
     }
 }

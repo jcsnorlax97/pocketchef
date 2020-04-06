@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ScrollView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,7 +27,6 @@ import net.team5.pocketchef.MainActivity;
 import net.team5.pocketchef.R;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 
 public class FragmentAddRecipe extends Fragment {
@@ -36,7 +37,9 @@ public class FragmentAddRecipe extends Fragment {
     // --- variables ---
     Button btnAddRecipe;
     EditText etRecipeName;
-    EditText etRecipeCategory;
+
+    // --- category spinner (selector) ---
+    Spinner vCategorySpinner;
 
     // --- variables for ingredients ---
     MaterialButton btnAddIngredient;
@@ -66,8 +69,14 @@ public class FragmentAddRecipe extends Fragment {
 
         // --- recipe name and category ---
         etRecipeName = view.findViewById(R.id.etRecipeName);
-        etRecipeCategory = view.findViewById(R.id.etRecipeCategory);
         btnAddRecipe = view.findViewById(R.id.btnAddRecipe);
+
+        // --- category spinner (selector) & setup ---
+        vCategorySpinner = view.findViewById(R.id.vCategorySpinner);
+        ArrayList<Category> categoryArrayList = MainActivity.manager.getCategories();
+        ArrayAdapter<Category> categoryArrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, categoryArrayList);
+        categoryArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        vCategorySpinner.setAdapter(categoryArrayAdapter);
 
         // --- ingredients ---
         btnAddIngredient = view.findViewById(R.id.btnAddIngredient);
@@ -162,16 +171,14 @@ public class FragmentAddRecipe extends Fragment {
                     return;
                 }
 
-
                 // --- category (must be existing in db already) ---
-                String recipeCategoryName = etRecipeCategory.getText().toString();
-                newRecipeCategory = MainActivity.manager.getCategory(recipeCategoryName);
+                newRecipeCategory = (Category) vCategorySpinner.getSelectedItem();
 
                 // --- category: quick ui validation ---
                 if (newRecipeCategory == null)
                 {
                     // construct error message
-                    String message = recipeCategoryName + " does not exist. Please enter an existing category.";
+                    String message = newRecipeCategory.getCategoryName() + " does not exist. Please enter an existing category.";
 
                     // show error message
                     Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
