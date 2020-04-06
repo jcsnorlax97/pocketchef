@@ -1,7 +1,5 @@
 package net.team5.pocketchef.Database.hsqldb;
 
-import android.widget.Toast;
-
 import net.team5.pocketchef.Business.Objects.Category;
 import net.team5.pocketchef.Business.Objects.RecipeObject;
 import net.team5.pocketchef.Database.CategoryPersistence;
@@ -9,7 +7,6 @@ import net.team5.pocketchef.MainActivity;
 
 import org.hsqldb.jdbc.JDBCArrayBasic;
 
-import java.sql.Array;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
