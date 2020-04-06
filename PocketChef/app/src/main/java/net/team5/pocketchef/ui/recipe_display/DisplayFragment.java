@@ -72,7 +72,6 @@ public class DisplayFragment extends Fragment{ // If i have problems, check beca
             }
         });
 
-        // scrollView.setMovementMethod(new ScrollingMovementMethod());
         return root;
     }
 }
