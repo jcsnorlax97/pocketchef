@@ -242,7 +242,7 @@ public class FragmentAddRecipe extends Fragment {
                 MainActivity.manager.addRecipe(newRecipe);
 
                 // show what has been entered; (just for testing; should remove it later)
-                Toast.makeText(getContext(), newRecipe.getRecipeName() + " " + newRecipeCategory.getCategoryName() + " " + result.toString() + newRecipeInstructions.get(0) + " is entered.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), newRecipe.getRecipeName() + " has been entered.", Toast.LENGTH_SHORT).show();
             }
         });
 

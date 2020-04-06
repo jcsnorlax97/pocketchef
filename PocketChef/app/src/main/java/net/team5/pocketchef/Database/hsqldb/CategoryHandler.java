@@ -145,7 +145,6 @@ public class CategoryHandler implements CategoryPersistence {
             st.executeUpdate();
         } catch (final SQLException e)
         {
-            System.err.println(("Catch SQLException: " + e.getMessage()));
             throw new PersistenceException(e);
         }
     }
